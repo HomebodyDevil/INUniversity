@@ -16,6 +16,7 @@ public class EnemyInfoPanel : MonoBehaviour
     [SerializeField] private GameObject enemyInfoPanel;
     [SerializeField] private GameObject okButton;
     [SerializeField] private GameObject enemyImage;
+    [SerializeField] private RectTransform dropListText;
     [SerializeField] private GameObject dropItemCardPanel;
     [SerializeField] private TextMeshProUGUI enemyDescriptionText;
     [SerializeField] private Transform cardList;
@@ -23,13 +24,16 @@ public class EnemyInfoPanel : MonoBehaviour
 
     [Space(10), Header("Space Ratio")]
     [SerializeField] private float padding;
+    [SerializeField] private float okButtonBottomGap;
     [SerializeField] private float gap;
     [SerializeField] private int objectsCount;
     [SerializeField, Range(0, 1f)] private float enemyImagePanelHeightRatio;
     [SerializeField, Range(0, 1f)] private float enemyInfoPanelHeightRatio;
     [SerializeField, Range(0, 1f)] private float okButtonHeightRatio;
     [SerializeField, Range(0, 1f)] private float okButtonWidthRatio;
+    [SerializeField, Range(0, 1f)] private float dropListTextHeightRatio;
     [SerializeField, Range(0, 1f)] private float dropItemCardPanelHeightRatio;
+    [SerializeField, Range(0, 1f)] private float slotWidthHeightRatio;
     //[SerializeField, Range(0, 1f)] private float dropItemCardPanelWidthRatio;
 
     private MapUIManager uiManager;
@@ -47,7 +51,7 @@ public class EnemyInfoPanel : MonoBehaviour
 
     private void Update()
     {
-        //Initialize();
+        Initialize();
     }
 
     public void GetUIManager()
@@ -73,6 +77,7 @@ public class EnemyInfoPanel : MonoBehaviour
 
         float enemyImagePanelHeight = (height - 2 * padding - (objectsCount - 1) * gap) * enemyImagePanelHeightRatio;
         float enemyInfoPanelHeight = (height - 2 * padding - (objectsCount - 1) * gap) * enemyInfoPanelHeightRatio;
+        float dropListTextHeight = (height - 2 * padding - (objectsCount - 1) - gap) * dropListTextHeightRatio;
         float dropListPanelHeight = (height - 2 * padding - (objectsCount - 1) * gap) * dropItemCardPanelHeightRatio;
         float okButtonHeight = (height - 2 * padding - (objectsCount - 1) * gap) * okButtonHeightRatio;
 
@@ -90,13 +95,17 @@ public class EnemyInfoPanel : MonoBehaviour
         sumOfUsedPanelsHeightWithGap += enemyImagePanelHeight;
 
         RectTransform enemyImageRectTransform = enemyImage.GetComponent<RectTransform>();
-        float enemyImageWidthAndHeight = MathF.Min(enemyImagePanelRectTransform.rect.width, enemyImagePanelRectTransform.rect.height);
+        float enemyImageWidthAndHeight = MathF.Min(enemyImagePanelRectTransform.rect.width - 100, enemyImagePanelRectTransform.rect.height - 100);
         enemyImageRectTransform.sizeDelta = new Vector2(enemyImageWidthAndHeight, enemyImageWidthAndHeight);
 
         RectTransform enemyInfoRectTransform = enemyInfoPanel.GetComponent<RectTransform>();
         enemyInfoRectTransform.offsetMax = new Vector2(-padding, -padding - sumOfUsedPanelsHeightWithGap - gap);
         enemyInfoRectTransform.offsetMin = new Vector2(padding, startFromTop - sumOfUsedPanelsHeightWithGap - gap - enemyInfoPanelHeight);
         sumOfUsedPanelsHeightWithGap += (enemyInfoPanelHeight + gap);
+
+        dropListText.offsetMax = new Vector2(-padding, -padding - sumOfUsedPanelsHeightWithGap);
+        dropListText.offsetMin = new Vector2(padding, startFromTop - sumOfUsedPanelsHeightWithGap - gap - dropListTextHeight);
+        sumOfUsedPanelsHeightWithGap += (dropListTextHeight);
 
         RectTransform dropListPanelRectTransform = dropItemCardPanel.GetComponent<RectTransform>();
         dropListPanelRectTransform.offsetMax = new Vector2(-padding, -padding - sumOfUsedPanelsHeightWithGap - gap);
@@ -105,7 +114,12 @@ public class EnemyInfoPanel : MonoBehaviour
 
         RectTransform okButtonRectTransform = okButton.GetComponent<RectTransform>();
         okButtonRectTransform.offsetMax = new Vector2(-(width - okButtonWidth) / 2, -(height - padding - okButtonHeight));
-        okButtonRectTransform.offsetMin = new Vector2((width - okButtonWidth) / 2, padding);
+        okButtonRectTransform.offsetMin = new Vector2((width - okButtonWidth) / 2, okButtonBottomGap);
+
+        height = dropListPanelRectTransform.GetComponent<RectTransform>().rect.height * slotWidthHeightRatio;
+        //float widthHeight = Math.Min()
+        cardList.GetComponent<GridLayoutGroup>().cellSize = new Vector2(height, height);
+        itemList.GetComponent<GridLayoutGroup>().cellSize = new Vector2(height, height);
     }
 
     public void OnClicked()

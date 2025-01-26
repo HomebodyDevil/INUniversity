@@ -18,6 +18,7 @@ public class BattleUIManager : A_UIManager
     [SerializeField] private GameObject canclePanel;
     [SerializeField] private GameObject currentCardsInBattlePanel;
     [SerializeField] private GameObject battleCompleteObjectPanel;
+    [SerializeField] private GameObject preservePanel;
 
     [Space(10), Header("Buttons")]
     [SerializeField] private GameObject optionButton;
@@ -74,11 +75,18 @@ public class BattleUIManager : A_UIManager
         BattleManager.OnBattleWin -= ActivateBattleWinObject;
         BattleManager.OnBattleWin += ActivateBattleWinObject;
 
+        BattleManager.OnBattleWin -= ActivatePreservePanel;
+        BattleManager.OnBattleWin += ActivatePreservePanel;
+
         BattleManager.OnBattleLose -= ActivateBattleLoseObject;
         BattleManager.OnBattleLose += ActivateBattleLoseObject;
 
+        BattleManager.OnBattleLose -= ActivatePreservePanel;
+        BattleManager.OnBattleLose += ActivatePreservePanel;
+
         itemsPanel.SetActive(false);
         battleCompleteObjectPanel.SetActive(false);
+        preservePanel.SetActive(false);
 
         activeObject = new Stack<GameObject>();
         panelsList = new List<GameObject>();
@@ -102,6 +110,8 @@ public class BattleUIManager : A_UIManager
         CanclePanel.OnCanclePanelClicked -= OnCanclePanel;
         BattleManager.OnBattleWin -= ActivateBattleWinObject;
         BattleManager.OnBattleLose -= ActivateBattleLoseObject;
+        BattleManager.OnBattleWin -= ActivatePreservePanel;
+        BattleManager.OnBattleLose -= ActivatePreservePanel;
 
         PlayerSpecManager.Instance().StopIncreaseCost();
         BattleManager.Instance().StopIncreaseEnemyCost();
@@ -217,8 +227,8 @@ public class BattleUIManager : A_UIManager
     {
         //DisableThingsForBattleWinObject();
 
-        ActivateCanclePanel();
-
+        //ActivateCanclePanel();
+        BattleManager.OnPauseBattle.Invoke();
         UpdateAcquiositionSlot();
         battleCompleteObjectPanel.GetComponent<BattleCompletePanel>().SetComponents(true);
         battleCompleteObjectPanel.SetActive(true);
@@ -226,7 +236,9 @@ public class BattleUIManager : A_UIManager
 
     private void ActivateBattleLoseObject()
     {
-        ActivateCanclePanel();
+        //ActivateCanclePanel();
+
+        BattleManager.OnPauseBattle.Invoke();
         battleCompleteObjectPanel.GetComponent<BattleCompletePanel>().SetComponents(false);
         battleCompleteObjectPanel.SetActive(true);
     }
@@ -361,6 +373,11 @@ public class BattleUIManager : A_UIManager
         }
         else
             Debug.Log("CardList is Null");
+    }
+
+    private void ActivatePreservePanel()
+    {
+        preservePanel.SetActive(true);
     }
 
     //private void DisableThingsForBattleWinObject()
