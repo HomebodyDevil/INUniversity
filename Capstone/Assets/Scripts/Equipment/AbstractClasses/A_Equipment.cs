@@ -6,6 +6,7 @@ public abstract class A_Equipment : MonoBehaviour
 {
     public PlayerEquipmentManager.Equipments equipmentType;
     public int equipmentID;
+    public bool isEquipped;
 
     [TextArea] public string equipmentName;
     [TextArea] public string equipmentImagePath;

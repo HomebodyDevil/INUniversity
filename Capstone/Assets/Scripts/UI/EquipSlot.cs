@@ -147,7 +147,9 @@ public class EquipSlot : MonoBehaviour, IPointerClickHandler
     public void Equip()
     {
         PlayerEquipmentManager.Instance().SetCurrentPlayerEquipment(equipment);
-        equipment.PutOn();
+
+        //if (!equipment.isEquipped)
+        //    equipment.PutOn();
     }
 
     public void UnEquip()

@@ -210,6 +210,8 @@ public class DeckPanel : MonoBehaviour, IPanel
         }
         else
         {
+            CanclePanel.OnCanclePanelClicked.Invoke();
+
             gameObject.SetActive(true);
             UIManager.Instance().CurrentUIManager().ActivateCanclePanel();
             UIManager.Instance().CurrentUIManager().activeObject.Push(gameObject);

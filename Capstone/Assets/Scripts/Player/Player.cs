@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //Debug.Log(Vector3.Distance(transform.position, CameraManager.Instance().GetFreeLookCamera().position));
+
         PlayerMovement.OnMakePlayerCanMove -= MakeCanMoveTrue;
         PlayerMovement.OnMakePlayerCanMove += MakeCanMoveTrue;
 

@@ -149,13 +149,15 @@ public class EquipmentPanel : MonoBehaviour, IPanel
         //Debug.Log("Clicked Items");
 
         bool isActive = gameObject.activeSelf;
-
+        
         if (isActive)
         {
             //gameObject.SetActive(false);
         }
         else
         {
+            CanclePanel.OnCanclePanelClicked.Invoke();
+
             gameObject.SetActive(true);
             UIManager.Instance().CurrentUIManager().ActivateCanclePanel();
             UIManager.Instance().CurrentUIManager().activeObject.Push(gameObject);

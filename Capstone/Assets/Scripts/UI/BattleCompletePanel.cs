@@ -77,7 +77,7 @@ public class BattleCompletePanel : MonoBehaviour
 
         SetPanel(completeTitlePanel, completeTitlePanelHeight, 0);
         SetPanel(levelCheckPanel, levelCheckPanelHeight, padding);
-        SetPanel(acquisitionItemPanel, acquisitionItemPanelHeight, titlePadding);
+        SetPanel(acquisitionItemPanel, acquisitionItemPanelHeight, padding);
         SetPanel(acquisitionCardPanel, acquisitionCardPanelHeight, padding);
 
         // 이때 해주어야 제대로된 값을 구할 수 있음.

@@ -144,16 +144,28 @@ public class PlayerEquipmentManager : MonoBehaviour
         switch (equipment.equipmentType)
         {
             case Equipments.Head:
+                if (currentHeadEquip != null)
+                    currentHeadEquip.TakeOff();
                 currentHeadEquip = equipment;
+                currentHeadEquip.PutOn();
                 break;
             case Equipments.Body:
+                if (currentBodyEquip != null)
+                    currentBodyEquip.TakeOff();
                 currentBodyEquip = equipment;
+                currentBodyEquip.PutOn();
                 break;
             case Equipments.Shoes:
+                if (currentShoesEquip != null)
+                    currentShoesEquip.TakeOff();
                 currentShoesEquip = equipment;
+                currentShoesEquip.PutOn();
                 break;
             case Equipments.Weapon:
+                if (currentWeaponEquip != null)
+                    currentWeaponEquip.TakeOff();
                 currentWeaponEquip = equipment;
+                currentWeaponEquip.PutOn();
                 break;
             default:
                 Debug.Log(string.Format("There is no Equipment : {0}", equipment.ToString()));

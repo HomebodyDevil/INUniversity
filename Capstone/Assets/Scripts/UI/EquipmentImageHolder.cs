@@ -21,6 +21,7 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         initialSprite = image.sprite;
+        UpdateImage();
     }
 
     private void OnEnable()
@@ -44,7 +45,7 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Debug.Log(currentEquipment.equipmentImagePath);
+            //Debug.Log(currentEquipment.equipmentImagePath);
             image.sprite = Resources.Load<Sprite>(currentEquipment.equipmentImagePath);
         }
     }

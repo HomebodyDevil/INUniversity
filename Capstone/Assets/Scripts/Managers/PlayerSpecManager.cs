@@ -172,4 +172,14 @@ public class PlayerSpecManager : MonoBehaviour
     {
         currentPlayerHP = Mathf.Clamp(n, 0, maxPlayerHP);
     }
+
+    public float GetCurrentPlayerAttackPoint()
+    {
+        return currentPlayerAttackPoint;
+    }
+
+    public void SetCurrentPlayerAttackPoint(float attackPoint)
+    {
+        currentPlayerAttackPoint = Mathf.Max(0.0f, attackPoint);
+    }
 }
