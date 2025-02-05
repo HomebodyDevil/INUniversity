@@ -1,0 +1,136 @@
+SceneManagerEX
+    public static Action OnSwitchSceneToIntro;        
+    public static Action OnSwitchSceneToMap;
+        등록 : GPSManager
+        등록 : EnemySpawner
+        Invoke : SceneManagerEX - SwitchToMapScene
+    public static Action OnSwitchSceneToBattle;
+        등록 : GPSManager
+        등록 : EnemySpawner
+        Invoke : SceneManagerEX - SwitchToBattleScene
+
+
+
+BattleManager
+    public static Action<float> OnPlayerDamaged
+    public static Action<float> OnEnemyDamaged
+    public static Action<bool> OnStartBattle
+        등록 :  BattleManager
+    public static Action OnPauseBattle
+        등록 :  BattleManager
+    public static Action OnBattleWin
+        등록 :  BattleUIManager
+                BattleManager
+        Inovke : BattleManager의 EnemyDead
+    public static Action OnBattleLose
+        등록 :  BattleUIManager
+                BattleManager
+        Inovke : 
+
+
+
+CanclePanel
+    public static Action OnCanclePanelClicked
+        등록 :  BattleUIManger
+
+
+
+ItemPanel
+    public static Action EnableItemButtons
+        등록 :  ItemPanel
+        Invoke :    ItemSlot
+    public static Action DisableItemButtons
+        등록 :  ItemPanel     
+    public static Action<ItemSlot> SelectCurrentItemSlot
+        등록 :  PlayerItemManager
+        Invoke :    ItemSlot
+
+
+
+EquipmentPanel
+    public static Action EnableEquipmentButtons
+        등록 :  EquipmentPanel
+        Invoke :    EquipSlot
+    public static Action DisableEquipmentButtons
+        등록 :  EquipmentPanel
+        Invoke :    
+    public static Action<A_Equipment> SelectCurrentEquipmentSlot
+        등록 :  PlayerEquipmentManager
+        Invoke :    EquipSlot
+
+
+
+ItemSlot   
+    public static Action UsedAllItems
+        등록 :  ItemPanel
+        Invoke :    ItemSlot
+    public static Action Act_Unselect;
+        등록 : ItemSlot
+        Invoke : ItemSlot의 OnPointerClick
+
+PlayerEquipmentManager
+    public static Action MadeEquipmentDictionary
+        등록 :  EquipmentPanel
+        Invoke :    PlayerEquipmentManager
+    public static Action EquipEquipment;
+        등록 :  EquipmentImageHolder
+        Invoke :    MapUIManger의 OnEquipButtonClick
+
+
+
+DeckPanel
+    public static Action Act_DisableButtons
+        등록 :  DeckPanel
+    public static Action Act_EnableUseButton
+        등록 :  DeckPanel
+    public static Action Act_EnableUnuseButton
+        등록 :  DeckPanel
+    public static Action Act_EnableDescriptionButton   
+        등록 :  DeckPanel
+    public static Action<CardSlot> SelectCurrentCardSlot
+    public static Action Act_UpdateDeckImages
+        등록 :  DeckPanel
+        Invoke :    MapUIManger의 OnCardUseButtonClick
+
+
+
+PlayerCurrentCardHandler
+    public static Action Act_UpdateTrackingImages
+        등록 :  PlayerCurrentCardHandler
+        Invoke :    BattleUIManager
+
+MiniGamePanel
+    public static Action EnableMinGamesPanel
+        등록 : MiniGamePanel
+    public static Action DisableMiniGamesPanel
+        등록 : MiniGamePanel
+
+
+DeckCardImageHolder
+    public static Action DisableDeckCardImagesOutline
+        등록 : DeckCardImageHolder
+        Invoke : DeckCardImageHolder의 OnPointerClick
+    public static Action Act_DisableDeckCardCostPanel;
+        등록 : DeckCardImageHolder
+        Invoke : DeckPanel의 UpdateDeckCardImageHolders
+
+
+PlayerStatusText
+    public static Action Act_UpdatePlayerStatusValueText
+        등록 : PlayerStatusText
+        Invoke : MapUIManager의 OnItemUseButtonClick
+
+
+PlayerStatusTextInEquipment
+    Act_UpdatePlayerStatusTextInEquipment
+        등록 : PlayerStatusTextInEquipment
+        Invoke : MapUIManager의 OnEquipButtonClick
+
+
+ObjectDescriptionPanel
+    public static Action Act_EnableObjectDescriptionPanel;
+        등록 : ObjectDescriptionPanel
+    public static Action Act_DisableObjectDescriptionPanel;
+        등록 : ObjectDescriptionPanel
+    public static Action<string, string, string> Act_UpdateObjectDescription;
+        등록 : ObjectDescriptionPanel

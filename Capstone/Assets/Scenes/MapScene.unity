@@ -644,7 +644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &59696125
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9671,7 +9671,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 90, y: 90, z: 90}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 79861876}
@@ -10735,7 +10735,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827391884}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26693356, y: -0.000000028720944, z: 0.00000000795524, w: 0.96371496}
+  m_LocalRotation: {x: 0.2669336, y: 3.4238033e-15, z: -1.836517e-15, w: 0.96371496}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18727,7 +18727,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400192860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2317505, y: 0.000000025399652, z: -0.0000000060511227, w: 0.9727753}
+  m_LocalRotation: {x: 0.2317505, y: 0.000000025399654, z: -0.0000000060511227, w: 0.9727753}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20966,7 +20966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543626623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24935995, y: 0.000000018541735, z: -0.000000004774385, w: 0.9684109}
+  m_LocalRotation: {x: 0.24935995, y: 0.000000018629626, z: -0.0000000047970166, w: 0.9684109}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22932,7 +22932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692050068}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26693356, y: -0.00000002872094, z: 0.000000007955239, w: 0.96371496}
+  m_LocalRotation: {x: 0.26693362, y: 0.000000028720947, z: -0.000000007955243, w: 0.96371496}
   m_LocalPosition: {x: 0, y: 18, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30100,15 +30100,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
       propertyPath: spawnEnemyList.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
       propertyPath: spawnEnemyList.Array.data[0].enemy
       value: 
       objectReference: {fileID: 2664173555295338185, guid: 0131fb785a815fd4ba920ab298f666d3, type: 3}
     - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[1].enemy
+      value: 
+      objectReference: {fileID: 1034392861463655775, guid: f972d0ba37ef9654688ff5bab2ae42a6, type: 3}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[2].enemy
+      value: 
+      objectReference: {fileID: 575728543089479446, guid: ef64edf4102bf544daceb812b5a93cb3, type: 3}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[3].enemy
+      value: 
+      objectReference: {fileID: 575728543089479446, guid: a3f835a78523c5a4a82c3a19921a842b, type: 3}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
       propertyPath: spawnEnemyList.Array.data[0].weight
-      value: 20
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[1].weight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[2].weight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 931357686624571794, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
+      propertyPath: spawnEnemyList.Array.data[3].weight
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2367340345850054628, guid: 86ea7f60048fe3a479c4866e79e79df6, type: 3}
       propertyPath: m_LocalPosition.x

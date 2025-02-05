@@ -141,8 +141,10 @@ public class EnemySpawner : MonoBehaviour
         int randValue = UnityEngine.Random.Range(0, maxRandomValue);
         foreach(EnemyForSpawn spawn in spawnEnemyList)
         {
-            if (randValue <= spawn.weight)
+            if (randValue < spawn.weight)
                 return spawn.enemy;
+            else
+                randValue -= spawn.weight;
         }
 
         Debug.Log("Shoud not Reach Here!!!");

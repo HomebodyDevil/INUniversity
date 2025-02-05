@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 // using UnityEditor.VersionControl;
@@ -66,6 +67,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Debug.Log(Vector3.Distance(transform.position, CameraManager.Instance().GetFreeLookCamera().position));
+
+        UnityEngine.Random.InitState((int)DateTime.Now.Ticks);
 
         PlayerMovement.OnMakePlayerCanMove -= MakeCanMoveTrue;
         PlayerMovement.OnMakePlayerCanMove += MakeCanMoveTrue;

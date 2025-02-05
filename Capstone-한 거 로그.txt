@@ -1,0 +1,780 @@
+<< 2024-07-29 >>
+    Enemy Battle Check Panel 만들기
+        EnemyBody 스크립트를 통해 적을 클릭시, 적 Info UI가 나오도록 함.
+        TimeScale을 0으로 하는 게 아닌, CinemachineBrain의 enabled값 변경을 통해 UI가 활성화됐을 때 카메라가 움직이지 않도록 했음.(Panel 스크립트 보면 앎.)
+        UIManager에서 Panel을 활성화하는 것을 담당하였는데
+            이젠, 각각의 Panel 스크립트로 관리하도록 함, 할 예정.
+
+
+<< 2024-07-31 >>
+    Enemy BAttle Check Panel이 다양한 해상도에 대응되도록 해줬음.
+        pivot이 right, top, left, bottom일 경우, RectTransform의 offsetMax / Min을 통하여 크기를 조절함.
+        pivot이 width, height일 경우, RectTransform의 sizeDelta를 사용하여 크기를 조절함.
+    IPlayerCard 인터페이스를 만듦
+        Player가 쓰는 Card에게 필수적으로 필요한 함수들이 포함되도록 하기 위함임.
+        현재 기준, Play, Draw, Discard 함수가 포함됨.
+    Scene이 바뀔때마다 UI가 달라지도록 해줌.
+        SceneManagerEX와 UIManager를 사용함.
+    적을 선택하면 BattleManager에게 적의 정보(스크립터블오브젝트)를 가지도록 만들자.
+    플레이어의 정보도 BattleManager가 알 수 있도록 하자.
+
+
+<< 2024-08-01 >>
+    BattleScene으로 전환될 때 플레이어와 적이 Battle화면에 맞게 위치하도록 해줌.
+    카메라도 마찬가지로 조정됨. VirtualCameraBase의 Priority를 조절하는 것으로 구현.(참고로 높을 수록 우선순위가 높은 거임. 중요도라고 보면 될듯.)
+    SceneManager와 CameraManager, BattleManager가 수정됨.
+    적 Info Panel의 OK버튼을 누르면 BattleScene으로 넘어가게 함.
+    일단 임시방편으로 BattleScene에서 Prifle Button을 누르면 MapScene으로 넘어가게 함.
+    일단 적을 Load할 때, Resources를 사용하는 중인데, 차후, Addressable이나 다른 거로 바꾸도록 해보자.
+        (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TestEnemy.prefab", typeof(GameObject));
+        ~를 사용하여 빌드시 오류가 나와서 Resources를 사용하는 방법을 쓸 수밖에 없었다.
+        GameObject enemy = Resources.Load<GameObject>("Prefabs/TestEnemy");
+        파일 뒤에 .prefab등의 확장자를 적어주지 않아야 한다는 점에 유의하자.
+    폰으로 할시, GPS로 인해 BattleScene에서 Player가 정상적으로 위치하지 않는 문제 인지.
+        Player의 canMove를 통해 움직이거나 Rotate하지 않도록 해준다.
+        PlayerMovment에 Action을 만들어, 다른 스크립트에서 원격으로 수행 / 수행하지 않도록 만들었다.
+        현재 기준) SceneManagerEX 스크립트에서 사용.
+        문자열로 코루틴을 사용할 경우, 문자열로 코루틴을 중지할 수 있음.
+        성능면에선 함수형태로 사용하는 것이 이득.
+
+
+<< 2024-08-05 >>
+    BattleScene에서 PlayerCard를 드래그할 수 있도록 했음.
+        PlayerAttackCard 스크립트를 맹금.
+    Player의 DefaultPlayerData를 통해 MaxCardAmount로 해당하는 수 만큼의 카드를 current로 만들도록 함.
+        CurrentCardsInBattlePanel 스크립트에 구현.
+        Transform자체를 통해서는 Destroy를 수행 하지 못함. Transform.gameObject로 접근해야 함.
+    PlayerCard의 부모 클래스로 사용할 스크립트(클래스)를 만듦.
+        A_PlayerCard로 명명.
+    BattleManager에다가 currentPlayerDeck 리스트를 초기화, 사용할 수 있도록 할 예정.
+        Player.Instance를 통해 PLayer의 Deck을 참조하도록 함.
+
+    화면 비율(해상도)를 변경시 BaseCard의 이미지의 크기가 비정상적으로 출력되는 현상 발견.
+    원래는 최대 카드의 개수를 유동적으로 가질 수 있도록 할 예정이었으나, 그냥 3개로 고정하도록 타협함.
+
+
+<< 2024-08-06 >>
+    현재 Player의 체력에 맞는 HP 슬라이더가 되도록 했다.
+        0이 되도 똥이 남아있는데, 이는, 직접 만들거나 0이 되면 Fill Area를 SetActive false 해줌으로 해결 가능하다.
+        HP나 Cost, EXP의 Slider에 StatusSlider 스크립트를 붙였다.
+    Cancle Panel이 동작하는 것에 오류가 있는 것 같음.
+        원래 Panel들 마다 각자의 CanclePanel을 가지도록 하고 Action으로 OnCanclePanelClick으로 동작했었는데
+        이젠 그냥 UIManager의 CanclePanel을 공용으로 사용하도록 바꿨음.
+
+
+<< 2024-08-08 >>
+    Map - Battle - Map Scene으로 돌아올시 EventSystem 문제인지 HP Slider의 value를 통한 게이지 GUI가 정상적으로 출력되지 않는 문제 발견.
+        UI를 모든 Scene에서 DontDestryOnLoad를 통해 같은 것을 사용하는 것이 아니라 Scene마다 다른 UIManager를 사용하도록 하는 것으로 해결해볼 예정.
+        Scene에 따라 BattleUIManager / MapUIManager로 나누어 사용하도록 함.
+        UIManager에서 current UIManager를 통해 현재 사용하고 있는 UIManager에 접근할 수 있도록 함.
+        따라서 Scene이 바뀔때마다 UpdateCurrentManager를 통해 UIManager들이 담겨있는 List를 최신화하고
+        CurrentUIManager라는 함수를 통해 현재 사용중인 UIManager를 가져오도록 함.
+
+        IUIManager라는 Interface를 만들어 UIManager가 공통적으로 가져야 할 것(ActivateCancelPanel 등등)을 등록함.
+        그리고 IUIManager로 공통적으로 접근할 수 있게 하여 다른 Scene이더라도 IUIManager를 사용하는 방식의 통일된 방법을 사용토록 함.
+
+    PlayerSpecManager에 Cost를 1초마다 currentCostIncreaseAmount만큼 상승시키는 StartIncreaseCost 함수(코루틴)을 배치.
+    StartIncreaseCost함수에서는 일단 currentPlayerCost에 currentPlayerCost만큼을 빼주어 0부터 시작하도록 했음.
+    BattleManager의 OnBattleStarted Action에 이 코스트를 증가시키는 코루틴을 시작하는 함수를 연결함.
+    일단 BattleUIManager가 Start될 때, BattleManager의 OnBattleStarted를 Invoke해줌으로써 Cost 증가를 시작함.
+    BattleUIManager가 Disable될 때 이 코루틴을 종료(Stop)시킴.
+
+    유니티 에디터에서는 실행이 되나, 핸드폰에선 실행이 안 되는 문제 발생.
+        IntroScene - MapScene - BattleScene순으로 Scene을 추가했는데 
+        IntroScene엔 아무것도 없으나 빌드 후엔 IntroScene부터 실행되기 때문에 발생한 문제.
+        Build할 때 IntroScene을 체크 해제하여 문제 해결.
+
+
+<< 2024-08-09 >>
+    1. BattleScene에서 Items 버튼이나 기타 버튼을 눌러 Panel이 활성화돼있는 상태라면, Cost의 증가를 멈추도록 했음.
+        BattleUIManager에서 OnCanclePanel 함수에 과정 추가.
+        BattleUIManager의 ActivateCanclePanel에 OnBattlePause Action을 Invoke하여 코스트가 증가되는 것이 멈추도록 함.
+        일단 BattleUIManager의 Start에서 코스트 생성 Action Invoke함.
+    
+    2. BattleScene에서 Enemy의 HP와 Cost를 볼 수 있도록 Slider를 추가함.
+    
+    3. 카드를 드래그중일 때 시간이 천천히 갔으면 좋겠음.
+        BattleManager에 timeScale변수를 넣고 SlowDownTimeScale과 ResetTimeScale 함수를 통해 조절할 수 있도록 함.
+        시험적으로 PlayerAttackCard의 OnDrag에서 이 함수를 통해 timeSclae의 값을 낮출 수 있도록 했음.
+    
+    4. MapScene의 Enemy 오브젝트를 BattleScene으로 옮기지 말고 BattleScene용 Enemy를 만들어서 그것을 로드하는 방식으로 하자.
+        SceneManager에서 Map이나 BattleScene으로 Switch될 때마다
+        BattleManager의 SetEnemy나 RemoveEnemy를 통해 Battle용 Enemy 오브젝트를 생성/제거함.
+    
+    5. Player자체와 PlayerBody를 분리하여 PlayerBody를 Player의 자식으로 넣었음.    
+    
+    6. BattleScene에서 MapScene으로 돌아갈 시 카메라가 쭈우욱 이동하는 현상 발견.
+        BattleScene으로 이동시 BattleCamera는 position 0, 0, 0의 위치로 가나
+        MapScene으로 돌아갈 때 FreeLookCamera는 원래의 Player의 위치에 있으므로 Blending되어 나타나는 현상이라고 생각.
+        BattleCamera의 위치를 0, 0, 0이 아니도록 할 필요성이 있어보임.
+        CimemachineBrain의 Blend를 cut으로 바꾸는 방법 고안.
+        그냥 BattleVirtualCamera를 Player의 상대적인 위치로 이동시키는 방법으로 해결.
+    
+    7. BattleScene에서 적의 현재 Spec을 Slider에 어떻게 반영할 것인가...
+        일단 BattleManager에 Enemy의 Max, Current / Hp, Cost, IncreaseCostAmount변수들을 public으로 두었음.
+        Player와 마찬가지로 Start / Stop IncreaseCoroutine 함수를 통해 enemy의 cost를 증가시키도록 함.
+        Player와 마찬가지로 BattleUIManager가 OnDisable일 떄, StopCoroutine을 호출하여 코루틴을 멈춤.
+        TIme.deltaTime을 사용했기 때문에 enemy도 역시 카드를 드래그 중일 때 Cost의 증가는 느려지고 UI가 활성화돼있을 때는 멈춤.
+    
+    8. MapScene에서 인벤토리 등의 UI가 활성화돼있을 때, BattleScene Player가 움직이지 않도록 하고싶음.
+        MapUIManager의 Start와 BattleUIManager의 Start에서 PlayerMovement.OnPlayerCantMove를 Invoke함.
+        BattleUIManager의 OnDisable에서 Playermovement.OnPlayerCanMove를 Invoke함.
+        MapUIManager의 ActivateCanclePanel에서 PlayerMovement.OnPlayerCantMove를 Invoke함.
+        MapUIManager의 OnCanclePanel에서 activateObject.Count를 확인해서 활성화된 Panel 등이 없으면 Playermovement.OnPlayerCanMove를 Invoke함.
+        --해결 안 됨 계속 해보자--
+        SceneManager에서 Switch될 때 Invoke로 제어하려 생각중임.
+        CanclePanel의 OnClicked를 통한 Action에 MapUI와 BattleUIManager의 OnCancleClicked가 연결돼있었음.
+        따라서 PlayerCanMove Action의 활성화는 SceneManager에서 Scene이 Switch될 때 이루어지도록 하는 것으로 해결해봄.
+
+
+<< 2024-08-10 >>
+    1. 처음 이후 Player가 Rotate되지 않는 현상 발견.
+        Player에 있는 canMove변수를 통해 canMove의 값에 따라 GPSManager에서 lat / lot를 갱신할지 말지를 결정하도록 함.
+        원래 이것들이 실시간으로 반영되어 Rotate됐어야 했는데, 실시간으로 반영은 되나, Rotate는 돌지 않기 때문에
+        시간이 지날수록 이 Rotate가 올바르게 되지 않게되는 것 같음.
+        따라서 움직이지 못할때는 갱신을 하지 않도록 하는 방법을 사용해봤음.
+
+    2. 폰에서 Player가 Rotate는 되는데 움직이지는 않는 문제 발견.
+        GPSManager의 getGPSCoroutine에서 if (player.isInDest)가 문제인듯.
+        Scene이 Switch될 때나, CanclePanel에 상황에 따라 Player의 canMove를 조절하고 있다고 생각했는데
+        보니까 canMove가 제대로 적용되지 않는듯 함.
+        GPSManager에서 Player.Instance().canMove if문에 들어가질 못함.
+        시작하면 canMove가 flase로 되는데 왜 그런지 모르겠음.
+        
+        Player스크립트에서 Action을 추가해주는 것에 둘 다 OnMakePlayeCanMove에다가 연결해놨던 것이 문제였음.
+        하나는 OnMakePlayeCanMove에 연결해줘야 했음.
+
+        그리고 MapUI나 BattleUI Manager나 둘 다 OnCancleClicked를 같은 이벤트 : CanclePanel의 OnCanclePanelClicked에 연결해놨었기 때문에
+        Invoke시 canMove를 true로 만드는 MapUI도 같이 실행됐었다.
+        따라서 현재 Scene의 종류를 확인하고 canMove를 true로 만드는 과정을 수행할지 말지를 결정하도록 만든다.
+    
+    3. 현재 기준 MapScene에서 BattleScene으로 넘아갈 때의 Player.
+        일단 Player의 움직임을 멈춘다(canMove = false)
+        Player의 상대적인 위치로 존재하는 Battle에서의 카메라 위치에 대한 정보를 가지고 있는 자식 Transform을 통해 BattleVirtualCamera를 이동시킨다.
+        카메라와 마찬가지로 Player와 상대적인 위치의 Transform을 가지고 적 Prefab을 Load하여 배치시킨다.
+
+
+<< 2024-08-12 >>
+    1. 화면 비율에 따라 Card를 Drag하여 Play할 때 Cancle되는 거리가 해상도에 따라 상대적이면 좋겠음.
+        따라서 절대적인 거리를 사용하는 것이 아니라 화면의 height에 대한 ratio값으로 distance를 구하고
+        이 distance 이하의 거리에서 떨어진 상태에서 Drag를 취소하면 Cancle되도록 함 - PlayerCardUI
+    
+    2. PlayerDeck을 통해 본격적으로 카드를 사용할 수 있도록 해봄.
+        PlayerSpecManaegr - 일단, InitializePlayerSpec을 통해 Player의 DefaultPlayerData의 데이터를 받아옴.
+            여기서 BattleManager의 PlayerDeck을 초기화함.(Battle에 사용할 카드들 List임) 일단 Start에서 수행함.
+        BattleManager - 그리고 LoadCards 통해 Battle이 시작될 때, 손패와 Ready상태의 List를 초기화할 수 있도록 함.
+            일단 SceneManagerEX의 SwitchToBattle에서 LoadCards 실행했음.
+
+    3. BattleManager -  SetPlayerDeck에서의 playerDeck과 LoadCards playerDeck이 다른 것 같음.
+        SetPlayerDeck - SetPlayerDeck에서 Count가 3인데 LoadCards를 실행하는 시점에선 Count가 0이 됨. 왜 그럴까?
+                        Start에서 초기화한 List는 그대로 LoadCards까지 유지되는 것으로 보아
+                        SetPlayerDeck에서 지역변수로서 적용되는 게 아닌가 하는 의심이 듦.
+                        SetPlayerDeck이 수행되는 시점에 playerDeck이 초기화되지 않았을 수도 있다는 생각이 든다.
+                            Null Reference 오류가 뜸.
+                        그래서 그냥 변수 선언과 동시에 초기화함.(야매)
+        LoadCards - 무한루프에 빠지는 현상 발견.
+                    TestPlayerData의 값이 3이 아니라 5여서 생긴 문제였음.(실수)
+    
+
+<< 2024-08-14 >>
+    1. BattleScene에서 카드를 드래그하여 Play할 때 Cost를 소모하도록 만들었음.
+        A_PlayerCard -  [SerializeField] protected float cardCost를 선언.
+        PlayerCard_NormalAttack -   OnPlayCard함수에 Cost를 소모하는 과정 추가.
+        BattleManager - ReducePlayerCost 함수 추가.
+
+    2. 적을 처치하면 WinPanel이 나오도록 했음.
+        BattleUIManager -   Inspector에 BattleWinObject추가(버튼과 Panel이 포함돼있는 오브젝트)
+                            WinObject의 Button을 누르면 Map으로 Scene이 Switch 되도록 함.
+        BattleManager - OnBattleWin 시그널에 StopIncreaseEnemyCost를 추가.
+                        EnemyDead함수에 GainEXP를 수행하도록 함.
+                        일단 EXP가 잘 늘어나는 것을 확인함.
+        PlayerSpecManaegr - GainEXP함수를 추가(추후 제대로 사용할 예정)
+
+    3. Scene을 왔다 갔다 한 후, Panel이나 Button의 Active를 false나 true로 설정하려 하면 MissingReferenceException 오류 발생하는 거 확인
+        BattleUIManager -   Items버튼을 통한 CanclePanel활성화는 가능하나, 적을 처치하는 것을 통한 CanclePanel활성화에서는 오류가 발생. 왤까?
+                            일단 ActivateCanclePanel에서 CanclePanel을 SetActve(true)로 하는 과정에서 문제 발생함.
+                            그냥 List에 포함하는 모든 Panel에서 문제가 발생하는 것 같음.
+        MapUIManager -  CompusPanel을 PanelsList에 Add하지 않으니 오류 발생 X
+                        위의 Panle들의 공통점이 뭘까?                        
+        이벤트(Action)을 사용하는 스크립트들의 OnDisable 시점에서 Start 등에서 등록했던 Action들을 등록 해제해주니 해결됨.
+
+
+<< 2024-08-16 >>
+    1. 사용할 수 있는 아이템을 추가해보자.
+        A_Item -    스크립트 추가.
+                    모든 아이템들이 상속할 부모 클래스로서 사용할 예정.
+                    소비 아이템과 장비 아이템 모두가 같이 사용할지는 현시점에선 미지수.
+        ItemSlot -  스크립트 추가.
+                    슬롯을 클릭하면 사용 / 설명 버튼이 등장하도록 하자.
+                    일단 ItemSlot을 임의의 개수만큼 만들어 놓은 상태에서 Player가 갖고 있는 Item들을 참조하여
+                    Button들에 Canvas Component를 추가하여 Sort order를 overide했는데 클릭이 안 됨. 수정해보자.
+                    그 List(확정X)대로 ItemSlot의 Sprite를 적절히 갖도록 해볼 생각.
+        Item_Potion -   스크립트 추가.
+                        간단히 체력을 회복시켜주는 아이템으로서, 아이템의 테스트를 위해 최적인 것 같다.
+    
+    2. Item을 선택시, 다른 것들은 어둡게 하는 건 어떨지 고민중.
+
+
+<< 2024-08-17 >>
+    1.  ItemPanel - 초기, PlayerData의 Slot개수를 통해 동적?으로 GridLayoutGroup에 Slot(Prefab)을 생성하도록 함.
+                    ItemSlot을 클릭시(OnPointerClick) ItemPanel의 EnableItemButtons를 Invoke하여 Description, Use Button들을 활성화하도록 함.
+                    
+                    Equipment든 Item이든
+                    CountPanel은 꼭 비활성화한 상태로 Prefab화 돼있어야 함.
+
+    2.  PlayerSpecManager에서 isFirstTime변수에 따라 DefaultPlayerData를 사용할지 말지를 결정하고있음.
+
+    3.  Load되는 Item에 따라 ItemSlot에 적절한 이미지가 할당되도록 했음
+        Resources.Load를 사용함.
+        Item Prefab에 Sprite에 대한 Path를 명시할 수 있도록 하였음.
+
+    4.  아이템에 수량 개념을 도입하고싶음.
+
+    5. ItemSlot -   UpdateItemUseCount에서 오류 나오는 거 같음.
+                    반복문을 도는 동안에는 Collection의 수정은 불가하다.
+
+    6. PlayerItemManager - 플레이어의 장비와 소비 아이템을 관리할 매니저를 사용하자.
+
+
+<< 2024-08-21 >>
+    1. PlayerEquipmentManager - 플레이어의 장비를 관리할 매니저를 추가함.
+
+    2. EquipmentPanel을 추가함.
+
+    3. EquipSlot을 추가함.
+        ItemSlot과 같은 역할을 할 예정.
+        더 좋은 방법이 있을테지만 그냥 하자.
+
+    4. A_Equipment 추가.
+        장비들에 대한 부모 클래스 역하을 할 추상 클래스.
+
+    5. Scene 전환 시 아이템 개수가 초기화되는 문제 발견.
+        ItemSlot -  slotItemUseCount만 감소시켜주고 있고 PlayerItemsManager의 Dictionary에는 반영되지 않고 있음.
+                    UseItem UpdateItemUseCountData를 썼었는데 실수로 지웠었음.
+
+    6. EquipmentManager보다 EquipmentPanel의 Start가 먼저 시작하여 오류 발생.
+        playerEquipmentListDictionary가 manager에서 먼저 초기화된 후에 EquipmentPanel이 실행돼야함.
+        Action을 사용했다.
+        EquipmentManager의 Action에 EquipmentPanel의 InitializeEquipmentSlots를 등록했음.
+
+    7. Item이 사용되는 과정
+        MapUI / BattleUI의 ItemPanel의 ItemPanelButtons의 UseButton은 MapUI / BattleUI Manager의 OnItemUseButtonClick을 호출하게되고
+            이 함수는 PlayerItemManager의 Instance의 UseCurrentPlayerItem을 호출함.
+            그리고 PlayerItemManager의 currentSelectedItemSlot의 UseItem함수를 호출하여 사용하게됨.
+
+    8. Equipment가 Equip되는 과정
+        MapUI의 Equipmentpanel의 EquipmentPanelButtons의 EquipButton은 MapUIManager의 OnEquipButtonclick을 호출함.
+        이 함수는 PlayerEquipmentManager의 Instance의 EquipCurrentEquipment를 호출하고
+        PlayerEquipmentManager에서는 curentSelectedEquipSlot의 Equip을 호출.
+
+        솔직히 Equip 이나 Item Use나 Action 등을 사용하면 더 간결하게 할 수 있을 거 같은데 귀찮다.
+
+    9. BattleScene에서 다시 MapScene으로 돌아올시 Equipment Button을 클릭시 장비들이 제대로 보이지 않는 현상 발견.
+        (6)에서 Action으로 사용하여 함수를 실행할 시 한 번만 수행되기 때문에 발생한 문제 같음.
+        처음엔 Action으로 수행하지만, 이후 EquipmentManager의 public static bool 형의 isInitialize를 true로 만들고
+        EquipmentPanel의 Start에서 이 isInitialize가 true라면 InitializeEquipmentSlots를 수행하는 것으로 임시조치.
+
+
+
+<< 2024-08-23 >>
+    1.  EquipmentPanel을 활성화된 상태로 실행해야 NuLL Reference Error가 나오지 않는다.
+        근데 ItemPanel은 그렇지 않아도 Error가 발생하지 않음..
+        PlayerEquipmentManager - Start의 MadeEquipmentDictionary.Invoke부분에서 에러가 나옴.        
+
+    2.  ItemPanel처럼 EquipmentPanel도 동적으로 요소들의 Size를 조절할 수 있도록 해야할 것 같음.
+        현재 장착중인 Equipment Image와 보유중인 Equipment들 요소에 대한 Image의 Size를 동적으로 수정할 수 있도록 해야 할듯.
+        ItemPanel은 잘 되는데 EquipmentPanel은 잘 되지 않는 이유는 뭘까.
+        size는 같은데 보여질 때 크기는 다름. itemPanel와 equipmentPanel에서의 132의 size가 item에서는 비율에 맞게 보이는데, equipment에서는 그렇지 않음.
+        Initialize하면 Scale이 2.25가 돼버린다. 왜그럴까?
+        
+        Slot을 등록할 때, SetParent(content, false)로 하면 해결됨. 
+
+    3.  Equioment Panel 장비 이미지들 배치 해주자.
+
+    4. EquipmentImageHolder - EquipmentPanel에서 착용한 장비의 이미지를 올바르게 보여주도록 하기 위한 스크립트를 만들었음.
+
+    5. Equipment가 Equip되는 과정
+        MapUI의 Equipmentpanel의 EquipmentPanelButtons의 EquipButton은 MapUIManager의 OnEquipButtonclick을 호출함.
+        이 함수는 PlayerEquipmentManager의 Instance의 EquipCurrentEquipment를 호출하고
+        PlayerEquipmentManager에서는 curentSelectedEquipSlot의 Equip을 호출.
+        이 Equip에서 PlayerEquipmentManager.Instance().SetCurrentPlayerEquipment(equipment)를 통해 현재 선택한 장비를 업데이트함.
+        그리고 equipment.PutOn()로 장비했을 시의 효과를 발동시킴.
+
+    6. EquipmentImageHolder -   PlayerEquipmentManger의 EquipEquipment를 등록을 Awake에서 하고
+                                OnDisable에서 등록을 해제하니, 비활성화 될 때 Action에서 등록 해제되어
+                                다시 활성화 됐을 때, 올바르게 Invoke가 수행되지 않게된다.
+                                따라서 Awake뿐만 아니라 OnEnable에서도 이 Action을 등록해주는 과정을 추가하는 것으로 해결한다.
+
+    7.  EquipSlot - 선택시 현재 선택중인 Slot의 OutLine을 강조하도록 했음.     
+        ItemSlot -  선택시 현재 선택중인 Slot의 OutLine을 강조하도록 했음.
+
+
+<< 2024-08-27 >>
+    1. Deck기능을 추가해보자
+        PlayerCardManaegr - 여기서 갖고있는 카드들과 현재 덱을 관리.
+                            Battle이나 어디에서든 카드나 덱에 대한 접근이 필요한 경우 이 Manager를 사용할 수 있도록 함.
+        CardSlot -  카드 슬롯을 통해 갖고있는 카드를 Deck에 등록할 수 있도록 함.
+
+        DeckPanel, CardManger에서 다시 시작하자.
+        Outline이 활성화 안 됨.
+        Use버튼을 눌러 Deck에 카드를 추가한 후, BattleScene으로 넘어가면 무한루프가 도는 현상이 발생.
+
+        BattleManagerUI에서 발생하는 오류같음.
+
+    2. PlayerCardUI의 public static 함수, 멤버들을 다른 스크립트에서 참조할 수 없는 문제 발생
+        시바 그냥 PlayerCArdUI삭제하고 PlayerCurrentCardHandler라는 새로운 스크립트를 사용하는 것으로 해결.
+
+
+
+<< 2024-08-28 >>
+    1.  적을 클릭하여 EnemyBattleCehckPanel이 활성화됐을 때 정보들을 볼 수 있도록 해보자.
+        적을 클릭시 -   EnemyBody의 OnPointerClick에 의해 BattleManager의 CurrentEnemy가 갱신된다.
+                       이 다음에 Panel의 내용들을 최신화할 수 있으면 좋겠음.
+    
+    2.  안내 / 경고 메시지를 띄울 수 있도록 할 예정: 카드를 3개 이상 덱으로 지정해야 함을 알려주는 등등.
+        MapUIManager -  OnEnemyBattleCheckPanelOkClick에서 덱 내의 카드 수에 따라 알림창을 보여줄지의 여부를 결정.
+    
+    DeckPanel에서 현재 사용중인 카드를 사용 해제할 수 있도록 하자.
+    Battle에서 Enemy를 처치시 처치후 알림 Panel에 결과 내용을 볼 수 있도록 해보자.
+        레벨, 흭득한 보상 등을 확인 가능하도록 하자.
+
+
+
+<< 2024-08-29 >>
+    1. BattleScene에서
+        BattleCompleteObject에서
+            PanelForDontClockCancle: Clock이 아니라 Click임. Cancle파넬 클릭 방지를 위한 파넬.
+            BattleCompletePanel: 실질적인 파넬.
+                CompleteTitlePanel: Clear 문구(이미지)를 띄우기 위한 파넬
+
+                LevelCheckPanel: 레벨의 변화를 위한 파넬.
+                    Text: Level 칸임을 알수 있도록 하기 위한 텍스트
+                    WhenNotLevelUpObject: 레벨업을 하지 않았을 때 SetActive할 오브젝트
+                    WhenNotLevelUpObject: 레벨업을 했을 때 SetActive할 오브젝트나
+
+                AcquisitionItemPanel: 흭득한 아이템을 표시하기 위한 파넬.
+                    Text: AcquisitionItem 칸임을 알수 있도록 하기 위한 텍스트
+                    Scroll View: 흭득한 아이템들을 보여주기 위한 스크롤 뷰(Horizontal)
+                
+                AcquisitionCardPanel: 흭득한 카드를 표시하기 위한 파넬.
+                    Text: AcquisitionCard 칸임을 알수 있도록 하기 위한 텍스트
+                    Scroll View: 흭득한 카드들을 보여주기 위한 스크롤 뷰(Horizontal)
+                
+                EnemyProfilePanel: 전투 승리 / 패배시 적의 프로필 사진과 대사를 표시하기 위한 파넬
+                    EnemyImage: 적의 프로필 이미지.
+                    EnemyDialoguePanel: 적의 대사를 표시하기 위한 파넬
+                        Text: 적의 대사에 해당하는 텍스트
+    
+        이겼을 때, 졌을 때를 나눠서 표시할 걸 다르게 할 수 있는 게 좋을듯
+        이겼을 경우, CompleteTitlePanel을 Clear. 졌다면 Lose 등의 문구(이미지)를 보여주도록 하자.
+        이겼을 경우, 이겼을 때의 적 프로필 이미지를 표시, 대사를 치도록 한다. 지면 졌을 때의 이미지, 대사를 보여주도록 하자.
+
+        해상도가 바뀔 경우 제대로 출력되지 않는 것 같으니 스크립트로 이를 맞춰주자.
+
+    2. BattleCompletePanel -   내용들의 크기를 초기화함.
+
+    3. DefaultEnemyData -   드랍 아이템, 카드, 프로필 이미지, dialogue 등을 추가함.
+                            근데, ScriptableObject에서의 List가 제대로 동작할지 잘 모르겠음.
+                            TestPlayerData(ScriptableObjet스크립트로 만든 오브젝트)에서의 List가 잘 됐으니 되지 않을까 생각중.
+
+
+
+<< 2024-09-03 >>
+    1. 적을 처치하여 Win시 EnemyProfile, Dialogue가 적절하게 설정되도록 함.
+        BattleCompletePanel -   SetCompoments함수를 만들어 Win시, Invoke되는 BattleManager의 OnBattleWin에 연결돼있는
+                                BattleUIManger의 ActivateBattleWinObject함수에다가 호출하도록 설정.
+                                이 함수는 bool을 인자로 Win인지 Lose인지를 구분하여 적절하게 설정되도록 함.
+
+
+
+
+<< 2024-09-06 >>    
+    1. 적을 처치하면 드랍템(카드)가 나오도록 해볼까.
+        DefaultEnemyData - 요 안에 DropItem, DropCard, DropEquipment 클래스들을 Serialzieable로 선언. Inspector에서 수정 가능토록 함.
+        적을 처치하면 BattleManager에 있는 dropItemList, dropCardsList, dropEquipmentList를 최신화 하도록 할 예정.
+    
+    2. Slot에 대한 스크립트도 만들었음.
+        BattleCompleteAcquisitionSlot - 귀찮아서 그냥 card든 item이든 equipment든 enum으로 type을 정하고
+                                        이를 사용할 때는 switch로 구분하여 GetItem / GetCard 등등의 함수를 호출하도록 할 예정.
+        SceneManagerEX -    따라서 여기의 SwitchToBattleScene에다가 BattleManager.Instance().UpdateDropLists()를 추가함.
+                            차피 드랍 정보는 DefaultEnemyData에 있으므로 바로 사용 가능해서 괜찮아보임.
+
+    4. BattleScene으로 들어가면 더 이상 Enemy가 아닌 EnemyInBattle를 상대하게됨.
+        EnemyInBattle - 여기다가 Drop 함수를 넣긴 넣을 건데...
+                        드랍 정보들을 Enemy가 가지고 있으니... BattleScene으로 전환될 때 드랍 템, 카드들을 미리 정해놓는 방식을 쓰자...
+                        EnemyInBattle에다가 정보를 추가로 넣어줘도 될 거 같긴 한데 귀찮아보임.
+
+    5. BattleManager -  UpdateDropLists함수에서
+                        currentEnemyData로 참조하는 ScriptableObject의 item, card등의 참조는 prefab들이므로
+                        이를 바로 사용하는 것이 아니라 Instantiate해줘야 할 것 같아서 그리 하고 리스트들에 추가하도록 했음.
+
+                EnemyBody, BattleCompleteAcquisitionSlot, BattleUIManager, BattleManagerm, Enemy 스크립트를 작업하고 있었음.
+                BattleCompletePanel에 Drop (아이템, 장비), 카드 들의 List들을 보여줄 수 있도록 해보자.
+                확률에 따라 제대로 List에 추가되는 과정이 잘 안 되는 것 같음. - BattleManager의 UpdateDropLists함수.
+                DefaultEnemyData의 Drop~류들을 각각의 스킓트를 참조하는 것에서 GameObject로 참조하는 것으로 바꿨더니 오류 발생. Instantiate가 GameObject에만 적용되는 건지, 스크립트에도 적용되는 건지 모르겠음.
+
+    6. BattleCompletePanel에 보이기까지의 로직
+                        DefaultEnemyData에는 Drop할 Card와 Item, Equipment들을 정할 수 있도록 Serializeable한 요소들을 가미해놨음.
+
+                        SceneManagerEX에서 BattleScene으로 전환될 때 - BattleManager의 currentEnemyData가 있으므로 이를 사용하게 됨.
+                                                                      SceneMAnagerEx의 SwitchToBattleScene에는 BattleManager.Instance().UpdateDropLists()가 있는데
+                                                                      어떤 과정을 거치냐면
+                                                                        1. BattleManager에 있는 기존의 drop(item, card, equipment) List들을 Clear함.
+                                                                        2. currentEnemyData를 사용하여 확률(Chance)에 맞춰 drop(item, card, equipment) List에 추가함.
+                                                                                참고로 여기의 Chance는 0부터 100까지의 integer값을 사용하도록 했음. 확률%라고도 볼 수 있을듯?
+                                                                                random한 값을 얻고 이 값이 Chance "미만"의 값을 가졌을 때 당첨(?)됐다고 보기로 했음.
+                                                                        3. 즉, 드랍 아이템(카드)들은 Scene이 전환될 때 미리 확정지어진다는 얘기임.
+
+                        만약 Enemy를 처치했을 경우.
+                                        1. BattleUIManager의 ActivateBattleWinObject함수에서 UpdateAcquiositionSlot함수를 호출함.
+                                        2. UpdateAcquiositionSlot에서는 SetItemsAndEquipmentSlots와 SetCardSlots함수를 호출함.
+                                        3. 위의 두 함수를 통해 BattleCompletePanel에 흭득한 Card, Equipment, Item들을 보여줄 수 있게됨.
+
+                여기까지 BattleCompletePanel에다가 Drop하여 흭득한 아이템, 카드들을 볼수 있도록 했음.
+                이제 실질적으로 보유하고 있는 카드, 장비에 들어갈 수 있도록 해주기만 해보자.
+                Enemy를 처치하고 BattleCompletePanel이 활성화될 때 PlayerEquipmentManager, PlayerItemsManager, PlayerCardManaegr의 컨테이너(Dictionary)들에 넣어주도록 하면 될듯.    
+                        
+
+
+
+<< 2024-09-07 >>
+    1. PlayerCardManager -  playerHaveCardListDictionary를 Dictionary<A_PlayerCard, int>로 다루니 문제가 좀 있는 것 같음.
+                            따라서 이를 Dictionary<int, A_PlayerCard> playerHaveCardsDictionary, Dictionary<int, int> playerHaveCardsCount로 나누어 다루기로 하였음.
+
+    2. PlayerEquipmentManager - PlayerCardManager와 같은 이유로 바꿔줌.
+
+    3. DefaultEnemyData -   dropItem에다가 maxDropAmount를 추가.
+                            최대로 drop할 수 있는 아이템의 개수를 제한할 수 있도록 하였음.
+                            
+    4. BattleManager -  List<A_Item> dropItemsList를 사용하지 않고
+                        Dictionary<A_Item, int> dropItemsDictionary를 사용하여 복수의 아이템을 drop할 수 있도록 해줬음.
+
+    5. SetItemsAndEquipmentSlots에다가 Drop된 Item의 개수를 볼 수 있도록 해보자.
+                일단 AcquiotionSlot_Image 프리팹에다가 여타 다른 Slot들 처럼 개수를 볼 수 있도록 Panel과 Text를 추가해줬고.
+                BattleCompleteAcquisitionSlot - EnableText : Text Panel을 활성화.
+                                                DisableText : Text Panel을 비활성화.
+                                                SetCountText : Text를 설정.
+                                                ...의 함수들을 추가해줬다.
+
+                BattleUIManager -   SetItemsAndEquipmentSlots 함수에다가
+                                    BattleCompleteAcquisitionSlot에 추가한 함수들(EnableText, DisableText, SetCountText)을 사용하여
+                                    설정을 할 수 있도록 해줬다.
+                                
+
+
+
+                적들이 스폰되는 지역(Area)를 만들어보도록 하자.
+
+
+
+
+<< 2024-09-11 >>
+    EnemySpawner -  EnemyForSpawn( [Serializeable] )
+                        적 프리팹(GameObject)
+                        weight를 갖는 멤버(public으로 선언하긴 함) 클래스
+
+                    적들을 생성하는 오브젝트에 포함되는 스크립트.
+                    spwnerID를 통해 구분한다.
+                    각 spwner들은 EnemyForSpawn List를 통해 고유의 몬스터 스폰 테이블을 갖도록 한다.
+
+
+    EnemySpawnerManager -   전반적으로 모든 EnemySpwner들을 관리한다.
+                            Dictionary<int, List<Transform>>을 통해 각 스포너의 id 마다의 Enemy(Transform) List를 갖도록 한다.
+                            적을 처치시 BattleManager의 RemoveEnemy를 통해 위의 List에서와 해당 Enemy의 게임 오브젝트를 Destroy한다.
+
+    전체적으로 동작하는 로직 -    EnemySpawn :  Start시, 혹은 Scene이 Map으로 바뀔 시, StartSpawning을 시작.
+                                            이는 StartSpawningCoroutine 코루틴을 시작함.
+                                            이 코루틴은 1초마다 체크함.
+                                            여기에서 랜덤한 값을 통해 spawnChance에 따라 적을 생성함.
+                                            실질적인 Spawn은 SpawnEnemy함수를 통해 이루어짐.
+                                            만약 EnemySpawnerManager에 본 spawnerID에 해당하는 List 내의 Enemy의 Count가 maxEnemyCount 보다 적은지 확인함.
+                                                만약 적다면 적을 Instantiate함.
+                                                GetRandomPosition 함수를 통해 SpawnArea(Radius) 내의 랜덤한 위치에 적을 생성함.
+                                                ThereAreObjectInArea를 통해 겹치지 않게 생성함.
+                                                EnemySpawnerManager.Instance().AddEnemyToList(spawnerID, enemyForSpawn.transform)를 통해 적을 등록함.
+                                            
+                                            한편, Scene이 Battle로 바뀔 경우, StopSpawning을 통해 코루틴을 멈춤.
+                                
+                                EnemySpawnerManager : 전반적인 Spawner들을 Handling함.
+
+                                EnemyBody : OnPointerClick에서
+                                                    battleManager.currentEnemysSpawnersID = transform.parent.GetComponent<Enemy>().GetSpawnersID();
+                                                    battleManager.currentEnemyInMap = transform.parent;
+                                                    해줌. Enemy를 current로 Handling할 수 있도록 BattleManager에게 참조하라고 해주는 것임.
+                                                    여기에는 해당 Enemy의 SpawnerID와 Enemy의 Transform을 사용함.
+
+                                BattleManager : RemoveEnemy 함수에서
+                                                    적을 처치했을 경우, 해당 Enemy의 SpawnerID를 통해 List를 받고
+                                                    현재 Handling중인 current Enemy를 리스트에서 제거(Remove), 오브젝트를 Destroy함.
+                                                    오브젝트 풀링을 사용하는 방법도 있겠으나, 그건 나중에 해주자.
+
+                                또한 Scene이 Switch 될 때 마다 이 코루틴을 Start할지 Stop할지를 결정함.
+                                Spanwer에 Collider Component를 넣어(Trigger로) OnTirggerStay와 OnTriggerExit를 통하여 Player가 영역 내에 존재하는지 확인할 수 있도록 했음.
+                                Player가 영역 내에 있을 때만 적을 Spawn할지는 차차 생각해봐야 할듯.
+
+
+
+
+<< 2025-01-06 >>
+    MiniGamePanel - 미니게임 목록(Button들)을 볼 수 있는 UI(CanclePanel과 더불어)를 볼 수 있도록 했음.
+
+
+
+
+<< 2025-01-08 >>
+    DeckPanel - MyDeckPanel에서 DeckCardImageHolder를 선택할 수 있도록 했다.
+                선택하면 외곽선이 보이도록 했다.
+                선택한 후, UnuseButton을 통해, Deck에서 제거할 수 있도록 했다.
+
+                DescriptionButton을 사용하지 않고, Deck이든 CardSlot이든 꾹 눌러서 설명을 볼 수 있도록 하자.
+
+
+
+
+<< 2025-01-09 >>
+    ItemPanelButtons -  DescriptionButton을 사용하지 않고 꾹 눌러서, 설명을 볼 수 있도록 할 예정.
+                        따라서 일단 DescriptionButton은 없앰.
+                        
+    BattleScene -   ...에서 ItemsButton을 사용하지 않기로 함.
+                    ...이에 따라 CurrentCardsInBattlePanel의 위치를 조정함.
+                        -> Left : 50, PosY : 250, Right : 340, Height : 250 에서
+
+    DeckPanel - 카드의 cost를 CardSlot과 Deck Slot에서 볼 수 있도록 했음.(Battle에서도 cost를 볼 수 있도록 함)
+
+    ObjectDescriptionPanel -    아이템이나 Equipment나 Card에 대한 설명을 볼 수 있는 Panel을 만들자.
+                                ItemSlot, CardSlot, DeckCardImageHolder, EquipmentSlot, 장착중인 장비 Slot 등등.
+                                선택된 slot을 한 번 더 누르는 것을 통해, 설명을 볼 수 있도록 함.
+                                이 때, 각 스크립트에 isSelected 변수를 사용함.
+                                MapUIManager의 산하에 DescriptionPanel gameObject를 두고 이를 활성화 하는 방식으로 보여주도록 함.
+
+
+<< 2025-01-10 >>
+    PlayerCurrentCardHolder, BattleManager -    Battle에서 카드를 사용했을 때, 상용한 카드를 deck에 넣고, 랜덤한 카드를 deck에서 보충하도록 함.
+    PlayerSprite -  보고있는 방향을 고정한 것처럼 보이도록 8방향 Sprite를 사용.
+                    Animator를 통해, 카메라를 움직일 경우 그것에 맞춰 적절한 Sprite(Animation)을 보여주도록 함.
+
+
+<< 2025-01-13 >>
+    Enemy_Fox - 각 Scene에 맞는 카메라를 Sprite가 바라보도록 함.
+                상황에 맞는 애니메이션이 재생되도록 함.
+
+
+<< 2025-01-14 >>
+    EnemyInfoPanel -    UpdateContents함수
+                            EnemyBody 스크립트에서 OnPointerClick 함수에서 실행되도록 함.
+                            BattleManager를 통해 current enemy의 data를 가져옴.
+                            이때 이 data를 통해 DropItem, DropEquipment, DropCard에 대한 List를 받아옴.
+                            이 class는 DefaultEnemyData 스크립트에 정의돼있음.
+                            이때, 해당 각 class는 GameObject를 Inspector에서 설정할 수 있게 됨.
+                            따라서, Drop~류 List에 있는 GameObject를 순회하며 각각에 GetComponent를 통해 A_PlayerCard, A_Equipment 등에 접근함.
+                            이를 통해 A_PlayerCard 등의 List를 만들어가고, 이 List를 인자로 UpdateCardList, UpdateItemList를 수행함.
+                        
+                        UpdateCardList 함수
+                            ClearChild 메서드를 통해 현재 설정돼있는 DropListSlot들을 없앰.
+                            인자로 받은 List를 순회하며, 해당하는 적절한 Prefab의 경로를 통해 Load하고 자식으로 추가함.
+
+                        UpdateItemList 함수
+                            ClearChild 메서드를 통해 현재 설정돼있는 DropListSlot들을 없앰.
+                            인자로 받은 List를 순회하며, 해당하는 적절한 Prefab의 경로를 통해 Load하고 자식으로 추가함.
+
+    DropListSlot -      UpdateSlot 메서드
+                            인자로 받은 Type을 통해 imagePath, object의 name, description 변수를 설정함.
+                            이것들을 통해, DropListSlot 객체를 갱신함.
+
+
+<< 2025-01-15 >>
+    Equipment Panel의 Sprute를 Update함.
+
+
+
+<< 2025-01-21 >>
+    Enemy를 통해 얻은 Card가 PlaeyrCardManager에 정상적으로 등록되지 않는 것 같은 문제 발생 확인.
+                        어느 시점에서 문제가 발생하는지 모르겠음.
+                        PlayerCardManager의 AddNewCardToPlaeyr에서 문제가 발생하는 것 같음 : "foreach(A_PlaeyrCard in dropCards)" 부분에서 발생하는 것 같음.
+                        AddnewCardToPlayer를 어디서 호출하고 있는지 확인해볼 필요가 있어보임.
+                        BattleManager의 OnBattleWin Action에 연결돼있음.
+                        따라서 AddNewCardToPlayer 함수 내부에서 문제가 발생하는 것 같음.
+
+                        이 함수 내에서 BattleManager.Instance().GetDropCardsList()를 통해 내부 변수 List<A_PlayerCard> dropCards에 값을 대입하게 됨.
+                        즉, BattleManager.Instance().GetDropCardList() 부분에서 문제가 발생하는 것 같음.
+
+                        BattleManager의 DropCardList 함수 내부에서 dropCardsList를 순회하며 체크해봤는데, dropCardLists에 null이 추가돼있는 상태임.
+                        dropCardsList에 어느 시점에 null이 추가되는지 알아볼 필요가 있음.
+
+                        BattleManager의 UpdateDropLists 함수 내에서 문제가 발생했던 것 같음.
+                        dropCardsList.Add(Instantiate(dropCards[i].card).GetComponent<A_PlayerCard>()); => Instantiate를 수행했던 것이 문제였던 것 같음.
+                        Instantiate한 오브젝트가 스택이 없어지면서 제거돼 발생한 문제인 것으로 추측함.                        
+                        dropCardsList.Add((dropCards[i].card).GetComponent<A_PlayerCard>());
+
+
+<< 2025-01-26 >>
+    BattleScene에서의 UI sprite를 적용.
+    EnemyBattleCheck Panel에 UI sprite를 적용.
+
+
+
+<< 2025-02-03 >>
+    IntroPanel을 만듦.
+        IntroScene에서 MapScene으로 넘어가는 방법을 쓸까 했지만.
+        그냥, MapScene에 IntroPanel을 만들어 사용토록 하는 게 더 나아보임.
+        카메라와 플레이어의 거리가 일정 거리보다 멀면, Panel을 닫을 수 없음.
+        일정 거리 내에 도달하게 되면, Touch to Start 문구가 활성화되며, Panel을 닫을 수 있음.
+
+    Equipment를 장착할 때.  
+        Puton, TakeOff가 적절히 동작하도록 함.
+        BattleScene에서 MapScene으로 돌아오고 EquipmentPanel을 열면, 현재 장착중인 Equipment의 이미지가 출력되지 않는 현상이 발생했는데.
+        EquipmentImageHolder의 Start에서 UpdateImage를 수행하는 것으로 해결함.
+
+
+<< 2025-02-05 >>
+    적 추가 - Enemy_Slime, Enemy_Bird, Enemy_Raccoon
+                추가 시, Battlein...시리즈 추가해야 함.
+                각각의 Animator, Animation 추가해줘야 함.
+                각각의 스크립트 추가해 줘야 함. - Enemy_[적]_In_Battle
+                ScriptableObject를 추가해줘야 함. - Enemy[ 적 ]Data
+
+
+
+
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+
+
+
+
+
+
+<< 알아둘 것 >>
+    1.  현재는 초기 시작할 때, PlayerDefaultData를 통해 정보들을 받아온다.
+        이후, Addressable이나, 로컬 Json을 통해 데이터를 로드하도록 바꿔볼 예정.
+
+    2.  ItemSlot의 수와 Item의 수는 같은 게 아님.
+
+    3. PlayerSpecManager의 Start부분에 없애줘야 할 것 있음.
+
+    4. RectTransform 등의 적용을 받지 않는 경우
+        ex) GridLayoutGroup의 Cell Size같은 경우들은 코드로 크기를 적절하게 맞춰주는 것이 좋아보임.
+
+    5. Deck이나 Item의 Test를 위한 설정은 각각의 Manager를 사용하자.
+
+    6. 카드, 장비, 아이템 ID의 컨벤션
+        카드 : 0XXXX
+        장비 : 1XXXX
+        아이템 : 2XXXX
+
+    7. GPS상 멀리 있는 곳에 가면(예 : 서울) 적을 터치시, 부정확 하다고 해야 할까, 오차가 있는 것 같음.
+        PC에서 테스트 환경에서 수행시, 정상적으로 동작함.
+        뭐가 문제인지 모르겠음.
+
+
+
+
+
+
+
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+
+
+
+
+
+
+
+
+
+<< 목표 >>
+BattleScene에서 Slide 혹은, 클릭, 클릭 방식으로 스킬(카드)를 사용할 수 있도록 하고싶음. ----------------------(Done)
+BattleScene에서 실시간으로 증가하는 Cost -------------------------------------------------------------------(Done)
+Items Panel에서 장비 창과 소비 템 창을 분리하여 볼 수 있도록 해보자.------------------------------------------(Done)
+덱에서 카드를 뺄 수 있도록 하자.--------------------------------------------------------------------------(Done)
+EquipmentPanel과 ItemPanel에서 Player의 Status를 볼 수 있도록 하자.(Maybe Done) ---------------------------(Done)
+선택한 Deck이나 CardSlot의 카드를 다시시 눌러, 해당 카드의 설명을 볼 수 있도록 하자. ---------------------------(Done)
+선택한 Item이나 Equipment를 다시 눌러, 해당 설명을 볼 수 있도록 하자. ------------------------------------(Done)
+Battle에서 카드 사용시 새로운 카드를 현재 deck에서 드로우할 수 있도록 하자.------------------------------------(Done)
+
+여러 적들 만들기.
+
+여러 Item들 만들기.
+여러 Equipment 만들기.
+여러 Card 만들기.
+
+Options 구현.
+
+EnemySpawner에서 각각의 적(Prefab?)의 가중치에 따라 적이 생성되도록 하기.
+
+적의 인공지능 구현.
+
+플레이어, 적에 스킨(sprite) 입히기. 적은 그냥 lookat-camera하면 될듯.
+
+(후보)JSON으로 Player와 Enemy의 데이터를 관리할까?
+    저장/로드 할 것 :   Player - maxHP, currHP, currEXP, maxEXP, attackPoint
+                        Card - 가지고 있는 카드, 덱 카드(개수).
+                        Equipment - 사용중인 것, 가지고 있는 것(개수).
+                        Item - 가지고 있는 것(개수).
+
+고려중
+    장비를 해제(UnEquip)할 수 있도록 하자.( 고려 )
+    도감 시스템 만들기.(고려)
+    Profile 구현 - 일단 Profile은 없애놈놈. 필요가 없을 것 같기 때문.
+
+
+
+
+
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+==========================================================================================================================================================================
+
+
+
+
+
+
+
+
+<< 깨달은 것 >>
+    1. RectTransform의 크기에 관한 진실
+        런타임에서 코드로 따로 수정하는 등의 행동을 하지 않는 이상.
+        RectTransform의 Width와 Height의 값은 변경되지 않는다.
+        버그인지 모르겠지만 심지어 화면의 해상도를 바꾸더라도 초기값 그대로가 유지된다.
+        따라서 이 값을 잘 사용하려면, 수치가 적절하게 값을 가지도록 해줘야 한다.
+
+    2. Slider가 끝까지 채워지지 않는다면
+        Slider의 RectTransform의 채우기 모드? 정도 등을 확인.
+        Parent 오브젝트의 RectTransform의 채우기 모드? 정도?를 확인.
+        Handle이 활성화돼있는지 확인(활성화 / Inspector창에 등록돼있지 않아야 했나)해야 함.
+
+    3. C#은 기본적으로 참조인듯?
+        따라서 A = B하면 A가 B를 참조하게됨.
+
+    4. Interface자체를 public 등으로 Inspector에서 편집할 수 없음.
+        ex( List<Interface> list 같은 것들)
+
+    5. Random사용법.
+        Random의 모호성이 존재. using Random = UnityEngihe.Random으로 해결.
+
+    6. 추가한 Event(Delegate / Action / Func)는 OnDisable에서 등록을 해제해주도록 하자.
+        안 하면 오류가 발생한다.
+
+    7. 스크립터블오브젝트는 read-only data만을 다루게된다.
+
+    8. SerializeField로는 오브젝트나 이미지, UI 등등으로만 전달 가능.
+        Project창에서 Script를 바로 참조는 불가능.
+
+    9. UI 등을 동적으로 생성시, anchorOffset과 Offsetmax 등을 신경써줘야 함.
+
+    10. GetComponentInChildren을 사용시 본인도 포함됨을 잊지 말도록 하자.
+
+    11. 반복문을 도는 동안에는 Collection의 수정은 불가하다.
+
+    12. 자식 오브젝트들을 전부 없애는법
+            while(transform.childCount > 0)
+                DestroyImmediate(transfomm.Child(0).gameObject);
+
+    13. 반복문에는 제한을 걸어둬서 무한루프를 방지할 수 있도록 해야 함.
+
+    14. Disable(SetActive가 false)인 오브젝트는 스스로의 메서드(스크립트 내의)로 스스로를 SetActive(true) 등을 통해 활성화 할 수 없음.
+        애초에 스크립트 실행이 불가능한 듯 함.(Null Reference가 뜨지 않을까.)

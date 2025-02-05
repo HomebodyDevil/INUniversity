@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     {
         if (enemyData == null)
         {
-            Debug.Log("In TestEnemy. Theres no EnemyData");
+            Debug.Log("Theres no EnemyData");
             return null;
         }
         else
