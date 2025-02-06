@@ -18,6 +18,8 @@ public class BattleManager : MonoBehaviour
 
     private static BattleManager instance;
 
+    public static bool isInBattle;
+
     [SerializeField, Range(0, 1)] private float timeScale;
     [SerializeField] private Transform enemyTransformInBattle;
 
@@ -89,6 +91,12 @@ public class BattleManager : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToBattle -= LoadCards;
         SceneManagerEX.OnSwitchSceneToBattle += LoadCards;
+
+        SceneManagerEX.OnSwitchSceneToBattle -= EnableIsInBattle;
+        SceneManagerEX.OnSwitchSceneToBattle += EnableIsInBattle;
+
+        SceneManagerEX.OnSwitchSceneToMap -= DisableIsInBattle;
+        SceneManagerEX.OnSwitchSceneToMap += DisableIsInBattle;
     }
 
     // Start is called before the first frame update
@@ -100,6 +108,8 @@ public class BattleManager : MonoBehaviour
         dropCardsList = new List<A_PlayerCard>();
 
         dropCards = new List<DropCard>();
+
+        isInBattle = false;
 
         // 이걸 주석처리하니까 실행이 안 되네 그래서 변수 선언에서 초기화도 했음.
         // playerDeck = new List<A_PlayerCard>(1);      
@@ -116,6 +126,18 @@ public class BattleManager : MonoBehaviour
         BattleManager.OnBattleWin -= StopIncreaseEnemyCost;
         BattleManager.OnBattleWin -= RemoveMapEnemy;
         SceneManagerEX.OnSwitchSceneToBattle -= LoadCards;
+        SceneManagerEX.OnSwitchSceneToBattle -= EnableIsInBattle;
+        SceneManagerEX.OnSwitchSceneToMap -= DisableIsInBattle;
+    }
+
+    private void EnableIsInBattle()
+    {
+        isInBattle = true;
+    }
+
+    private void DisableIsInBattle()
+    {
+        isInBattle = false;
     }
 
     public void SetCurrentEnemyData(GameObject currentEnemyGameObject)
@@ -245,6 +267,8 @@ public class BattleManager : MonoBehaviour
 
     public void DamageToPlayer(float damage)
     {
+        PlayerEffectTransform.EnablePlayerHittedEffect.Invoke();
+
         HealToPlayer(-damage);
         float currPlayerHP = PlayerSpecManager.Instance().currentPlayerHP;
 
@@ -276,6 +300,10 @@ public class BattleManager : MonoBehaviour
         //float currentHP = PlayerSpecManager.Instance().currentPlayerHP;
         //PlayerSpecManager.Instance().currentPlayerHP = Mathf.Max(currentHP + heal,
         //                                PlayerSpecManager.Instance().maxPlayerHP);      
+        if (heal > 0 && isInBattle)
+        {
+            PlayerEffectTransform.EnablePlayerHealedEffect.Invoke();
+        }
 
         PlayerSpecManager.Instance().AddValueToCurrentPlayerHP(heal);
     }
