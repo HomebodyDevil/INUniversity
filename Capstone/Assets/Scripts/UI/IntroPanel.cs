@@ -109,6 +109,8 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
 
     IEnumerator WaitForDistance()
     {
+        canStart = false;
+
         int rep = 0;
         while(true)
         {
