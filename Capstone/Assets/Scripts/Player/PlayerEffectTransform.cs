@@ -100,7 +100,7 @@ public class PlayerEffectTransform : MonoBehaviour
 
     public void ResetTransform()
     {
-        transform.position = Vector3.zero;
+        transform.localPosition = Vector3.zero;
     }
 
     public void ResetHitted()

@@ -257,6 +257,11 @@ public class BattleManager : MonoBehaviour
 
     public void DamageToEnemy(float damage)
     {
+        if (damage > 0)
+        {
+            EnemyEffectTransform.EnableEnemyHittedEffect.Invoke();
+        }
+
         currentEnemyHP -= damage;
 
         if ((int)currentEnemyHP <= 0)
@@ -292,6 +297,8 @@ public class BattleManager : MonoBehaviour
 
     public void HealToEnemy(float heal)
     {
+        EnemyEffectTransform.EnableEnemyHealedEffect.Invoke();
+
         DamageToEnemy(-heal);
     }
 
