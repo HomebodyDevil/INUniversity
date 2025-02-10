@@ -15,10 +15,13 @@ public class BattleManager : MonoBehaviour
     public static Action OnPauseBattle;
     public static Action OnBattleWin;
     public static Action OnBattleLose;
+    public static Action OnEnemyHPisZero;
+    public static Action OnEnemyDead;
 
     private static BattleManager instance;
 
     public static bool isInBattle;
+    public static bool checkDeathImediate = true;
 
     [SerializeField, Range(0, 1)] private float timeScale;
     [SerializeField] private Transform enemyTransformInBattle;
@@ -204,6 +207,8 @@ public class BattleManager : MonoBehaviour
 
     public void RemoveMapEnemy()
     {
+        Debug.Log("RemoveMapEnemy");
+
         List<Transform> currentEnemysSpawnersList = EnemySpawnerManager.Instance().GetEnemyList(currentEnemysSpawnersID);
         foreach (Transform enemy in currentEnemysSpawnersList)
         {
@@ -229,6 +234,7 @@ public class BattleManager : MonoBehaviour
 
     public void StopIncreaseEnemyCost()
     {
+        Debug.Log("StopIncreaseEnemyCost");
         StopCoroutine("IncreaseEnemyCostCoroutine");
     }
 
@@ -253,21 +259,45 @@ public class BattleManager : MonoBehaviour
     public void ReduceEnemyCost(float cost)
     {
         currentEnemyCost -= cost;
+        currentEnemyCost = Mathf.Clamp(currentEnemyCost, 0, currentEnemyMaxCost);
     }
 
     public void DamageToEnemy(float damage)
     {
         if (damage > 0)
         {
-            EnemyEffectTransform.EnableEnemyHittedEffect.Invoke();
+            if (EnemyEffectTransform.EnableEnemyHittedEffect != null)
+                EnemyEffectTransform.EnableEnemyHittedEffect.Invoke();
         }
 
         currentEnemyHP -= damage;
 
         if ((int)currentEnemyHP <= 0)
-            EnemyDead();
+        {
+            if (OnEnemyHPisZero != null)
+            {
+                Debug.Log("OnEnemyHPisZero in DamageToEnemy");
+                OnEnemyHPisZero.Invoke();
+            }
+
+            if (checkDeathImediate)
+            {
+                Debug.Log("checkDeathImediate in DamageToEnemy");
+                EnemyDead();
+            }
+            else
+            {
+                StartCoroutine("DelayEnemyDead");
+            }
+        }
 
         currentEnemyHP = Mathf.Clamp(currentEnemyHP, 0, currentEnemyMaxHP);      
+    }
+
+    IEnumerator DelayEnemyDead()
+    {
+        yield return new WaitForSecondsRealtime(2.0f);
+        EnemyDead();
     }
 
     public void DamageToPlayer(float damage)
@@ -297,7 +327,8 @@ public class BattleManager : MonoBehaviour
 
     public void HealToEnemy(float heal)
     {
-        EnemyEffectTransform.EnableEnemyHealedEffect.Invoke();
+        if (EnemyEffectTransform.EnableEnemyHealedEffect != null)
+            EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.yellow);
 
         DamageToEnemy(-heal);
     }
@@ -315,12 +346,19 @@ public class BattleManager : MonoBehaviour
         PlayerSpecManager.Instance().AddValueToCurrentPlayerHP(heal);
     }
 
-    private void EnemyDead()
+    public void EnemyDead()
     {
+        Debug.Log("EnemyDead");
+
         if (currentEnemyHP > 0) return;
 
         PlayerSpecManager.Instance().GainEXP(currentEnemyEXPAmount);
-        OnBattleWin.Invoke();
+
+        if (BattleManager.OnBattleWin != null)
+        {
+            Debug.Log("Invoke OnBattleWin");
+            BattleManager.OnBattleWin.Invoke();
+        }
     }
 
     public A_PlayerCard GetActiveCard(int order)

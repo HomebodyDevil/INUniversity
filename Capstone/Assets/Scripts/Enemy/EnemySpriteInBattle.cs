@@ -24,6 +24,11 @@ public class EnemySpriteInBattle : MonoBehaviour
         transform.LookAt(battleCamera);
     }
 
+    private void EndAttack()
+    {
+        animator.SetBool("isAttack", false);
+    }
+
     private void EndAct()
     {
         animator.SetBool("isAct", false);

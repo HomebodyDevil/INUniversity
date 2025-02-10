@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyEffectTransform : MonoBehaviour
 {
     public static Action EnableEnemyHittedEffect;
-    public static Action EnableEnemyHealedEffect;
+    public static Action<Color> EnableEnemyHealedEffect;
 
     //[SerializeField] private Transform freeLookCamera;
     //[SerializeField] private Transform battleVirtualCamera;
 
-    [SerializeField] private SpriteRenderer renderer;
+     private SpriteRenderer renderer;
     [SerializeField] private Animator animator;
     [SerializeField] private float effectScale;
     [SerializeField] private float effectPosScale;
@@ -29,6 +30,8 @@ public class EnemyEffectTransform : MonoBehaviour
 
     private void Start()
     {
+        renderer = GetComponent<SpriteRenderer>();
+
         EnableEnemyHittedEffect -= OnEnableEnemyHittedEffect;
         EnableEnemyHittedEffect += OnEnableEnemyHittedEffect;
 
@@ -95,15 +98,15 @@ public class EnemyEffectTransform : MonoBehaviour
 
     private void RandomColor()
     {
-        float randColRatio = UnityEngine.Random.Range(0.8f, 1.1f);
+        float randColRatio = UnityEngine.Random.Range(0.8f, 1.0f);
         Color randColor = new Color(randColRatio, randColRatio, randColRatio);
         renderer.color = randColor;
     }
 
-    private void SetColor(float r, float g, float b, float a)
+    public void SetColor(Color color)
     {
         //renderer.color = new Color(r, g, b, a);
-        renderer.color = Color.yellow;
+        renderer.color = color;
     }
 
     public void ResetTransform()
@@ -125,13 +128,33 @@ public class EnemyEffectTransform : MonoBehaviour
     public void ResetHealed()
     {
         animator.SetBool("Healed", false);
+        MakeCanAct();
     }
 
-    private void OnEnableEnemyHealedEffect()
+    public void SetDefaultHealEffectScale()
     {
         ResetTransform();
 
-        SetColor(0.0f, 240 / 255, 110 / 255, 1.0f);
+        float healEffectScale = effectScale;
+        transform.localScale = new Vector3(healEffectScale, healEffectScale, healEffectScale);
+    }
+
+    private void OnEnableEnemyHealedEffect(Color color)
+    {
+        SetDefaultHealEffectScale();
+
+        //SetColor(Color.yellow);
+        renderer.color = color;
         animator.SetBool("Healed", true);
+    }
+
+    public void MakeCanAct()
+    {
+        transform.parent.GetComponent<Enemy_Jhin_InBattle>().SetCanAct(true);
+    }
+
+    public void MakeCantAct()
+    {
+        transform.parent.GetComponent<Enemy_Jhin_InBattle>().SetCanAct(false);
     }
 }

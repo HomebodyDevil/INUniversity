@@ -147,6 +147,8 @@ public class PlayerCardManager : MonoBehaviour
 
     public void AddNewCardToPlayer()
     {
+        Debug.Log("AddNewCardToPlayer");
+
         List<A_PlayerCard> dropCards = BattleManager.Instance().GetDropCardsList();
         foreach(A_PlayerCard newCard in dropCards)
         {

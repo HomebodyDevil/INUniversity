@@ -88,7 +88,7 @@ public class PlayerEffectTransform : MonoBehaviour
 
     private void RandomColor()
     {
-        float randColRatio = UnityEngine.Random.Range(0.0f, 1.1f);
+        float randColRatio = UnityEngine.Random.Range(0.7f, 1.1f);
         Color randColor = new Color(randColRatio, randColRatio, randColRatio);
         renderer.color = randColor;
     }

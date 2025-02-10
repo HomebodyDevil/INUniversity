@@ -197,6 +197,8 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void AddNewEquipmentToPlayer()
     {
+        Debug.Log("AddNewEquipmentToPlayer");
+
         List<A_Equipment> equipmentList = BattleManager.Instance().GetDropEquipmentList();
         foreach(A_Equipment newEquipment in equipmentList)
         {

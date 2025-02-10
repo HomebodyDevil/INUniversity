@@ -100,6 +100,8 @@ public class PlayerItemsManager : MonoBehaviour
 
     public void AddNewItemToPlayer()
     {
+        Debug.Log("AddNewItemToPlayer");
+
         Dictionary<A_Item, int> dropItems = BattleManager.Instance().GetDropItemsDictionary();
         foreach(KeyValuePair<A_Item, int> item in dropItems)
         {
