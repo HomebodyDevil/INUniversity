@@ -38,6 +38,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
     [SerializeField] private int amountOfIncreaseAttackAmount;
 
     [Space(10.0f), Header("ActCool")]
+    [SerializeField] private float normalCool;
     [SerializeField] private float healCool;
     [SerializeField] private float increaseMaxHPCool;
     [SerializeField] private float increaseMaxCostCool;
@@ -91,7 +92,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         StartCoroutine("IncreaseMaxHPCool");
         StartCoroutine("IncreaseMaxCostCool");
         StartCoroutine("IncreaseAttackAmountCool");
-        StartCoroutine("Act", 1.0f);
+        StartCoroutine("Act", normalCool);
     }
 
     private void OnDestroy()
@@ -179,7 +180,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
 
             SelectAct();
 
-            coolSec = Random.Range(1.0f, 1.5f) * coolSeconds;
+            coolSec = Random.Range(0.8f, 1.5f) * coolSeconds;
         }
     }
 
@@ -305,10 +306,14 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         //sprite.gameObject.GetComponent<EnemyEffectTransform>().SetDefaultHealEffectScale();
         //effectAnimator.SetBool("Healed", true);
 
+        BattleManager.Instance().ReduceEnemyCost(increaseMaxHPCost);
+
         BattleManager.Instance().currentEnemyMaxHP += amountOfIncreaseMaxHP;
         BattleManager.Instance().HealToEnemy(0.3f * BattleManager.Instance().currentEnemyMaxHP);
 
-        EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.red);
+        //EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.red);
+        EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.red);
+
         StartCool();
     }
 
@@ -330,7 +335,11 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         //sprite.color = Color.blue;
         //sprite.gameObject.GetComponent<EnemyEffectTransform>().SetDefaultHealEffectScale();
         //effectAnimator.SetBool("Healed", true);
-        EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.blue);
+        //EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.blue);
+
+        BattleManager.Instance().ReduceEnemyCost(increaseMaxCostCool);
+
+        EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.blue);
 
         BattleManager.Instance().currentEnemyMaxCost += amountOfIncreaseMaxCost;
         BattleManager.Instance().currentEnemyCostIncreaseAmount += amountOfIncreaseIncreasingMaxCost;
@@ -356,7 +365,11 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         //sprite.color = Color.magenta;
         //sprite.gameObject.GetComponent<EnemyEffectTransform>().SetDefaultHealEffectScale();
         //effectAnimator.SetBool("Healed", true);
-        EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.magenta);
+        //EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.magenta);
+
+        BattleManager.Instance().ReduceEnemyCost(increaseAttackAmountCost);
+
+        EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.magenta);
 
         attackAmount += amountOfIncreaseAttackAmount;
         behaviorControl.SetAttackAmount(attackAmount);

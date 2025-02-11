@@ -266,8 +266,17 @@ public class BattleManager : MonoBehaviour
     {
         if (damage > 0)
         {
+            // ±¸¹öÀü Àûµé¿ë.
+            // ¼öÁ¤ÇÏ±â ±ÍÂú¾Æ¼­ ³ÀµÒ.
             if (EnemyEffectTransform.EnableEnemyHittedEffect != null)
                 EnemyEffectTransform.EnableEnemyHittedEffect.Invoke();
+
+            float randVal = Random.Range(0.7f, 1.0f);
+            //Color color = Color.black;
+            Color color = new Color(randVal, randVal, randVal);
+
+            if (EnemyHittedEffectTransform.PlayEnemyHittedEffect != null)
+                EnemyHittedEffectTransform.PlayEnemyHittedEffect.Invoke(color);
         }
 
         currentEnemyHP -= damage;
@@ -327,8 +336,14 @@ public class BattleManager : MonoBehaviour
 
     public void HealToEnemy(float heal)
     {
+        // ±¸¹öÀü Àûµé¿ë.
+        // ¼öÁ¤ÇÏ±â ±ÍÂú¾Æ¼­ ³ÀµÒ.
         if (EnemyEffectTransform.EnableEnemyHealedEffect != null)
             EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.yellow);
+
+        if (EnemyHealedEffectTransform.PlayEnemyHealedEffect != null)
+            EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.yellow);
+
 
         DamageToEnemy(-heal);
     }

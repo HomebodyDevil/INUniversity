@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyJhinData
   m_EditorClassIdentifier: 
   enemyName: Fox
-  attackPoint: 10
-  maxHP: 10
-  maxCost: 10
+  attackPoint: 5
+  maxHP: 50
+  maxCost: 5
   currentCostIncreaseAmount: 1
   EXPAmount: 3
   enemyDeck: []
