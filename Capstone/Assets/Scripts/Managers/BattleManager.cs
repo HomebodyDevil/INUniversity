@@ -254,6 +254,8 @@ public class BattleManager : MonoBehaviour
     {
         PlayerSpecManager playerSpecManager = PlayerSpecManager.Instance();
         playerSpecManager.currentPlayerCost -= cost;
+
+        playerSpecManager.currentPlayerCost = Math.Max(playerSpecManager.currentPlayerCost, 0.0f);
     }
 
     public void ReduceEnemyCost(float cost)

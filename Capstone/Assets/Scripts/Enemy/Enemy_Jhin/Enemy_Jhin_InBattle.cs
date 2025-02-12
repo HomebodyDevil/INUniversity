@@ -68,7 +68,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         doingIncreaseMaxCostCoroutine = false;
         doingIncreaseAttackAmountCoroutine = false;
 
-    actChances = new List<int>();
+        actChances = new List<int>();
         InitChances();
 
         BattleManager.OnBattleWin -= MakeCantAct;

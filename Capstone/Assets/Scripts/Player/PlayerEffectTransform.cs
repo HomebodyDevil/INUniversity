@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -110,6 +111,9 @@ public class PlayerEffectTransform : MonoBehaviour
 
     private void OnEnablePlayerHittedEffect()
     {
+        ResetHitted();
+        ResetHealed();
+
         RandomColor();
         animator.SetBool("Hitted", true);
     }
@@ -121,6 +125,9 @@ public class PlayerEffectTransform : MonoBehaviour
 
     private void OnEnablePlayerHealedEffect()
     {
+        ResetHitted();
+        ResetHealed();
+
         SetColor(1.0f, 240 / 255, 110 / 255, 1.0f);
         animator.SetBool("Healed", true);
     }
