@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Fox
   attackPoint: 5
-  maxHP: 10
-  maxCost: 5
-  currentCostIncreaseAmount: 1
+  maxHP: 30
+  maxCost: 20
+  currentCostIncreaseAmount: 0.8
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Park_InBattle

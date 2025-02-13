@@ -200,9 +200,9 @@ MonoBehaviour:
   behaviorControl: {fileID: 3439360131705572264}
   animator: {fileID: 4336340384914391334}
   effectAnimator: {fileID: 2373854455663665775}
-  attackHPCost: 0
+  attackHPCost: 1
   attackMPCost: 2
-  healCost: 0
+  healCost: 1
   attackHPChance: 2
   attackMPChance: 2
   healChance: 1
@@ -210,10 +210,10 @@ MonoBehaviour:
   attackHPMinRatio: 0.1
   attackMPRatio: 0.8
   healRatio: 0.5
-  normalCool: 1
-  healCool: 8
-  attackHPCool: 3
-  attackMPCool: 10
+  normalCool: 0.5
+  healCool: 7
+  attackHPCool: 2
+  attackMPCool: 9
 --- !u!1001 &5006992364140029778
 PrefabInstance:
   m_ObjectHideFlags: 0
