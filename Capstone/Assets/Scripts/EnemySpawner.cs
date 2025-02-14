@@ -52,6 +52,8 @@ public class EnemySpawner : MonoBehaviour
     {
         RegisterSpawnerToManager();
 
+        UnityEngine.Random.InitState((int)((DateTime.Now.Ticks * 1000) % int.MaxValue));
+
         maxRandomValue = 0;
         foreach (EnemyForSpawn spawn in spawnEnemyList)
             maxRandomValue += spawn.weight;

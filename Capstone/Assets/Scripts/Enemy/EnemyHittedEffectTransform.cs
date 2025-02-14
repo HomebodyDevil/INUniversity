@@ -34,7 +34,7 @@ public class EnemyHittedEffectTransform : MonoBehaviour
 
     private void Update()
     {
-        LookCamera();
+        //LookCamera();
     }
 
     private void LookCamera()
@@ -53,7 +53,7 @@ public class EnemyHittedEffectTransform : MonoBehaviour
         float randX = UnityEngine.Random.Range(-0.2f, 0.2f) * effectPosScale;
         float randY = UnityEngine.Random.Range(-0.2f, 0.2f) * effectPosScale;
 
-        float randScale = UnityEngine.Random.Range(0.7f, 1.1f) * effectScale;
+        float randScale = UnityEngine.Random.Range(0.9f, 1.2f) * effectScale;
 
         transform.localPosition = new Vector3(initialPosition.x + randX, initialPosition.y + randY, 0);
         transform.localScale = new Vector3(randScale, randScale, randScale);

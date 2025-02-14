@@ -30,7 +30,7 @@ public class PlayerCard_NormalAttack : A_PlayerCard
         //Debug.Log(string.Format("CardCost : {0}", cardCost));
 
         battleManager.ReducePlayerCost(cardCost);
-        battleManager.DamageToEnemy(2.0f);
+        battleManager.DamageToEnemy(5.0f);
 
         //Debug.Log("Attack_Play");
     }

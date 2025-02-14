@@ -23,7 +23,7 @@ public class EnemyHealedEffectTransform : MonoBehaviour
         initialPosition = transform.localPosition;
         renderer = GetComponent<SpriteRenderer>();
 
-        transform.localScale = new Vector3(effectScale, effectScale, effectScale);
+        //transform.localScale = new Vector3(effectScale, effectScale, effectScale);
 
         PlayEnemyHealedEffect -= AnimateHealedEffect;
         PlayEnemyHealedEffect += AnimateHealedEffect;
@@ -36,7 +36,7 @@ public class EnemyHealedEffectTransform : MonoBehaviour
 
     private void Update()
     {
-        LookCamera();
+        //LookCamera();
     }
 
     private void LookCamera()

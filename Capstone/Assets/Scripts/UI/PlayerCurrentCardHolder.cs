@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public static Action Act_UpdateHandCardsImages;
+    public static Action Act_ValidDragEnd;
 
     [SerializeField] private bool isNeedTarget;
     [SerializeField] private int cardOrder;
@@ -79,6 +80,9 @@ public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDra
             {
                 Debug.Log("NULL PlayerCard");
             }
+
+            if (Act_ValidDragEnd != null)
+                Act_ValidDragEnd.Invoke();
 
             playerCard.OnPlayCard();
         }

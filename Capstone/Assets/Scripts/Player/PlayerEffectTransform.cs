@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerEffectTransform : MonoBehaviour
 {
     public static Action EnablePlayerHittedEffect;
-    public static Action EnablePlayerHealedEffect;
+    public static Action<Color, bool> EnablePlayerHealedEffect;
 
     [SerializeField] private Transform freeLookCamera;
     [SerializeField] private Transform battleVirtualCamera;
@@ -114,7 +114,8 @@ public class PlayerEffectTransform : MonoBehaviour
         ResetHitted();
         ResetHealed();
 
-        RandomColor();
+        //RandomColor();
+        renderer.color = Color.red;
         animator.SetBool("Hitted", true);
     }
 
@@ -123,12 +124,20 @@ public class PlayerEffectTransform : MonoBehaviour
         animator.SetBool("Healed", false);
     }
 
-    private void OnEnablePlayerHealedEffect()
+    private void OnEnablePlayerHealedEffect(Color color, bool isBuff = true)
     {
         ResetHitted();
         ResetHealed();
 
-        SetColor(1.0f, 240 / 255, 110 / 255, 1.0f);
+        if (isBuff)
+        {
+            SetColor(1.0f, 240 / 255, 110 / 255, 1.0f);
+        }
+        else
+        {
+            SetColor(color.r, color.g, color.b, color.a);
+        }
+
         animator.SetBool("Healed", true);
     }
 }

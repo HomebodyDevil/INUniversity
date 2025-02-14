@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class PlayerSprite : MonoBehaviour
 {
     //public static Action Act_LookBattleCamera;
     //public static Action Act_LookFreeLookCamera;
+
+    public static Action<UnityEngine.Color> ChangePlayerColor;
 
     [SerializeField] private Transform freeLookCamera;
     [SerializeField] private Transform battleVirtualCamera;
@@ -38,6 +41,18 @@ public class PlayerSprite : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToMap -= AnimateMapSprite;
         SceneManagerEX.OnSwitchSceneToMap += AnimateMapSprite;
+
+        PlayerCurrentCardHolder.Act_ValidDragEnd -= DoAct;
+        PlayerCurrentCardHolder.Act_ValidDragEnd += DoAct;
+
+        ChangePlayerColor -= SetPlayerColor;
+        ChangePlayerColor += SetPlayerColor;
+
+        BattleManager.OnBattleLose -= ResetPlayerColor;
+        BattleManager.OnBattleLose += ResetPlayerColor;
+
+        BattleManager.OnBattleWin -= ResetPlayerColor;
+        BattleManager.OnBattleWin += ResetPlayerColor;
     }
 
     private void OnDestroy()
@@ -50,6 +65,13 @@ public class PlayerSprite : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToBattle -= AnimateBattleSprite;
         SceneManagerEX.OnSwitchSceneToMap -= AnimateMapSprite;
+
+        PlayerCurrentCardHolder.Act_ValidDragEnd -= DoAct;
+
+        ChangePlayerColor -= SetPlayerColor;
+
+        BattleManager.OnBattleLose -= ResetPlayerColor;
+        BattleManager.OnBattleWin -= ResetPlayerColor;
     }
 
     private void Start()
@@ -129,5 +151,27 @@ public class PlayerSprite : MonoBehaviour
     private void AnimateMapSprite()
     {
         animator.SetBool("isBattle", false);
+    }
+
+    private void DoAct()
+    {
+        animator.SetBool("isAct", true);
+    }
+
+    private void ResetAct()
+    {
+        animator.SetBool("isAct", false);
+    }
+
+    private void SetPlayerColor(UnityEngine.Color color)
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = color;
+    }
+
+    private void ResetPlayerColor()
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = UnityEngine.Color.white;
     }
 }

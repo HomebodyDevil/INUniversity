@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
+  m_Name: EnemyKimData
+  m_EditorClassIdentifier: 
+  enemyName: Fox
+  attackPoint: 5
+  maxHP: 10
+  maxCost: 20
+  currentCostIncreaseAmount: 1
+  EXPAmount: 3
+  enemyDeck: []
+  battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Kim_InBattle
+  enemyDescription: Kim
+  enemyImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Profile
+  enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Win_Profile
+  enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Lose_Profile
+  enemyPlayerWinDialogueText: Player Win
+  enemyPlayerLoseDialogueText: Player Lose
+  dropItems:
+  - item: {fileID: 1819807146939611753, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
+    chance: 70
+    maxDropAmount: 5
+  dropCards:
+  - card: {fileID: 2242407686405643945, guid: 711905648dda4f243b4e2caf21bf25a1, type: 3}
+    chance: 50
+  - card: {fileID: 2242407686405643945, guid: 7f34013a77980804eac937f10b2448eb, type: 3}
+    chance: 50
+  - card: {fileID: 2242407686405643945, guid: 7eef633bc86cd0140bf95bead3e83c02, type: 3}
+    chance: 50
+  dropEquipment:
+  - equipment: {fileID: 6212625612447770044, guid: b245260262cb6d34885a5754267c0fe8, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: 8372dee6ed533964aae5b78ed2690451, type: 3}
+    chance: 50

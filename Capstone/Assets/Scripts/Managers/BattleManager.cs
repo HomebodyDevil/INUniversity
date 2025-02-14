@@ -56,6 +56,11 @@ public class BattleManager : MonoBehaviour
 
     private List<DropCard> dropCards;
 
+    [Space(10.0f), Header("Light Values")]
+    [SerializeField] private float transitionTime;
+    private Light sunLight;
+    private Light battleLight;
+
     private void Initialize()
     {
         if (instance == null)
@@ -266,6 +271,9 @@ public class BattleManager : MonoBehaviour
 
     public void DamageToEnemy(float damage)
     {
+        if (currentEnemyHP <= 0)
+            return;
+
         if (damage > 0)
         {
             // 구버전 적들용.
@@ -313,6 +321,9 @@ public class BattleManager : MonoBehaviour
 
     public void DamageToPlayer(float damage)
     {
+        if (damage <= 0)
+            return;
+
         PlayerEffectTransform.EnablePlayerHittedEffect.Invoke();
 
         HealToPlayer(-damage);
@@ -357,7 +368,7 @@ public class BattleManager : MonoBehaviour
         //                                PlayerSpecManager.Instance().maxPlayerHP);      
         if (heal > 0 && isInBattle)
         {
-            PlayerEffectTransform.EnablePlayerHealedEffect.Invoke();
+            PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.white, true);
         }
 
         PlayerSpecManager.Instance().AddValueToCurrentPlayerHP(heal);
@@ -367,7 +378,11 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("EnemyDead");
 
-        if (currentEnemyHP > 0) return;
+        if (currentEnemyHP > 0)
+        {
+            Debug.Log("Actually Not Dead");
+            return;
+        }
 
         PlayerSpecManager.Instance().GainEXP(currentEnemyEXPAmount);
 
