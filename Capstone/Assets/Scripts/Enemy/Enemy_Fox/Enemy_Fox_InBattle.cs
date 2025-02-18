@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering.Universal;
@@ -49,6 +50,8 @@ public class Enemy_Fox_InBattle : MonoBehaviour
 
         BattleManager.OnStartBattle -= OnStartBattle;
         BattleManager.OnStartBattle += OnStartBattle;
+
+        UnityEngine.Random.InitState((int)(DateTime.Now.Ticks * 1000));
 
         StartCoroutine("Act", 1.0f);
     }
@@ -109,13 +112,13 @@ public class Enemy_Fox_InBattle : MonoBehaviour
 
             SelectAct();            
 
-            coolSec = Random.Range(1.0f, 1.5f) * coolSeconds;
+            coolSec = UnityEngine.Random.Range(1.0f, 1.5f) * coolSeconds;
         }
     }
 
     private void SelectAct()
     {
-        int randVal = (int)Random.Range(0, totalChances);
+        int randVal = (int)UnityEngine.Random.Range(0, totalChances);
         //Debug.Log(string.Format("randVal : {0}", randVal));
 
         int selectIndex = 0;

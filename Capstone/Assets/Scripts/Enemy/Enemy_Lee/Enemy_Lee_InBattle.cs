@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +76,10 @@ public class Enemy_Lee_InBattle : MonoBehaviour
         BattleManager.checkDeathImediate = false;
 
         behaviorControl.SetCostStillAmount(nightStillAmount);
+
+        UnityEngine.Random.InitState((int)(DateTime.Now.Ticks * 1000));
+
+        StartCoroutine("ChangeTimeCool");
 
         StartCoroutine("Act", normalCool);
     }
@@ -171,7 +176,7 @@ public class Enemy_Lee_InBattle : MonoBehaviour
 
             SelectAct();
 
-            coolSec = Random.Range(0.8f, 1.5f) * coolSeconds;
+            coolSec = UnityEngine.Random.Range(0.8f, 1.5f) * coolSeconds;
         }
     }
 
@@ -180,7 +185,7 @@ public class Enemy_Lee_InBattle : MonoBehaviour
         float currentEnemyCost = BattleManager.Instance().currentEnemyCost;
         float currentEnemyMaxCost = BattleManager.Instance().currentEnemyMaxCost;
 
-        int randVal = (int)Random.Range(0, totalChances);
+        int randVal = (int)UnityEngine.Random.Range(0, totalChances);
 
         int selectIndex = 0;
         for (; selectIndex < actChances.Count; selectIndex++)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering.Universal;
@@ -92,6 +93,9 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         StartCoroutine("IncreaseMaxHPCool");
         StartCoroutine("IncreaseMaxCostCool");
         StartCoroutine("IncreaseAttackAmountCool");
+
+        UnityEngine.Random.InitState((int)(DateTime.Now.Ticks * 1000));
+
         StartCoroutine("Act", normalCool);
     }
 
@@ -180,7 +184,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
 
             SelectAct();
 
-            coolSec = Random.Range(0.8f, 1.5f) * coolSeconds;
+            coolSec = UnityEngine.Random.Range(0.8f, 1.5f) * coolSeconds;
         }
     }
 
@@ -194,7 +198,7 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
             return;
         }
 
-        int randVal = (int)Random.Range(0, totalChances);
+        int randVal = (int)UnityEngine.Random.Range(0, totalChances);
         //Debug.Log(string.Format("randVal : {0}", randVal));
 
         int selectIndex = 0;

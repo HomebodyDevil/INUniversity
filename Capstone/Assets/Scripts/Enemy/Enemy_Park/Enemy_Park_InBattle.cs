@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,6 +68,8 @@ public class Enemy_Park_InBattle : MonoBehaviour
         BattleManager.OnEnemyHPisZero += Dead;
 
         BattleManager.checkDeathImediate = false;
+
+        UnityEngine.Random.InitState((int)(DateTime.Now.Ticks * 1000));
 
         StartCoroutine("Act", normalCool);
     }
@@ -146,7 +149,7 @@ public class Enemy_Park_InBattle : MonoBehaviour
 
             SelectAct();
 
-            coolSec = Random.Range(0.8f, 1.5f) * coolSeconds;
+            coolSec = UnityEngine.Random.Range(0.8f, 1.5f) * coolSeconds;
         }
     }
 
@@ -155,7 +158,7 @@ public class Enemy_Park_InBattle : MonoBehaviour
         float currentEnemyCost = BattleManager.Instance().currentEnemyCost;
         float currentEnemyMaxCost = BattleManager.Instance().currentEnemyMaxCost;
 
-        int randVal = (int)Random.Range(0, totalChances);
+        int randVal = (int)UnityEngine.Random.Range(0, totalChances);
 
         int selectIndex = 0;
         for (; selectIndex < actChances.Count; selectIndex++)
@@ -195,7 +198,7 @@ public class Enemy_Park_InBattle : MonoBehaviour
         float currentPlayerHP = PlayerSpecManager.Instance().currentPlayerHP;
         float maxPlayerHP = PlayerSpecManager.Instance().maxPlayerHP;
 
-        float randVal = Random.Range(-0.2f, 0.2f);
+        float randVal = UnityEngine.Random.Range(-0.2f, 0.2f);
         randVal = Mathf.Clamp(attackHPRatio + randVal, 0.0f, 0.8f);
 
         float attackAmount = currentPlayerHP * (randVal);
@@ -223,7 +226,7 @@ public class Enemy_Park_InBattle : MonoBehaviour
 
         float currentPlayerCost = PlayerSpecManager.Instance().currentPlayerCost;
 
-        float randVal = Random.Range(-0.2f, 0.2f);
+        float randVal = UnityEngine.Random.Range(-0.2f, 0.2f);
         randVal = Mathf.Clamp(attackMPRatio + randVal, 0.0f, 0.9f);
 
         float attackAmount = currentPlayerCost * (randVal);

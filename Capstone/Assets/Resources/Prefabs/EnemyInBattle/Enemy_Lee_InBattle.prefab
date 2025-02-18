@@ -238,7 +238,7 @@ MonoBehaviour:
   attackCost: 1
   changeTimeCost: 0
   healChance: 0
-  attackChance: 1
+  attackChance: 0
   changeTimeChance: 1
   healRatio: 0.6
   attackAmount: 2
@@ -247,7 +247,7 @@ MonoBehaviour:
   normalCool: 2
   healCool: 13
   attackCool: 2
-  changeTimeCool: 10
+  changeTimeCool: 20
 --- !u!1 &7631515307580398722
 GameObject:
   m_ObjectHideFlags: 0

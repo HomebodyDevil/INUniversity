@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -90,6 +91,8 @@ public class Enemy_Kim_InBattle : MonoBehaviour
         BattleManager.OnBattleWin -= ResetPlayerCostIncrease;
         BattleManager.OnBattleWin += ResetPlayerCostIncrease;
 
+        UnityEngine.Random.InitState((int)(DateTime.Now.Ticks * 1000));
+
         StartCoroutine("Act", normalCool);
         StartCoroutine("TickDamageToPlayer");
     }
@@ -170,7 +173,7 @@ public class Enemy_Kim_InBattle : MonoBehaviour
 
             SelectAct();
 
-            coolSec = Random.Range(0.8f, 1.5f) * coolSeconds;
+            coolSec = UnityEngine.Random.Range(0.8f, 1.5f) * coolSeconds;
         }
     }
 
@@ -179,7 +182,7 @@ public class Enemy_Kim_InBattle : MonoBehaviour
         float currentEnemyCost = BattleManager.Instance().currentEnemyCost;
         float currentEnemyMaxCost = BattleManager.Instance().currentEnemyMaxCost;
 
-        int randVal = (int)Random.Range(0, totalChances);
+        int randVal = (int)UnityEngine.Random.Range(0, totalChances);
 
         int selectIndex = 0;
         for (; selectIndex < actChances.Count; selectIndex++)
