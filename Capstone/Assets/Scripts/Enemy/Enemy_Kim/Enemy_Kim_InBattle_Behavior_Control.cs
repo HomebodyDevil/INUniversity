@@ -48,6 +48,7 @@ public class Enemy_Kim_InBattle_Behavior_Control : MonoBehaviour
 
     private void NormalAttack()
     {
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.hit, false);
         BattleManager.Instance().DamageToPlayer(attackAmount);
     }
 
@@ -56,6 +57,8 @@ public class Enemy_Kim_InBattle_Behavior_Control : MonoBehaviour
         float currentIncreaseAmount = PlayerSpecManager.Instance().currentCostIncreaseAmount;
         currentIncreaseAmount -= attackAmount;
         currentIncreaseAmount = Mathf.Max(currentIncreaseAmount, 0.1f);
+
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.kimCostHit, false);
 
         PlayerSpecManager.Instance().currentCostIncreaseAmount = currentIncreaseAmount;
     }

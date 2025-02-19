@@ -97,7 +97,7 @@ public class SceneManagerEX : MonoBehaviour
         }
 
         BattleManager.Instance().RemoveEnemy();
-        BattleManager.Instance().HealToPlayer(1.0f);
+        BattleManager.Instance().HealToPlayer(1.0f, false);
 
         //UIManager.Instance().CurrentUIManager().OnCanclePanel();
 
@@ -147,6 +147,10 @@ public class SceneManagerEX : MonoBehaviour
 
     IEnumerator WaitForLoadScene(string sceneName)
     {
+        //SoundManager.OnFadeSound.Invoke(true);
+
+        yield return SoundManager.Instance().FadeSound(true);
+
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
 
@@ -196,6 +200,8 @@ public class SceneManagerEX : MonoBehaviour
 
         Debug.Log("Finished");
         yield return new WaitForSecondsRealtime(0.05f);
+
+        yield return SoundManager.Instance().FadeSound(false);
 
         yield return StartCoroutine("Fade", false);
         loadingPanel.gameObject.SetActive(false);

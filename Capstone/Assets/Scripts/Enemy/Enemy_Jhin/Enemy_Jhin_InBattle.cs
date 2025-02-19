@@ -56,7 +56,8 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
 
     public void Start()
     {
-        //Debug.Log("Fox Here~");        
+        SoundManager.Instance().ChangeToBattleBackgroundAudio(SoundManager.AudioType.Jhin);
+        SoundManager.Instance().SetChangeBackgroundAudio(true);
 
         canAct = false;
 
@@ -318,6 +319,8 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         //EnemyEffectTransform.EnableEnemyHealedEffect.Invoke(Color.red);
         EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.red);
 
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
+
         StartCool();
     }
 
@@ -344,6 +347,8 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         BattleManager.Instance().ReduceEnemyCost(increaseMaxCostCool);
 
         EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.blue);
+
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
 
         BattleManager.Instance().currentEnemyMaxCost += amountOfIncreaseMaxCost;
         BattleManager.Instance().currentEnemyCostIncreaseAmount += amountOfIncreaseIncreasingMaxCost;
@@ -374,6 +379,8 @@ public class Enemy_Jhin_InBattle : MonoBehaviour
         BattleManager.Instance().ReduceEnemyCost(increaseAttackAmountCost);
 
         EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.magenta);
+
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
 
         attackAmount += amountOfIncreaseAttackAmount;
         behaviorControl.SetAttackAmount(attackAmount);

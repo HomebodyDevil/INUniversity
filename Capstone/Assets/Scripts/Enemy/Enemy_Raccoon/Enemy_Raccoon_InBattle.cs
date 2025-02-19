@@ -31,7 +31,8 @@ public class Enemy_Raccoon_InBattle : MonoBehaviour
 
     public void Start()
     {
-        //Debug.Log("Fox Here~");
+        //SoundManager.Instance().ChangeToBattleBackgroundAudio();
+        SoundManager.Instance().SetChangeBackgroundAudio(false);
 
         canAct = false;
 
@@ -151,6 +152,8 @@ public class Enemy_Raccoon_InBattle : MonoBehaviour
 
         animator.SetBool("isAct", true);
 
+        SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.hit, false);
+
         //Debug.Log("Attack");
         BattleManager.Instance().ReduceEnemyCost(attackCost);
         BattleManager.Instance().DamageToPlayer(attackAmount);
@@ -173,6 +176,8 @@ public class Enemy_Raccoon_InBattle : MonoBehaviour
         }
 
         animator.SetBool("isAct", true);
+
+        SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.heal, false);
 
         //Debug.Log("Heal");
 

@@ -39,11 +39,16 @@ public class Enemy_Park_InBattle_Bahavior_Control : MonoBehaviour
         }
         else if (behaviorIndex == 0)
         {
+
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.parkHPHit, false);
+
             BattleManager.Instance().DamageToPlayer(attackAmount);
             behaviorIndex = -1;
         }
         else if (behaviorIndex == 1)
         {
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.parkCostHit, false);
+
             BattleManager.Instance().ReducePlayerCost(attackAmount);
             behaviorIndex = -1;
         }

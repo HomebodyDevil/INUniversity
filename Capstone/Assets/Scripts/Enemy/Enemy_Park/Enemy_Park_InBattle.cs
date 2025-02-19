@@ -43,6 +43,9 @@ public class Enemy_Park_InBattle : MonoBehaviour
 
     public void Start()
     {
+        SoundManager.Instance().ChangeToBattleBackgroundAudio(SoundManager.AudioType.Park);
+        SoundManager.Instance().SetChangeBackgroundAudio(true);
+
         canAct = false;
         canHeal = true;
         canAttackHP = true;
@@ -258,6 +261,8 @@ public class Enemy_Park_InBattle : MonoBehaviour
 
         BattleManager.Instance().HealToEnemy(healHP);
         BattleManager.Instance().ReduceEnemyCost(healCost);
+
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
 
         StartCoroutine("HealCool");
     }

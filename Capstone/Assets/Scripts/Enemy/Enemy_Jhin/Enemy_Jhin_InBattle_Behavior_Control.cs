@@ -41,11 +41,15 @@ public class Enemy_Jhin_InBattle_Behavior_Control : MonoBehaviour
         }
         else if (behaviorIndex == 0)
         {
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.hit, false);
+
             BattleManager.Instance().DamageToPlayer(attackAmount);
             behaviorIndex = -1;
         }
         else if (behaviorIndex == 1)
         {
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.jhinStrongHit, false);
+
             BattleManager.Instance().DamageToPlayer(attackAmount * 1.5f);
             behaviorIndex = -1;
         }

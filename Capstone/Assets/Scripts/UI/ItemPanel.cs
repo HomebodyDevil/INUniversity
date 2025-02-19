@@ -172,7 +172,7 @@ public class ItemPanel : MonoBehaviour, IPanel
 
     public void DisableButtons()
     {
-        descriptionButton.gameObject.SetActive(false);
+        //descriptionButton.gameObject.SetActive(false);
         useButton.gameObject.SetActive(false);
     }
     

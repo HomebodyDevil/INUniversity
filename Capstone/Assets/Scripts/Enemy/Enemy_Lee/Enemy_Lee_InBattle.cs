@@ -48,6 +48,9 @@ public class Enemy_Lee_InBattle : MonoBehaviour
 
     public void Start()
     {
+        SoundManager.Instance().ChangeToBattleBackgroundAudio(SoundManager.AudioType.Lee);    
+        SoundManager.Instance().SetChangeBackgroundAudio(true);
+
         canAct = false;
         canHeal = true;
         canAttack = true;
@@ -243,6 +246,8 @@ public class Enemy_Lee_InBattle : MonoBehaviour
 
         BattleManager.Instance().HealToEnemy(healHP);
         BattleManager.Instance().ReduceEnemyCost(healCost);
+
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
 
         StartCoroutine("HealCool");
     }

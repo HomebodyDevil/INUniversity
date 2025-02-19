@@ -26,7 +26,9 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
         if (canStart)
         {
             canStart = false;
-            StartCoroutine("FadeOut");        
+            StartCoroutine("FadeOut");
+
+            SoundManager.Instance().ChangeToMapBackgroundAudio();
         }
 
         //panelImage.color = Color.red;
@@ -43,7 +45,7 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
         orgColor = Color.white;
         text.color = orgColor;
 
-        Debug.Log(rectTransform.sizeDelta);
+        //Debug.Log(rectTransform.sizeDelta);
 
         //gameObject.SetActive(true);
         //canStart = false;
@@ -99,7 +101,7 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
                     sub = true;
             }
 
-            Debug.Log(tmpColor);
+            //Debug.Log(tmpColor);
             //text.color = Color.red;
             text.color = tmpColor;
 

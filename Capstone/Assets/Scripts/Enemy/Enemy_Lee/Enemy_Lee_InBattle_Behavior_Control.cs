@@ -69,6 +69,8 @@ public class Enemy_Lee_InBattle_Behavior_Control : MonoBehaviour
         }
         else if (behaviorIndex == 0)
         {
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.leeHit, false);
+
             Attack();
             behaviorIndex = -1;
         }
@@ -89,6 +91,8 @@ public class Enemy_Lee_InBattle_Behavior_Control : MonoBehaviour
 
     private void ChangeTime(bool isToLunch)
     {
+        SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.leeTimeChange, false);
+
         if (isToLunch)
         {
             BattleSceneLights.ChangeTimeToLunch.Invoke();
@@ -132,6 +136,8 @@ public class Enemy_Lee_InBattle_Behavior_Control : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(nightDealTick);
+
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.poisonHit, false);
 
             BattleManager.Instance().DamageToPlayer(nightDealAmount);
         }        

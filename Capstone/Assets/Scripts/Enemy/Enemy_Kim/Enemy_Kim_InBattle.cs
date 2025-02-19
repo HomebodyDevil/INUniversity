@@ -50,6 +50,9 @@ public class Enemy_Kim_InBattle : MonoBehaviour
 
     public void Start()
     {
+        SoundManager.Instance().ChangeToBattleBackgroundAudio(SoundManager.AudioType.Kim);
+        SoundManager.Instance().SetChangeBackgroundAudio(true);
+
         canAct = false;
         canHeal = true;
         canNormalAttack = true;
@@ -238,6 +241,8 @@ public class Enemy_Kim_InBattle : MonoBehaviour
         }
 
         BattleManager.Instance().HealToEnemy(healHP);
+        SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
+
         BattleManager.Instance().ReduceEnemyCost(healCost);
 
         StartCoroutine("HealCool");
@@ -325,7 +330,10 @@ public class Enemy_Kim_InBattle : MonoBehaviour
         {
             yield return new WaitForSeconds(poisonTick);
 
-            BattleManager.Instance().DamageToPlayer(currentPoisonDamage);
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.poisonHit, false);
+
+            if (poisonTick > 0)
+                BattleManager.Instance().DamageToPlayer(currentPoisonDamage);
         }
     }
 }

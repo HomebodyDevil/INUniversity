@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
+using Unity.VisualScripting;
 //using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -287,6 +289,11 @@ public class BattleManager : MonoBehaviour
 
             if (EnemyHittedEffectTransform.PlayEnemyHittedEffect != null)
                 EnemyHittedEffectTransform.PlayEnemyHittedEffect.Invoke(color);
+
+            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.hit, false);
+
+            string damageText = String.Format("{0:0.0}", damage);
+            TextController.ShowDescription.Invoke(false, true, false, damageText);
         }
 
         currentEnemyHP -= damage;
@@ -329,6 +336,9 @@ public class BattleManager : MonoBehaviour
         HealToPlayer(-damage);
         float currPlayerHP = PlayerSpecManager.Instance().currentPlayerHP;
 
+        string damageText = String.Format("{0:0.0}", damage);
+        TextController.ShowDescription.Invoke(true, true, false, damageText);
+
         if ((int)currPlayerHP <= 0)
         {
             PlayerDead();
@@ -344,6 +354,8 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Player Dead");
         //HealToPlayer(1);
 
+        SoundManager.Instance().Fade(true);
+
         OnBattleLose.Invoke();
     }
 
@@ -357,11 +369,13 @@ public class BattleManager : MonoBehaviour
         if (EnemyHealedEffectTransform.PlayEnemyHealedEffect != null)
             EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.yellow);
 
+        string healText = String.Format("{0:0.0}", heal);
+        TextController.ShowDescription.Invoke(false, true, true, healText);
 
         DamageToEnemy(-heal);
     }
 
-    public void HealToPlayer(float heal)
+    public void HealToPlayer(float heal, bool playSound = true)
     {
         //float currentHP = PlayerSpecManager.Instance().currentPlayerHP;
         //PlayerSpecManager.Instance().currentPlayerHP = Mathf.Max(currentHP + heal,
@@ -369,6 +383,12 @@ public class BattleManager : MonoBehaviour
         if (heal > 0 && isInBattle)
         {
             PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.white, true);
+            
+            if (playSound)
+                SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
+
+            string healString = string.Format("{0:0.0}", heal);
+            TextController.ShowDescription.Invoke(true, true, true, healString);
         }
 
         PlayerSpecManager.Instance().AddValueToCurrentPlayerHP(heal);
@@ -378,16 +398,18 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("EnemyDead");
 
-        if (currentEnemyHP > 0)
-        {
-            Debug.Log("Actually Not Dead");
-            return;
-        }
+        //if (currentEnemyHP > 0)
+        //{
+        //    Debug.Log("Actually Not Dead");
+        //    return;
+        //}
 
         PlayerSpecManager.Instance().GainEXP(currentEnemyEXPAmount);
 
         if (BattleManager.OnBattleWin != null)
         {
+            SoundManager.Instance().Fade(true);
+
             Debug.Log("Invoke OnBattleWin");
             BattleManager.OnBattleWin.Invoke();
         }
