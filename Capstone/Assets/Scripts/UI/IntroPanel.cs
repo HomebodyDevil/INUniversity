@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -5,11 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 
-public class IntroPanel : MonoBehaviour, IPointerClickHandler
+public class IntroPanel : MonoBehaviour
 {
     static private bool canStart = true;
 
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private float fadeTime;
 
     private Image panelImage;
     private RectTransform rectTransform;
@@ -21,18 +23,18 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
 
     private Color orgColor;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (canStart)
-        {
-            canStart = false;
-            StartCoroutine("FadeOut");
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    if (canStart)
+    //    {
+    //        canStart = false;
+    //        StartCoroutine("FadeOut");
 
-            SoundManager.Instance().ChangeToMapBackgroundAudio();
-        }
+    //        SoundManager.Instance().ChangeToMapBackgroundAudio();
+    //    }
 
-        //panelImage.color = Color.red;
-    }
+    //    //panelImage.color = Color.red;
+    //}
 
     void Start()
     {
@@ -46,7 +48,7 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
         text.color = orgColor;
 
         //Debug.Log(rectTransform.sizeDelta);
-
+        
         //gameObject.SetActive(true);
         //canStart = false;
         text.gameObject.SetActive(false);
@@ -127,39 +129,70 @@ public class IntroPanel : MonoBehaviour, IPointerClickHandler
 
             if (CheckPlayerCamDistance() < 30.0f)
             {
-                text.gameObject.SetActive(true);
-                StartCoroutine("BlinkText");
-                canStart = true;
+                //text.gameObject.SetActive(true);
+                text.gameObject.SetActive(false);
+                //StartCoroutine("BlinkText");
+                //canStart = true;
+
+                StartCoroutine(Fade(false));
 
                 break;
             }
         }
     }
 
-    IEnumerator FadeOut()
+    IEnumerator Fade(bool isIn)
     {
-        StopCoroutine("BlinkText");
-        text.gameObject.SetActive(false);
+        float target = isIn ? 0.0f : 1.0f;
+        panelImage.color = new Color(0f, 0f, 0f, target);
+        //panelImage.gameObject.SetActive(true);
 
-        int rep = 0;
-        while(true)
+        //target = isIn ? 0.0f : 1.0f;
+        float time = 0.0f;
+
+        while (time < fadeTime)
         {
-            if (rep++ > 100000)
-            {
-                Debug.Log("Too many rep");
-                break;
-            }
-
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,
-                                                Mathf.Lerp(rectTransform.sizeDelta.y, 0.0f, 0.3f));
-
-            if ((int)rectTransform.sizeDelta.y == 0)
-            {
-                gameObject.SetActive(false);
-                break;
-            }
-
             yield return null;
+            time += Time.deltaTime;
+
+            if (Mathf.Abs(time - fadeTime) < 0.01)
+                time = fadeTime;
+
+            float ratio = time / fadeTime;
+            float alpha = panelImage.color.a;
+            alpha = isIn ? Mathf.Lerp(alpha, 1.0f, ratio) : Mathf.Lerp(alpha, 0.0f, ratio);
+
+            Color overPanelColor = panelImage.color;
+            panelImage.color = new Color(overPanelColor.r, overPanelColor.g, overPanelColor.b, alpha);
         }
     }
+
+    //IEnumerator FadeOut()
+    //{
+    //    StopCoroutine("BlinkText");
+    //    text.gameObject.SetActive(false);
+
+    //    int rep = 0;
+    //    while(true)
+    //    {
+    //        if (rep++ > 100000)
+    //        {
+    //            Debug.Log("Too many rep");
+    //            break;
+    //        }
+
+    //        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,
+    //                                            Mathf.Lerp(rectTransform.sizeDelta.y, 0.0f, 0.3f));
+
+    //        SoundManager.Instance().ChangeToMapBackgroundAudio();
+
+    //        if ((int)rectTransform.sizeDelta.y == 0)
+    //        {
+    //            gameObject.SetActive(false);
+    //            break;
+    //        }
+
+    //        yield return null;
+    //    }
+    //}
 }

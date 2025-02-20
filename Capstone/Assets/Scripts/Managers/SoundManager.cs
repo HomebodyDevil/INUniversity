@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
@@ -43,6 +44,7 @@ public class SoundManager : MonoBehaviour
     private static SoundManager instance;
 
     [SerializeField] private Transform player;
+    [SerializeField] private AudioMixer mixer;
 
     [SerializeField] private float soundChangeTime;
 
@@ -273,6 +275,7 @@ public class SoundManager : MonoBehaviour
             AudioSource newAudioSoure = newSource.GetComponent<AudioSource>();
 
             sounds.Add(newAudioSoure);
+            newAudioSoure.outputAudioMixerGroup = mixer.FindMatchingGroups("Effect")[0];
 
             newAudioSoure.clip = audio;
             newAudioSoure.loop = loop;

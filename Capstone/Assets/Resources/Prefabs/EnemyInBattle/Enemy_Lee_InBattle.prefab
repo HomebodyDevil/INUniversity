@@ -284,8 +284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afce2190799c5e47b9265474f80f314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nightDealTick: 0.6
-  nightDealAmount: 0.2
+  nightDealTick: 1
+  nightDealAmount: 0.4
 --- !u!1 &3891003556211449958
 GameObject:
   m_ObjectHideFlags: 0

@@ -329,11 +329,12 @@ public class Enemy_Kim_InBattle : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(poisonTick);
-
-            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.poisonHit, false);
-
-            if (poisonTick > 0)
+            
+            if (currentPoisonDamage > 0)
+            {
                 BattleManager.Instance().DamageToPlayer(currentPoisonDamage);
+                SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.poisonHit, false);
+            }
         }
     }
 }
