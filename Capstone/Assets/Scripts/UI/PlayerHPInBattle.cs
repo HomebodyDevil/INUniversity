@@ -25,9 +25,9 @@ public class PlayerHPInBattle : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(0.1f);
 
-            text.text = string.Format("HP : ( {0} / {1} )",
-                                        (int)PlayerSpecManager.Instance().currentPlayerHP,
-                                        (int)PlayerSpecManager.Instance().maxPlayerHP);
+            text.text = string.Format("HP : ( {0:0.0} / {1:0.0} )",
+                                        (float)PlayerSpecManager.Instance().currentPlayerHP,
+                                        (float)PlayerSpecManager.Instance().maxPlayerHP);
         }
     }
 }

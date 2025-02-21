@@ -22,6 +22,7 @@ public class PlayerCardManager : MonoBehaviour
     // 카드마다 id(int)를 갖도록 하자.
     private Dictionary<int, A_PlayerCard> playerHaveCardsDictionary;    // ID에 해당하는 카드
     private Dictionary<int, int> playerHaveCardsCount;                  // 해당 ID의 카드를 얼마나 갖고있나.
+    private List<int> cantUseCardIdList;
 
     private List<A_PlayerCard> playerDeckCardList;
 
@@ -61,6 +62,7 @@ public class PlayerCardManager : MonoBehaviour
         playerHaveCardsDictionary = new Dictionary<int, A_PlayerCard>();
         playerHaveCardsCount = new Dictionary<int, int>();
         playerDeckCardList = new List<A_PlayerCard>();
+        cantUseCardIdList = new List<int>();
 
         for (int i = 0; i < cardForDictionary.Count; i++)
         {
@@ -72,6 +74,11 @@ public class PlayerCardManager : MonoBehaviour
         isInitialized = true;
 
         Initialize();
+    }
+
+    private void MakeCantUseCard(int cardID)
+    {
+
     }
 
     private void OnDestroy()

@@ -273,6 +273,8 @@ public class BattleManager : MonoBehaviour
 
     public void DamageToEnemy(float damage)
     {
+        //Debug.Log($"damage : {damage}");
+
         if (currentEnemyHP <= 0)
             return;
 
@@ -298,7 +300,7 @@ public class BattleManager : MonoBehaviour
 
         currentEnemyHP -= damage;
 
-        if ((int)currentEnemyHP <= 0)
+        if (currentEnemyHP <= 0.0f)
         {
             if (OnEnemyHPisZero != null)
             {
@@ -382,7 +384,7 @@ public class BattleManager : MonoBehaviour
         //                                PlayerSpecManager.Instance().maxPlayerHP);      
         if (heal > 0 && isInBattle)
         {
-            PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.white, true);
+            PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.yellow, true);
             
             if (playSound)
                 SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
@@ -675,6 +677,25 @@ public class BattleManager : MonoBehaviour
         }
 
         return currentEnemyInBattle;
+    }
+
+    public void MultipleAttack(int repeat, float attackAmount, float attackInterval)
+    {
+        StartCoroutine(MultipleAttackRoutine(repeat, attackAmount, attackInterval));
+    }
+
+    IEnumerator MultipleAttackRoutine(int repeat, float attackAmount, float attackInterval)
+    {
+        int rep = 0;
+        float initialAttackAmount = attackAmount;
+        while (rep < repeat)
+        {
+            attackAmount = initialAttackAmount * UnityEngine.Random.Range(0.8f, 1.5f);
+            BattleManager.Instance().DamageToEnemy(attackAmount);
+            rep++;
+
+            yield return new WaitForSeconds(attackInterval);
+        }
     }
 
     //public void SetDropItemsList(List<A_Item> itemList)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerCard_NormalAttack : A_PlayerCard
 {
+    [SerializeField] private float defaultAttack;
+    [SerializeField, Range(0.0f, 1.0f)] private float attackRatio;
+
     public override void OnDiscardCard()
     {
         Debug.Log("Attack_Discard");
@@ -29,8 +32,12 @@ public class PlayerCard_NormalAttack : A_PlayerCard
 
         //Debug.Log(string.Format("CardCost : {0}", cardCost));
 
+        float attackAmount = defaultAttack + attackRatio * playerSpecManager.currentPlayerAttackPoint;
+
+        Debug.Log(attackAmount);
+
         battleManager.ReducePlayerCost(cardCost);
-        battleManager.DamageToEnemy(5.0f);
+        battleManager.DamageToEnemy(attackAmount);
 
         //Debug.Log("Attack_Play");
     }

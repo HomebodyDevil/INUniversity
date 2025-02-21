@@ -106,6 +106,7 @@ public class PlayerEffectTransform : MonoBehaviour
 
     public void ResetHitted()
     {
+        ResetTransform();
         animator.SetBool("Hitted", false);
     }
 

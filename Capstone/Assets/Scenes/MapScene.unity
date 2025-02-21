@@ -497,9 +497,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardForDictionary:
   - {fileID: 6781167465260491677, guid: 711905648dda4f243b4e2caf21bf25a1, type: 3}
-  - {fileID: 6781167465260491677, guid: 5376c487a26edaa41aa7122d7ec0a940, type: 3}
-  - {fileID: 6781167465260491677, guid: 9973baa98998dab43b0da370d48a78f2, type: 3}
-  countForDictionary: 010000000100000001000000010000000100000001000000
+  - {fileID: -3963224759210499962, guid: 2725d47acc430224b9ea4125d9b974ed, type: 3}
+  - {fileID: 8564704050868236778, guid: b16d1ab4d0875bc4791096ccb95861c2, type: 3}
+  countForDictionary: 010000000100000001000000
 --- !u!4 &29449895
 Transform:
   m_ObjectHideFlags: 0
@@ -13965,10 +13965,10 @@ RectTransform:
   m_Father: {fileID: 8489521433728764878}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 20, y: 5000}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1042099381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16633,6 +16633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInitialized: 0
+  hpAddAmount: 0
+  attackPointAddAmount: 0
   currentPlayerLevel: 0
   currentPlayerHP: 0
   currentPlayerEXP: 0
@@ -19932,7 +19934,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400192860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2317505, y: -0.000000025399654, z: 0.0000000060511227, w: 0.9727753}
+  m_LocalRotation: {x: 0.23175052, y: 0.0000000038451993, z: -9.160681e-10, w: 0.9727753}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22609,7 +22611,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543626623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24935995, y: -0.000000018629626, z: 0.0000000047970166, w: 0.9684109}
+  m_LocalRotation: {x: 0.24935995, y: 0.000000018541735, z: -0.000000004774385, w: 0.9684109}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23352,7 +23354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemForDictionary:
   - {fileID: 8194157664655875222, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
-  countForDictionary: 05000000
+  - {fileID: 8194157664655875222, guid: 9a0f7bbf49d3c4c4bb4c09f0c435f484, type: 3}
+  - {fileID: 8194157664655875222, guid: ddfbecfeaaba7184589a1049cffd59f5, type: 3}
+  countForDictionary: 050000000500000005000000
 --- !u!1 &1602733690
 GameObject:
   m_ObjectHideFlags: 0

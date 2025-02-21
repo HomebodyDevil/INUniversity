@@ -10,6 +10,10 @@ public class PlayerSpecManager : MonoBehaviour
 
     public bool isInitialized;
 
+    [SerializeField] float hpAddAmount;
+    [SerializeField] float attackPointAddAmount;
+
+    [Space(10), Header("Settings")]
     public int currentPlayerLevel;
     public float currentPlayerHP;
     public float currentPlayerEXP;
@@ -49,25 +53,53 @@ public class PlayerSpecManager : MonoBehaviour
 
     private void Awake()
     {
-        Initialize();
-    }
-
-    private void OnEnable()
-    {
         BattleManager.OnStartBattle -= StartIncreaseCost;
         BattleManager.OnStartBattle += StartIncreaseCost;
 
         BattleManager.OnPauseBattle -= StopIncreaseCost;
         BattleManager.OnPauseBattle += StopIncreaseCost;
+
+        SceneManagerEX.OnSwitchSceneToMap -= UpdateSpec;
+        SceneManagerEX.OnSwitchSceneToMap += UpdateSpec;
+
+        Initialize();
     }
 
+    private void OnDestroy()
+    {
+        BattleManager.OnStartBattle -= StartIncreaseCost;
+        BattleManager.OnPauseBattle -= StopIncreaseCost;
+        SceneManagerEX.OnSwitchSceneToMap -= UpdateSpec;
+    }
+
+    //private void OnEnable()
+    //{
+    //    BattleManager.OnStartBattle -= StartIncreaseCost;
+    //    BattleManager.OnStartBattle += StartIncreaseCost;
+
+    //    BattleManager.OnPauseBattle -= StopIncreaseCost;
+    //    BattleManager.OnPauseBattle += StopIncreaseCost;
+    //}
+
     // Start is called before the first frame update
+
     void Start()
     {
         isInitialized = false;
 
         InitializePlayerSpec();
         MapUIManager.Instance().UpdatePlayerLevelText();
+
+        UpdateSpec();
+    }
+
+    public void UpdateSpec()
+    {
+        float hpRatio = currentPlayerHP / maxPlayerHP;
+        maxPlayerHP = Mathf.Max(maxPlayerHP + currentPlayerLevel * hpAddAmount, 0.0f);
+        currentPlayerHP = maxPlayerHP * hpRatio;
+
+        maxPlayerAttackPoint = Mathf.Max(currentPlayerAttackPoint + currentPlayerLevel * attackPointAddAmount, 0.0f);
     }
 
     public void InitializePlayerSpec()

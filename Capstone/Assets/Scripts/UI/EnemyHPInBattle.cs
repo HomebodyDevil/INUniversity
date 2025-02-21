@@ -25,9 +25,9 @@ public class EnemyHPInBattle : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(0.1f);
 
-            text.text = string.Format("EnemyHP : ( {0} / {1} )",
-                                        (int)BattleManager.Instance().currentEnemyHP,
-                                        (int)BattleManager.Instance().currentEnemyMaxHP);
+            text.text = string.Format("EnemyHP : ( {0:0.0} / {1:0.0} )",
+                                        (float)BattleManager.Instance().currentEnemyHP,
+                                        (float)BattleManager.Instance().currentEnemyMaxHP);
         }
     }
 }

@@ -25,9 +25,9 @@ public class EnemyCostInBattle : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(0.1f);
 
-            text.text = string.Format("EnemyCost : ( {0} / {1} )",
-                                        (int)BattleManager.Instance().currentEnemyCost,
-                                        (int)BattleManager.Instance().currentEnemyMaxCost);
+            text.text = string.Format("EnemyCost : ( {0:0.0} / {1:0.0} )",
+                                        (float)BattleManager.Instance().currentEnemyCost,
+                                        (float)BattleManager.Instance().currentEnemyMaxCost);
         }
     }
 }

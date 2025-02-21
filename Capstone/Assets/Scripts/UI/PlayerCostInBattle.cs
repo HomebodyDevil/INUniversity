@@ -25,9 +25,9 @@ public class PlayerCostInBattle : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(0.1f);
 
-            text.text = string.Format("Cost : ( {0} / {1} )",
-                                        (int)PlayerSpecManager.Instance().currentPlayerCost,
-                                        (int)PlayerSpecManager.Instance().maxPlayerCost);
+            text.text = string.Format("Cost : ( {0:0.0} / {1:0.0} )",
+                                        (float)PlayerSpecManager.Instance().currentPlayerCost,
+                                        (float)PlayerSpecManager.Instance().maxPlayerCost);
         }
     }
 }
