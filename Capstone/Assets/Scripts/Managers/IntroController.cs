@@ -23,6 +23,8 @@ public class IntroController : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
+
         canStart = false;
         audioSource.volume = 1.0f;
 

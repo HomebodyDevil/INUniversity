@@ -31,10 +31,14 @@ MonoBehaviour:
     chance: 70
     maxDropAmount: 5
   dropCards:
-  - card: {fileID: 2242407686405643945, guid: 711905648dda4f243b4e2caf21bf25a1, type: 3}
+  - card: {fileID: 2242407686405643945, guid: 2725d47acc430224b9ea4125d9b974ed, type: 3}
     chance: 50
   dropEquipment:
-  - equipment: {fileID: 6212625612447770044, guid: b245260262cb6d34885a5754267c0fe8, type: 3}
+  - equipment: {fileID: 3141337324803865170, guid: 25c00297ce3ba3d44ba0083e41a0359e, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 8372dee6ed533964aae5b78ed2690451, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: b43c97a90932f70449d717ac97c0b524, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
     chance: 50

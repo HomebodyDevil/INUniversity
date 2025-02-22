@@ -89,6 +89,9 @@ public class InputManager : MonoBehaviour
 
     private void TouchReleased(InputAction.CallbackContext ctx)
     {
+        if (!GPSManager.isIn)
+            return;
+
         Vector2 value = playerInput.PlayerTouch.TouchPosition.ReadValue<Vector2>();
         Vector3 pos = Camera.main.ScreenToWorldPoint(value);
         Vector3 mainCamPos = Camera.main.transform.position;

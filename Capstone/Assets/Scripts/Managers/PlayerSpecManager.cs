@@ -20,6 +20,11 @@ public class PlayerSpecManager : MonoBehaviour
     public float currentPlayerAttackPoint;
     public float currentPlayerCost;
 
+    private float originalPlayerMaxHP;
+    private float originalPlayerAttackPoint;
+    private float originalPlayerMaxCost;
+    private float originalCostIncreaseAmount;
+
     public float maxPlayerHP;
     public float maxPlayerEXP;
     public float maxPlayerAttackPoint;
@@ -62,6 +67,12 @@ public class PlayerSpecManager : MonoBehaviour
         SceneManagerEX.OnSwitchSceneToMap -= UpdateSpec;
         SceneManagerEX.OnSwitchSceneToMap += UpdateSpec;
 
+        SceneManagerEX.OnSwitchSceneToBattle -= SaveOriginalSpec;
+        SceneManagerEX.OnSwitchSceneToBattle += SaveOriginalSpec;
+
+        SceneManagerEX.OnSwitchSceneToMap -= RestoreOriginalSpec;
+        SceneManagerEX.OnSwitchSceneToMap += RestoreOriginalSpec;
+
         Initialize();
     }
 
@@ -70,6 +81,8 @@ public class PlayerSpecManager : MonoBehaviour
         BattleManager.OnStartBattle -= StartIncreaseCost;
         BattleManager.OnPauseBattle -= StopIncreaseCost;
         SceneManagerEX.OnSwitchSceneToMap -= UpdateSpec;
+        SceneManagerEX.OnSwitchSceneToBattle -= SaveOriginalSpec;
+        SceneManagerEX.OnSwitchSceneToMap -= RestoreOriginalSpec;
     }
 
     //private void OnEnable()
@@ -91,6 +104,22 @@ public class PlayerSpecManager : MonoBehaviour
         MapUIManager.Instance().UpdatePlayerLevelText();
 
         UpdateSpec();
+    }
+
+    private void SaveOriginalSpec()
+    {
+        originalPlayerMaxHP = maxPlayerHP;
+        originalPlayerAttackPoint = currentPlayerAttackPoint;
+        originalPlayerMaxCost = maxPlayerCost;
+        originalCostIncreaseAmount = currentPlayerAttackPoint;
+    }
+
+    private void RestoreOriginalSpec()
+    {
+        maxPlayerHP = originalPlayerMaxHP;
+        currentPlayerAttackPoint = originalPlayerAttackPoint;
+        maxPlayerCost = originalPlayerMaxCost;
+        currentPlayerAttackPoint = originalCostIncreaseAmount;
     }
 
     public void UpdateSpec()

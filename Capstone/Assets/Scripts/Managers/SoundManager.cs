@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
         poisonHit,
         heal,
         hit,
+        strongHit,
         win,
         lose,
         enemyDead,

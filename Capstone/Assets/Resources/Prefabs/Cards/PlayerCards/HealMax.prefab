@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardCost: 10
-  cardID: 9993
+  cardID: 3
   cardName: HealMax
   cardImagePath: Images/Cards/HealMax
   cardDescription: healMax

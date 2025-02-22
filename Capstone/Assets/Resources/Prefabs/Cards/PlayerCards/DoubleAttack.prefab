@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardCost: 2
-  cardID: 9994
+  cardID: 4
   cardName: DoubleAttack
   cardImagePath: Images/Cards/DoubleAttack
   cardDescription: DoubleAttack

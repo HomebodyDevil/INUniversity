@@ -7,6 +7,9 @@ public class EnemyBody : MonoBehaviour, IPointerClickHandler
 {  
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!GPSManager.isIn)
+            return;
+
         GameObject testEnemyObject = gameObject.transform.parent.gameObject;
 
         //Debug.Log("This is Enemy");

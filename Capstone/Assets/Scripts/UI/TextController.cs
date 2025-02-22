@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TextController : MonoBehaviour
 {
-    public static Action<bool, bool, bool, string> ShowDescription;
+    public static Action<bool, bool, bool, string, bool> ShowDescription;
 
     [SerializeField] private GameObject descriptionTextPrefab;
 
@@ -27,13 +27,13 @@ public class TextController : MonoBehaviour
         ShowDescription -= OnShowDescription;
     }
 
-    private void OnShowDescription(bool player, bool randPos, bool isHeal, string str)
+    private void OnShowDescription(bool player, bool randPos, bool isHeal, string str, bool isBuff = false)
     {
         if (isPlayer == player)
-            ShowText(str, isHeal, randPos);
+            ShowText(str, isHeal, randPos, isBuff);
     }
 
-    public void ShowText(string str, bool isHeal, bool randomPos)
+    public void ShowText(string str, bool isHeal, bool randomPos, bool isBuff = false)
     {
         GameObject go = Instantiate(descriptionTextPrefab);
         go.transform.SetParent(canvas.transform, false);
@@ -51,6 +51,10 @@ public class TextController : MonoBehaviour
         {
             descText.SetColor(Color.yellow);
             //descText.SetColor(new Color(1.0f, 1.0f, 0.0f, 1.0f));
+        }
+        else if (isBuff)
+        {
+            descText.SetColor(Color.blue);
         }
         else
         {

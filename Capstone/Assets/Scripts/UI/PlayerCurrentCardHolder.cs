@@ -98,6 +98,16 @@ public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDra
         GetComponent<Image>().sprite = image;
         trackingImage.sprite = image;
 
-        costText.text = String.Format("{0}", (int)currentPlayerCard.cardCost);
+        int currPlayerCardCost = (int)currentPlayerCard.cardCost;
+        if (currPlayerCardCost == -1)
+        {
+            costText.text = String.Format("All");
+        }
+        else
+        {
+            costText.text = String.Format("{0}", currPlayerCardCost);
+        }
+
+        //costText.text = String.Format("{0}", (int)currentPlayerCard.cardCost);
     }
 }

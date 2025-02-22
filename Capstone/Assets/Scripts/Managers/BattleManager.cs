@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 //using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Scripting;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class BattleManager : MonoBehaviour
@@ -107,6 +108,12 @@ public class BattleManager : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToMap -= DisableIsInBattle;
         SceneManagerEX.OnSwitchSceneToMap += DisableIsInBattle;
+
+        BattleManager.OnEnemyHPisZero -= StopBattleCoroutines;
+        BattleManager.OnEnemyHPisZero += StopBattleCoroutines;
+
+        BattleManager.OnBattleLose -= StopBattleCoroutines;
+        BattleManager.OnBattleLose += StopBattleCoroutines;
     }
 
     // Start is called before the first frame update
@@ -138,6 +145,8 @@ public class BattleManager : MonoBehaviour
         SceneManagerEX.OnSwitchSceneToBattle -= LoadCards;
         SceneManagerEX.OnSwitchSceneToBattle -= EnableIsInBattle;
         SceneManagerEX.OnSwitchSceneToMap -= DisableIsInBattle;
+        BattleManager.OnEnemyHPisZero -= StopBattleCoroutines;
+        BattleManager.OnBattleLose -= StopBattleCoroutines;
     }
 
     private void EnableIsInBattle()
@@ -292,10 +301,15 @@ public class BattleManager : MonoBehaviour
             if (EnemyHittedEffectTransform.PlayEnemyHittedEffect != null)
                 EnemyHittedEffectTransform.PlayEnemyHittedEffect.Invoke(color);
 
-            SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.hit, false);
+            if (damage / currentEnemyMaxHP >= 0.3f)
+            {
+                SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.strongHit, false);
+            }
+            else
+                SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.hit, false);
 
             string damageText = String.Format("{0:0.0}", damage);
-            TextController.ShowDescription.Invoke(false, true, false, damageText);
+            TextController.ShowDescription.Invoke(false, true, false, damageText, false);
         }
 
         currentEnemyHP -= damage;
@@ -339,7 +353,7 @@ public class BattleManager : MonoBehaviour
         float currPlayerHP = PlayerSpecManager.Instance().currentPlayerHP;
 
         string damageText = String.Format("{0:0.0}", damage);
-        TextController.ShowDescription.Invoke(true, true, false, damageText);
+        TextController.ShowDescription.Invoke(true, true, false, damageText, false);
 
         if ((int)currPlayerHP <= 0)
         {
@@ -372,7 +386,7 @@ public class BattleManager : MonoBehaviour
             EnemyHealedEffectTransform.PlayEnemyHealedEffect.Invoke(Color.yellow);
 
         string healText = String.Format("{0:0.0}", heal);
-        TextController.ShowDescription.Invoke(false, true, true, healText);
+        TextController.ShowDescription.Invoke(false, true, true, healText, false);
 
         DamageToEnemy(-heal);
     }
@@ -390,7 +404,7 @@ public class BattleManager : MonoBehaviour
                 SoundManager.PlayHitAudio.Invoke(SoundManager.AudioType.heal, false);
 
             string healString = string.Format("{0:0.0}", heal);
-            TextController.ShowDescription.Invoke(true, true, true, healString);
+            TextController.ShowDescription.Invoke(true, true, true, healString, false);
         }
 
         PlayerSpecManager.Instance().AddValueToCurrentPlayerHP(heal);
@@ -573,7 +587,7 @@ public class BattleManager : MonoBehaviour
         dropEquipmentList.Clear();
         dropCardsList.Clear();
 
-        Random.InitState((int)(Time.time * 1000));
+        Random.InitState((int)(Time.time * 1000) % int.MaxValue);
         int randValue = 0;
 
         if (currentEnemyData == null)
@@ -679,9 +693,44 @@ public class BattleManager : MonoBehaviour
         return currentEnemyInBattle;
     }
 
+    public void ChangeEnemyColorInBattle(Color color)
+    {
+        if (currentEnemyInBattle == null)
+            return;
+
+        SpriteRenderer sr = currentEnemyInBattle.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            Debug.Log("Enemy Image Is Null");
+            return;
+        }
+
+        sr.color = color;
+    }
+
+    private void StopBattleCoroutines()
+    {
+        repeatAttacking = 0;
+        StopCoroutine("MultipleAttackRoutine");
+        StopCoroutine("RepeatHealRoutine");
+        StopCoroutine("RepeatAttackRoutine");
+    }
+
     public void MultipleAttack(int repeat, float attackAmount, float attackInterval)
     {
         StartCoroutine(MultipleAttackRoutine(repeat, attackAmount, attackInterval));
+    }
+
+    public void RepeatHeal(int repeat, float healAmount, float interval)
+    {
+        StartCoroutine(RepeatHealRoutine(repeat, healAmount, interval));
+    }
+
+    private int repeatAttacking = 0;
+    public void RepeatAttack(int repeat, float damage, float interval)
+    {
+        repeatAttacking++;
+        StartCoroutine(RepeatAttackRoutine(repeat, damage, interval));
     }
 
     IEnumerator MultipleAttackRoutine(int repeat, float attackAmount, float attackInterval)
@@ -695,6 +744,40 @@ public class BattleManager : MonoBehaviour
             rep++;
 
             yield return new WaitForSeconds(attackInterval);
+        }
+    }
+
+    IEnumerator RepeatHealRoutine(int repeat, float healAmount, float interval)
+    {
+        int rep = 0;
+        while (rep < repeat)
+        {
+            rep++;
+
+            BattleManager.Instance().HealToPlayer(healAmount);
+
+            yield return new WaitForSeconds(interval);
+        }
+    }
+
+    IEnumerator RepeatAttackRoutine(int repeat, float damage, float interval)
+    {
+        int rep = 0;
+
+        ChangeEnemyColorInBattle(Color.green);
+        while (rep < repeat)
+        {
+            rep++;
+
+            BattleManager.Instance().DamageToEnemy(damage);
+
+            if (rep >= repeat && repeatAttacking <= 1)
+            {
+                repeatAttacking--;
+                ChangeEnemyColorInBattle(Color.white);
+            }
+
+            yield return new WaitForSeconds(interval);
         }
     }
 

@@ -141,8 +141,14 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
     private void UpdateCardCostText(int n)
     {
-        cardCostPanel.SetActive(true);
-        cardCostText.text = String.Format("{0}", n);
+        cardCostPanel.SetActive(true); if (n == -1)
+        {
+            cardCostText.text = String.Format("All");
+        }
+        else
+        {
+            cardCostText.text = String.Format("{0}", n);
+        }
     }
 
     public A_PlayerCard GetCard()

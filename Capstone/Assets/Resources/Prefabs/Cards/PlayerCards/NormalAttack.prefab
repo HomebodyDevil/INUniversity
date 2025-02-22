@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardCost: 0
-  cardID: 9991
+  cardID: 1
   cardName: NormalAttack
   cardImagePath: Images/Cards/NormalAttack
   cardDescription: attack

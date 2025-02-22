@@ -9,12 +9,13 @@ public class Player : MonoBehaviour
     private static Player instance;
 
     // 테스트용으로 집 주의를 목표로 해본다.
+    // 테스트용 경도 위도를 사용하려면, GPS매니저의 homeTextLat, homeTestLon을 변경.
     [Header("For Testing")]
-    public bool isForTesting;
-    public bool isForPCTest;
-    [SerializeField] public double testLat;         // 집 주위 영역의 중심 위도 / 경도
+    public bool isForTesting;                           // Dest로 테스트용 Dest 위치를 사용
+    public bool isForPCTest;                            // PC시, GPS 매니저에 있는 Home어쩌구의 lat, long을 사용. 폰의 GPS를 사용시 끌 것.
+    [SerializeField] public double testLat;             // 테스트용 Dest 위치
     [SerializeField] public double testLong;
-    [SerializeField] public double testRad;         // 영역에 대한 반지름
+    [SerializeField] public double testRad;             // 영역에 대한 반지름
     [SerializeField] public double latForTestZCor;      // 지도로 맨 왼쪽 아래의 위도 / 경도(집 테스트 기준)
     [SerializeField] public double longForTestXCor;
     [SerializeField] public double latForSchoolTestZCor;  // 지도로 맨 왼쪽 아래의 위도 / 경도(학교 테스트 기준)

@@ -29,12 +29,26 @@ MonoBehaviour:
   dropItems:
   - item: {fileID: 1819807146939611753, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
     chance: 70
+    maxDropAmount: 10
+  - item: {fileID: 1819807146939611753, guid: 9a0f7bbf49d3c4c4bb4c09f0c435f484, type: 3}
+    chance: 70
     maxDropAmount: 5
+  - item: {fileID: 1819807146939611753, guid: ddfbecfeaaba7184589a1049cffd59f5, type: 3}
+    chance: 70
+    maxDropAmount: 2
   dropCards:
-  - card: {fileID: 2242407686405643945, guid: 97e9935a7335bdb4984f4c54467ffea7, type: 3}
+  - card: {fileID: 2242407686405643945, guid: af97e5f416a3e6644a9724f3c7f56c88, type: 3}
+    chance: 50
+  - card: {fileID: 2242407686405643945, guid: 9d29452eac480074dbf3763ace2e5f4a, type: 3}
     chance: 50
   dropEquipment:
-  - equipment: {fileID: 6212625612447770044, guid: b245260262cb6d34885a5754267c0fe8, type: 3}
+  - equipment: {fileID: 3141337324803865170, guid: 4939f3a5da16c3549932f5aa37482b0b, type: 3}
     chance: 50
-  - equipment: {fileID: 3141337324803865170, guid: 8372dee6ed533964aae5b78ed2690451, type: 3}
+  - equipment: {fileID: 3141337324803865170, guid: 674252cdcfa7c7642ae226f4f7fd4cb8, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: 9f4b0273f44765e41be77b6b5ea56e35, type: 3}
+    chance: 50
+  - equipment: {fileID: 3141337324803865170, guid: 632a53f2bfa35ec46a2fe609718a3c38, type: 3}
     chance: 50

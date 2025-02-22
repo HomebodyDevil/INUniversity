@@ -115,7 +115,14 @@ public class DeckCardImageHolder : MonoBehaviour, IPointerClickHandler
 
     public void SetCostText(int n)
     {
-        costText.text = String.Format("{0}", n);
+        if (n == -1)
+        {
+            costText.text = String.Format("All");
+        }
+        else
+        {
+            costText.text = String.Format("{0}", n);
+        }        
     }
 
     public void UpdateImage(Sprite sprite)

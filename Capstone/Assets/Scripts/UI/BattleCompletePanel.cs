@@ -52,12 +52,13 @@ public class BattleCompletePanel : MonoBehaviour
     private void Start()
     {
         usedHeight = 0f;
-    }
-
-    private void Update()
-    {
         Intialize();
     }
+
+    //private void Update()
+    //{
+    //    Intialize();
+    //}
 
     private void Intialize()
     {

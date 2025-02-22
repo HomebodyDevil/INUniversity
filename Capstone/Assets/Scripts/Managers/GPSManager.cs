@@ -5,14 +5,17 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.UI;
 
 public class GPSManager : MonoBehaviour
 {
     static GPSManager instance;
+    public static bool isIn = false;
+    private static bool canUpdatePanel = true;
 
     [Header("Test Cordinates")]
-    [SerializeField] private float homeTestLat;
-    [SerializeField] private float homeTestLon;
+    [SerializeField] private double homeTestLat;
+    [SerializeField] private double homeTestLon;
     [SerializeField] private TextMeshProUGUI longText;
     [SerializeField] private TextMeshProUGUI latText;
     [SerializeField] private GameObject LocationPanel;
@@ -22,13 +25,15 @@ public class GPSManager : MonoBehaviour
     [Space(10), Header("Objects")]
     [SerializeField] private GameObject compusObject;
     [SerializeField] private GameObject textObject;
+    [SerializeField] private Image notInRangePanel;
+    [SerializeField] private float fadeTime;
 
     [Space(20f)]
     [Range(10, 150)] public int fontSize = 10;
     public Color color = new Color(.0f, .0f, .0f, 1.0f);
     public float width, height;
-    public float latitude, longitude, altitude;
-    public float exLatitude, exLongitude, exAltitude;
+    public double latitude, longitude, altitude;
+    public double exLatitude, exLongitude, exAltitude;
     string message = "-";
     private IEnumerator currentCoroutine;
 
@@ -70,6 +75,12 @@ public class GPSManager : MonoBehaviour
         SceneManagerEX.OnSwitchSceneToMap -= WhenSwitchSceneToMap;
         SceneManagerEX.OnSwitchSceneToMap += WhenSwitchSceneToMap;
 
+        SceneManagerEX.OnSwitchSceneToBattle -= MakeCantUpdatePanel;
+        SceneManagerEX.OnSwitchSceneToBattle += MakeCantUpdatePanel;
+
+        SceneManagerEX.OnSwitchSceneToMap -= MakeCanUpdatePanel;
+        SceneManagerEX.OnSwitchSceneToMap += MakeCanUpdatePanel;
+
         Initialize();
     }
 
@@ -86,13 +97,46 @@ public class GPSManager : MonoBehaviour
         playerMovement = Player.Instance().gameObject.GetComponent<PlayerMovement>();
         player = Player.Instance().gameObject.GetComponent<Player>();
 
-        getGPSInfo();
-    }
+        notInRangePanel.color = Color.black;
+        notInRangePanel.gameObject.SetActive(true);
 
+        if (!player.isForPCTest)
+            getGPSInfo();
+
+        StartCoroutine(CheckArea());
+    }
+   
     private void Update()
     {
         //목적지 영역 내에 들어왔는지 체크.
-        Player.Instance().isInDest = (GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad);
+        //Player.Instance().isInDest = (GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad);
+
+        //if (isIn && GetDistance(latitude, longitude, player.destLat, player.destLong) >= player.destRad)
+        //{
+        //    StopCoroutine("Fade");
+        //    StartCoroutine(Fade(true));
+        //}
+        //else if (!isIn && GetDistance(latitude, longitude, player.destLat, player.destLong) < player.destRad)
+        //{
+        //    StopCoroutine("Fade");
+        //    StartCoroutine(Fade(false));
+        //}
+        //isIn = GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad;
+
+
+        //if (!isIn && GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad)
+        //{
+        //    StopCoroutine("Fade");
+        //    StartCoroutine(Fade(false));
+        //}
+
+        //isIn = GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad;
+        //if (!isIn)
+        //{
+        //    notInRangePanel.color = Color.black;
+        //    notInRangePanel.gameObject.SetActive(true);
+        //}
+
 
         if (player.isForPCTest)
         {
@@ -107,7 +151,8 @@ public class GPSManager : MonoBehaviour
 
         // 확인용 Panel 사용.
         // 추후 없애주자.
-        TestText.text = String.Format("{2}\nxCor : {0}\nzCor : {1}", player.xCor, player.zCor, checkText);
+        //TestText.text = String.Format("{2}\nxCor : {0}\nzCor : {1}", player.xCor, player.zCor, checkText);
+        TestText.text = String.Format(isIn ? "Now INUniversity" : "Wrong Area");
 
         //if (Input.location.status == LocationServiceStatus.Running)
         //{
@@ -129,6 +174,9 @@ public class GPSManager : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToBattle -= WhenSwitchSceneToBattle;
         SceneManagerEX.OnSwitchSceneToMap -= WhenSwitchSceneToMap;
+
+        SceneManagerEX.OnSwitchSceneToBattle -= MakeCantUpdatePanel;
+        SceneManagerEX.OnSwitchSceneToMap -= MakeCanUpdatePanel;
     }
 
     //void OnGUI()
@@ -147,6 +195,16 @@ public class GPSManager : MonoBehaviour
 
     //    GUI.Label(position, text, style);
     //}
+
+    private void MakeCanUpdatePanel()
+    {
+        canUpdatePanel = true;
+    }
+
+    private void MakeCantUpdatePanel()
+    {
+        canUpdatePanel = false;
+    }
 
     private void DisableTestTextPanel()
     {
@@ -267,7 +325,7 @@ public class GPSManager : MonoBehaviour
                         player.zCor = GetDistance(latitude, 0, player.latForZCor, 0);
 
                         if (longitude - exLongitude != 0 || latitude - exLatitude != 0)
-                            playerMovement.moveDirection = new Vector3(longitude - exLongitude, 0, latitude - exLatitude);
+                            playerMovement.moveDirection = new Vector3((float)(longitude - exLongitude), 0, (float)(latitude - exLatitude));
 
                         print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
                     }
@@ -300,5 +358,60 @@ public class GPSManager : MonoBehaviour
         dist = dist * 1609.344;     // 미터 변환.
 
         return dist;
+    }
+
+    IEnumerator CheckArea()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(fadeTime + 0.05f);
+
+            if (!canUpdatePanel)
+                continue;
+
+            if (isIn && GetDistance(latitude, longitude, player.destLat, player.destLong) >= player.destRad)
+            {
+                StopCoroutine("Fade");
+                StartCoroutine(Fade(true));
+            }
+            else if (!isIn && GetDistance(latitude, longitude, player.destLat, player.destLong) < player.destRad)
+            {
+                StopCoroutine("Fade");
+                StartCoroutine(Fade(false));
+            }
+            isIn = GetDistance(latitude, longitude, player.destLat, player.destLong) <= player.destRad;
+        }
+    }
+
+    IEnumerator Fade(bool isIn)
+    {
+        Debug.Log($"IsIn? {isIn}");
+
+        float time = 0.0f;
+        Color panelColor = notInRangePanel.color;
+
+        panelColor = new Color(0f, 0f, 0f, isIn ? 0f : 1f);
+        notInRangePanel.color = panelColor;
+        notInRangePanel.gameObject.SetActive(true);
+
+        while (time < fadeTime)
+        {
+            yield return null;
+
+            float alpha = notInRangePanel.color.a;
+            time += Time.deltaTime;
+
+            float ratio = time / fadeTime;
+            if (Mathf.Abs(time - fadeTime) < 0.01f)
+                ratio = isIn ? 1.0f : 0.0f;
+
+            float newAlpha = isIn ? Mathf.Lerp(alpha, 1.0f, ratio) : Mathf.Lerp(alpha, 0.0f, ratio);
+            panelColor = new Color(0.0f, 0.0f, 0.0f, newAlpha);
+
+            notInRangePanel.color = panelColor;
+        }
+
+        if (!isIn)
+            notInRangePanel.gameObject.SetActive(false);
     }
 }
