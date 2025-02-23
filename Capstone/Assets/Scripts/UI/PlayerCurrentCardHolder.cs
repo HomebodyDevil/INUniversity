@@ -93,7 +93,10 @@ public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDra
 
     private void UpdateCardsImages()
     {
+        Debug.Log("UpdateCardsImages");
         A_PlayerCard currentPlayerCard = BattleManager.Instance().GetCurrentPlayerHandCard()[cardOrder];
+        Debug.Log($"BattleManager.Instance().GetCurrentPlayerHandCard()[cardOrder] is null ? {BattleManager.Instance().GetCurrentPlayerHandCard()[cardOrder] == null}");
+
         Sprite image = Resources.Load<Sprite>(currentPlayerCard.cardImagePath);
         GetComponent<Image>().sprite = image;
         trackingImage.sprite = image;

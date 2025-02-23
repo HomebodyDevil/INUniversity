@@ -54,6 +54,11 @@ public class DeckCardImageHolder : MonoBehaviour, IPointerClickHandler
         outline = GetComponent<Outline>();
     }
 
+    private void UpdateDeckCardImage()
+    {
+
+    }
+
     public int GetOrder()
     {
         return order;
@@ -71,7 +76,10 @@ public class DeckCardImageHolder : MonoBehaviour, IPointerClickHandler
             MapUIManager.Instance().ActivateObjectDescriptionPanel();
 
             A_PlayerCard currCard = playerDeck[order];
-            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currCard.cardImagePath, currCard.name, currCard.cardDescription);            
+
+            Debug.Log($"playerDeck[order] is null ? {playerDeck[order] == null}");
+
+            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currCard.cardImagePath, currCard.name, currCard.cardDescription);
         }
         else
         {

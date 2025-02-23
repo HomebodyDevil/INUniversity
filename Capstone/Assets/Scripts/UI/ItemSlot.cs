@@ -177,6 +177,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
         UpdateItemUseCountText(slotItemUseCount);
         UpdateItemUseCountData(slotItemUseCount);
+
         if (!hasItem)                  
             UsedAllItems.Invoke();
     }
@@ -212,5 +213,22 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         // 더 좋은 방법이 있을 것 같은데
         // C# 미숙 이슈.   
         PlayerItemsManager.Instance().GetPlayerItemCount()[item.itemID] = n;
+
+        if (n <= 0)
+        {
+            PlayerItemsManager.Instance().GetPlayerItemDictionary().Remove(item.itemID);
+
+            if (ItemPanel.UpdateItemPanel != null)
+                ItemPanel.UpdateItemPanel.Invoke(PlayerItemsManager.Instance().GetPlayerItemDictionary());
+
+            if (UsedAllItems != null)
+                UsedAllItems.Invoke();
+        }
+    }
+
+    public void MakeEmpty()
+    {
+        itemImage.gameObject.SetActive(false);
+        useCountPanel.SetActive(false);
     }
 }

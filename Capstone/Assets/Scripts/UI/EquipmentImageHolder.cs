@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
 {
+    public static Action UpdateEquipmentImageHolderImage;
+
     [SerializeField] PlayerEquipmentManager.Equipments type;
     [SerializeField] Image image;
 
@@ -28,11 +30,15 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
     {
         PlayerEquipmentManager.EquipEquipment -= UpdateImage;
         PlayerEquipmentManager.EquipEquipment += UpdateImage;
+
+        UpdateEquipmentImageHolderImage -= UpdateImage;
+        UpdateEquipmentImageHolderImage += UpdateImage;
     }
 
     private void OnDisable()
     {
         PlayerEquipmentManager.EquipEquipment -= UpdateImage;
+        UpdateEquipmentImageHolderImage -= UpdateImage;
     }
 
     private void UpdateImage()
@@ -41,6 +47,7 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
 
         if (currentEquipment == null)
         {
+            Debug.Log("CurrentEquipment is Null");
             image.sprite = initialSprite;                
         }
         else

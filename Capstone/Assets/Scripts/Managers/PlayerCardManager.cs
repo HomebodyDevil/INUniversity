@@ -20,11 +20,11 @@ public class PlayerCardManager : MonoBehaviour
 
     // Key값으로 A_PlayerCard를 사용하니 문제가 좀 있는 것 같음.
     // 카드마다 id(int)를 갖도록 하자.
-    private Dictionary<int, A_PlayerCard> playerHaveCardsDictionary;    // ID에 해당하는 카드
-    private Dictionary<int, int> playerHaveCardsCount;                  // 해당 ID의 카드를 얼마나 갖고있나.
+    public Dictionary<int, A_PlayerCard> playerHaveCardsDictionary;    // ID에 해당하는 카드
+    public Dictionary<int, int> playerHaveCardsCount;                  // 해당 ID의 카드를 얼마나 갖고있나.
     private List<int> cantUseCardIdList;
 
-    private List<A_PlayerCard> playerDeckCardList;
+    public List<A_PlayerCard> playerDeckCardList;
 
     private void Initialize()
     {
@@ -74,11 +74,6 @@ public class PlayerCardManager : MonoBehaviour
         isInitialized = true;
 
         Initialize();
-    }
-
-    private void MakeCantUseCard(int cardID)
-    {
-
     }
 
     private void OnDestroy()
@@ -151,6 +146,36 @@ public class PlayerCardManager : MonoBehaviour
     //        playerHaveCardListDictionary.Add(newCard, 1);
     //    }
     //}
+
+    public void ClearHaveCardDictionary()
+    {
+        playerHaveCardsDictionary.Clear();
+    }
+
+    public void ClearDeckCardList()
+    {
+        playerDeckCardList.Clear();
+    }
+
+    public void ClearCardCountDictionary()
+    {
+        playerHaveCardsCount.Clear();
+    }
+
+    public void AddNewHaveCard(A_PlayerCard card)
+    {
+        playerHaveCardsDictionary.Add(card.cardID, card);
+    }
+
+    public void AddNewDeckCard(A_PlayerCard card)
+    {
+        playerDeckCardList.Add(card);
+    }
+
+    public void AddNewCardCount(int id, int count)
+    {
+        playerHaveCardsCount.Add(id, count);
+    }
 
     public void AddNewCardToPlayer()
     {

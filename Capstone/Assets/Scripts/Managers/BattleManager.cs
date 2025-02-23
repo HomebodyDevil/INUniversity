@@ -32,15 +32,15 @@ public class BattleManager : MonoBehaviour
     // ID로 Battle Scene으로 넘어간 이후, 잡았으면, 적을 비활성화
     // 못 잡았으면 적을 그대로 활성화상태로 냅두도록 함.
     // ID를 통해, BattleScene으로 넘어가, 프리팹?을 로드할 수 있도록 할 예정.
-
+    
     public DefaultEnemyData currentEnemyData;
     public Transform currentEnemyInMap;
     public int currentEnemysSpawnersID;
     //private Enemy currentEnemy;
 
-    private List<A_PlayerCard> playerDeck = new List<A_PlayerCard>();
-    private List<A_PlayerCard> currentPlayerHandCards = new List<A_PlayerCard>();   // 플레이어가 손에 들고 있는 카드.
-    private List<A_PlayerCard> currentPlayerReadyCards = new List<A_PlayerCard>();  // 플레이어의 덱.
+    private List<A_PlayerCard> playerDeck;
+    private List<A_PlayerCard> currentPlayerHandCards;   // 플레이어가 손에 들고 있는 카드.
+    private List<A_PlayerCard> currentPlayerReadyCards;  // 플레이어의 덱.
         
     private GameObject currentEnemyInBattle;
 
@@ -119,7 +119,11 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //dropItemsList = new List<A_Item>();
+        playerDeck = new List<A_PlayerCard>();
+        currentPlayerHandCards = new List<A_PlayerCard>();
+        currentPlayerReadyCards = new List<A_PlayerCard>();
+
+    //dropItemsList = new List<A_Item>();
         dropItemsDictionary = new Dictionary<A_Item, int>();
         dropEquipmentList = new List<A_Equipment>();
         dropCardsList = new List<A_PlayerCard>();
@@ -223,7 +227,7 @@ public class BattleManager : MonoBehaviour
 
     public void RemoveMapEnemy()
     {
-        Debug.Log("RemoveMapEnemy");
+        //Debug.Log("RemoveMapEnemy");
 
         List<Transform> currentEnemysSpawnersList = EnemySpawnerManager.Instance().GetEnemyList(currentEnemysSpawnersID);
         foreach (Transform enemy in currentEnemysSpawnersList)
@@ -250,7 +254,7 @@ public class BattleManager : MonoBehaviour
 
     public void StopIncreaseEnemyCost()
     {
-        Debug.Log("StopIncreaseEnemyCost");
+        //Debug.Log("StopIncreaseEnemyCost");
         StopCoroutine("IncreaseEnemyCostCoroutine");
     }
 
@@ -318,13 +322,13 @@ public class BattleManager : MonoBehaviour
         {
             if (OnEnemyHPisZero != null)
             {
-                Debug.Log("OnEnemyHPisZero in DamageToEnemy");
+                //Debug.Log("OnEnemyHPisZero in DamageToEnemy");
                 OnEnemyHPisZero.Invoke();
             }
 
             if (checkDeathImediate)
             {
-                Debug.Log("checkDeathImediate in DamageToEnemy");
+                //Debug.Log("checkDeathImediate in DamageToEnemy");
                 EnemyDead();
             }
             else
@@ -412,7 +416,7 @@ public class BattleManager : MonoBehaviour
 
     public void EnemyDead()
     {
-        Debug.Log("EnemyDead");
+        //Debug.Log("EnemyDead");
 
         //if (currentEnemyHP > 0)
         //{
@@ -426,7 +430,7 @@ public class BattleManager : MonoBehaviour
         {
             SoundManager.Instance().Fade(true);
 
-            Debug.Log("Invoke OnBattleWin");
+            //Debug.Log("Invoke OnBattleWin");
             BattleManager.OnBattleWin.Invoke();
         }
     }
@@ -437,10 +441,15 @@ public class BattleManager : MonoBehaviour
 
         if (order < 0 || order >= currentPlayerHandCards.Count)
         {
-            Debug.Log("Out Of RANGE!!!!!");
+            Debug.Log("Out Of RANGE!!!!!");            
         }
 
-        return currentPlayerHandCards.ElementAt(order);
+        //Debug.Log($"currentPlayerHandCards is null ? {currentPlayerHandCards == null}");
+        Debug.Log($"PlayerCardManager.Instance().playerDeckCardList is null ? {PlayerCardManager.Instance().playerDeckCardList == null}");
+        Debug.Log($"currentPlayerHandCards[order] is null ? {currentPlayerHandCards[order] == null}");
+
+        //return currentPlayerHandCards.ElementAt(order);
+        return currentPlayerHandCards[order];
     }
 
     public List<A_PlayerCard> GetPlayerDeck()
@@ -473,19 +482,24 @@ public class BattleManager : MonoBehaviour
 
     public void SetPlayerDeck()
     {
+        Debug.Log("SetPlayerDeck");
+
         // Battle에서 사용하게될 Deck의 List를 참조하게됨.
-        playerDeck = PlayerCardManager.Instance().GetPlayerDeckCardList();
-        //foreach (A_PlayerCard card in playerDeck)
-        //{
-        //    if (card == null)
-        //    {
-        //        Debug.Log(String.Format("this is null : {0}", card));
-        //    }
-        //}
+        //playerDeck = PlayerCardManager.Instance().GetPlayerDeckCardList();
+        playerDeck = PlayerCardManager.Instance().playerDeckCardList;
+
+        foreach (A_PlayerCard card in playerDeck)
+        {
+            if (card == null)
+            {
+                Debug.Log(String.Format("this is null : {0}", card));
+            }
+        }
     }
 
     public void LoadCards()
     {
+        Debug.Log("LoadCards");
         SetPlayerDeck();
 
         //WaitPlayerDeckIsReady();
@@ -504,13 +518,18 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        // 정상임
+        //Debug.Log($"Player Deck is null : {playerDeck == null}");
+
         currentPlayerHandCards.Clear();
-        currentPlayerReadyCards = playerDeck.ToList();
+        foreach (A_PlayerCard card in playerDeck)
+            currentPlayerReadyCards.Add(card);
+
+        //currentPlayerReadyCards = playerDeck.ToList();
 
         List<int> choseCardIndexes = new List<int>();
 
         int index = 0;
-
         int indexMaxCount = Player.Instance().GetPlayerData().maxCardAmount;
 
         for (int i = 0; i < 3; i++)   // 한 번에 들 수 있는 카드의 최대수만큼 반복.
@@ -530,7 +549,16 @@ public class BattleManager : MonoBehaviour
             while (choseCardIndexes.Contains(index));
 
             choseCardIndexes.Add(index);
-            currentPlayerHandCards.Add(playerDeck.ElementAt(index));
+
+            //Debug.Log($"playerDeck[index] is null ? {playerDeck[index] == null}\nplayerDeck is null ? {playerDeck == null}");
+            //Debug.Log($"currentPlayerHandCards is null ? {currentPlayerHandCards == null}");
+            
+            currentPlayerHandCards.Add(playerDeck[index]);
+            //currentPlayerHandCards.Add(playerDeck.ElementAt(index));
+
+            // 정상임
+            //foreach (A_PlayerCard card in currentPlayerHandCards)
+            //    Debug.Log($"Counting Card : {card}");
         }
 
         foreach (A_PlayerCard card in currentPlayerHandCards)  // 선택된 카드들은 Ready에서 제외되도록 함.
@@ -541,14 +569,17 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        //Debug.Log(string.Format("Last Cards In Ready : {0}", currentPlayerReadyCards.Count));        
+        //Debug.Log(string.Format("Last Cards In Ready : {0}", currentPlayerReadyCards.Count));
+        //foreach (A_PlayerCard card in currentPlayerHandCards)
+        //    Debug.Log($"Counting Card-2 : {card}");
     }
 
     public void UseCard(int order)
     {
         if (currentPlayerHandCards[order] == null)
         {
-            Debug.Log("currentPlayerHandCard is NULL");
+            Debug.Log($"currentPlayerHandCards is null ? {currentPlayerHandCards == null}");
+            Debug.Log("currentPlayerHandCards[order] is NULL");
             return;
         }
 

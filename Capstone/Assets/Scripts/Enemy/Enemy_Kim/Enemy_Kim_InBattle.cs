@@ -146,7 +146,7 @@ public class Enemy_Kim_InBattle : MonoBehaviour
 
     private void MakeCantAct()
     {
-        Debug.Log("MakeCantAct");
+        //Debug.Log("MakeCantAct");
 
         canAct = false;
     }

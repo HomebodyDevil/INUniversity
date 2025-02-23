@@ -31,6 +31,8 @@ public class EquipSlot : MonoBehaviour, IPointerClickHandler
         outLine = GetComponent<Outline>();
         outLine.effectColor = outLineColor;
 
+        equipmentCountPanel.SetActive(false);
+
         DisableSlotOutline();
     }
 
@@ -131,7 +133,8 @@ public class EquipSlot : MonoBehaviour, IPointerClickHandler
             equipmentCountPanel.SetActive(false);
         else
         {
-            equipmentCountPanel.SetActive(true);
+            //equipmentCountPanel.SetActive(true);
+            equipmentCountPanel.SetActive(false);
             equipmentCountText.text = String.Format("{0}", n);
         }
     }

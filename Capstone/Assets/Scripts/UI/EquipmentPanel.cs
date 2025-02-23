@@ -13,6 +13,7 @@ public class EquipmentPanel : MonoBehaviour, IPanel
     public static Action EnableEquipmentButtons;
     public static Action DisableEquipmentButtons;
     public static Action<EquipSlot> SelectCurrentEquipmentSlot;
+    public static Action UpdateEquipmentSlots;
 
     [SerializeField] private float padding = 40;
     [SerializeField] private float gridGroupPadding = 0;
@@ -47,6 +48,9 @@ public class EquipmentPanel : MonoBehaviour, IPanel
 
         PlayerEquipmentManager.MadeEquipmentDictionary -= InitializeEquipmentSlots;
         PlayerEquipmentManager.MadeEquipmentDictionary += InitializeEquipmentSlots;
+
+        UpdateEquipmentSlots -= InitializeEquipmentSlots;
+        UpdateEquipmentSlots += InitializeEquipmentSlots;
     }
 
     private void Update()
@@ -82,6 +86,7 @@ public class EquipmentPanel : MonoBehaviour, IPanel
         EnableEquipmentButtons -= EnableButtons;
         DisableEquipmentButtons -= DisableButtons;        
         PlayerEquipmentManager.MadeEquipmentDictionary -= InitializeEquipmentSlots;
+        UpdateEquipmentSlots -= InitializeEquipmentSlots;
     }
 
     void IPanel.Initialize()

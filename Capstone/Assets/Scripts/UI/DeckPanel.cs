@@ -12,7 +12,8 @@ public class DeckPanel : MonoBehaviour, IPanel
     public static Action Act_EnableUseButton;
     public static Action Act_EnableUnuseButton;
     public static Action Act_EnableDescriptionButton;
-    public static Action<CardSlot> Act_SelectCurrentCardSlot;    
+    public static Action<CardSlot> Act_SelectCurrentCardSlot;
+    public static Action UpdateCardSlots;
 
     public static Action Act_UpdateDeckImages;
 
@@ -66,20 +67,23 @@ public class DeckPanel : MonoBehaviour, IPanel
 
     private void Awake()
     {
-        Act_DisableButtons -= DisableButtons;
-        Act_DisableButtons += DisableButtons;
+        //Act_DisableButtons -= DisableButtons;
+        //Act_DisableButtons += DisableButtons;
 
-        Act_EnableUseButton -= EnableUseButton;
-        Act_EnableUseButton += EnableUseButton;
+        //Act_EnableUseButton -= EnableUseButton;
+        //Act_EnableUseButton += EnableUseButton;
 
-        Act_EnableUnuseButton -= EnableUnuseButton;
-        Act_EnableUnuseButton += EnableUnuseButton;
+        //Act_EnableUnuseButton -= EnableUnuseButton;
+        //Act_EnableUnuseButton += EnableUnuseButton;
 
-        Act_EnableDescriptionButton -= EnableDescriptionButton;
-        Act_EnableDescriptionButton += EnableDescriptionButton;
+        //Act_EnableDescriptionButton -= EnableDescriptionButton;
+        //Act_EnableDescriptionButton += EnableDescriptionButton;
 
-        Act_UpdateDeckImages -= UpdateDeckCardImageHolders;
-        Act_UpdateDeckImages += UpdateDeckCardImageHolders;
+        //Act_UpdateDeckImages -= UpdateDeckCardImageHolders;
+        //Act_UpdateDeckImages += UpdateDeckCardImageHolders;
+
+        //UpdateCardSlots -= InitializeItemSlots;
+        //UpdateCardSlots += InitializeItemSlots;
     }
 
     //private void Update()
@@ -167,18 +171,40 @@ public class DeckPanel : MonoBehaviour, IPanel
         haveGrid.spacing = spacingVec;
     }
 
-    private void OnDisable()
+    private void OnEnable()
     {
-        DisableButtons();
+        Act_DisableButtons -= DisableButtons;
+        Act_DisableButtons += DisableButtons;
+
+        Act_EnableUseButton -= EnableUseButton;
+        Act_EnableUseButton += EnableUseButton;
+
+        Act_EnableUnuseButton -= EnableUnuseButton;
+        Act_EnableUnuseButton += EnableUnuseButton;
+
+        Act_EnableDescriptionButton -= EnableDescriptionButton;
+        Act_EnableDescriptionButton += EnableDescriptionButton;
+
+        Act_UpdateDeckImages -= UpdateDeckCardImageHolders;
+        Act_UpdateDeckImages += UpdateDeckCardImageHolders;
+
+        UpdateCardSlots -= InitializeItemSlots;
+        UpdateCardSlots += InitializeItemSlots;
+
+        InitializeItemSlots();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Act_DisableButtons -= DisableButtons;
         Act_EnableUseButton -= EnableUseButton;
         Act_EnableUnuseButton -= EnableUnuseButton;
         Act_EnableDescriptionButton -= EnableDescriptionButton;
         Act_UpdateDeckImages -= UpdateDeckCardImageHolders;
+        UpdateCardSlots -= InitializeItemSlots;
+
+        StopCoroutine("WaitForManagerCoroutine");
+        DisableButtons();
     }
 
     public void GetUIManager()
@@ -284,9 +310,12 @@ public class DeckPanel : MonoBehaviour, IPanel
     {
         WaitForManager();
 
-        while (contents.childCount > 0)
+        if (contents != null)
         {
-            DestroyImmediate(contents.GetChild(0).gameObject);
+            while (contents.childCount > 0)
+            {
+                DestroyImmediate(contents.GetChild(0).gameObject);
+            }
         }
 
         int slotNumber = PlayerCardManager.Instance().GetPlayerHaveCardDictionary().Count
@@ -299,7 +328,8 @@ public class DeckPanel : MonoBehaviour, IPanel
             tmpSlot = Resources.Load<GameObject>(cardSlotPath);
             tmpSlot = Instantiate(tmpSlot);
 
-            tmpSlot.transform.SetParent(contents, false);
+            if (contents != null)
+                tmpSlot.transform.SetParent(contents, false);
 
             cardSlotList.Add(tmpSlot.GetComponent<CardSlot>());
         }
@@ -338,6 +368,8 @@ public class DeckPanel : MonoBehaviour, IPanel
             //Debug.Log("DeckImageListCount : " + deckImagesList.Count);
 
             DeckCardImageHolder deckCardImageHolder = deckImageHoldersList[count].gameObject.GetComponent<DeckCardImageHolder>();
+
+            Debug.Log($"deck[count] is null ? {deck[count] == null}");
 
             //deckImageHoldersList[count].sprite = Resources.Load<Sprite>(deck[count].cardImagePath);
             deckCardImageHolder.UpdateImage(Resources.Load<Sprite>(deck[count].cardImagePath));

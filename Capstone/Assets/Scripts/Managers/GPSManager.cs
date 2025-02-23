@@ -385,7 +385,7 @@ public class GPSManager : MonoBehaviour
 
     IEnumerator Fade(bool isIn)
     {
-        Debug.Log($"IsIn? {isIn}");
+        //Debug.Log($"IsIn? {isIn}");
 
         float time = 0.0f;
         Color panelColor = notInRangePanel.color;

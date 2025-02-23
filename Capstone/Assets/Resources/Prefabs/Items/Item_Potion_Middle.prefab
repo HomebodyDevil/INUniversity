@@ -47,6 +47,6 @@ MonoBehaviour:
   itemName: Potion(Middle)
   itemImagePath: Images/Items/Item_Potion_Middle
   itemDescription: heal 30%
-  itemID: 20002
+  itemID: 2002
   haveNumber: 1
   amount: 1

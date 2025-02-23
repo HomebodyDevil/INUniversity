@@ -16,6 +16,14 @@ public class PlayerStatusText : MonoBehaviour
         Act_UpdatePlayerStatusValueText += UpdatePlayerStatusValueText;
     }
 
+    private void OnEnable()
+    {
+        if (statusValueText == null)
+            return;
+
+        UpdatePlayerStatusValueText();
+    }
+
     private void OnDestroy()
     {
         Act_UpdatePlayerStatusValueText -= UpdatePlayerStatusValueText;
@@ -23,7 +31,13 @@ public class PlayerStatusText : MonoBehaviour
 
     private void Start()
     {
-        UpdatePlayerStatusValueText();
+        //UpdatePlayerStatusValueText();
+        StartCoroutine(UpdateText());
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine("UpdateText");
     }
 
     private void UpdatePlayerStatusValueText()
@@ -39,5 +53,14 @@ public class PlayerStatusText : MonoBehaviour
 
         string content = string.Format("{0, 5}\n{1, 5}\n{2, 5}\n{3, 5}", attackPoint, maxHP, currHP, maxCost);
         statusValueText.text = content;
+    }
+
+    IEnumerator UpdateText()
+    {
+        while(true)
+        {
+            UpdatePlayerStatusValueText();
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

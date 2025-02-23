@@ -40,6 +40,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         outLine = GetComponent<Outline>();
         outLine.effectColor = outLineColor;
 
+        cardCountPanel.SetActive(false);
+
         DisableSlotOutline();
     }
 
@@ -110,7 +112,6 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         //slotCardCount = newCard.Value;
         slotCardCount = PlayerCardManager.Instance().GetPlayerHaveCardsCount()[newCard.Key];
 
-
         //if (slotCardCount > 0)
         //    GetComponent<Image>().sprite = Resources.Load<Sprite>(newCard.Value.cardImagePath);
         if (slotCardCount > 0)
@@ -134,7 +135,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
             cardCountPanel.SetActive(false);
         else
         {
-            cardCountPanel.SetActive(true);
+            //cardCountPanel.SetActive(true);
+            cardCountPanel.SetActive(false);
             cardCountText.text = String.Format("{0}", n);
         }
     }

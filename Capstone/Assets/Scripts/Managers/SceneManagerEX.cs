@@ -164,7 +164,7 @@ public class SceneManagerEX : MonoBehaviour
         while(!op.isDone)
         {
             count++;
-            Debug.Log(count);
+            //Debug.Log(count);
             yield return null;
 
             if (op.progress < 0.9f)
@@ -198,7 +198,7 @@ public class SceneManagerEX : MonoBehaviour
             }
         }
 
-        Debug.Log("Finished");
+        //Debug.Log("Finished");
         yield return new WaitForSecondsRealtime(0.05f);
 
         yield return SoundManager.Instance().FadeSound(false);

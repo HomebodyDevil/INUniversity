@@ -21,13 +21,14 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private static PlayerEquipmentManager instance;
 
+    // 테스트용
     [SerializeField] private List<A_Equipment> equipmentForDictionary;
     [SerializeField] private List<int> countForDictionary;
 
-    private A_Equipment currentHeadEquip;
-    private A_Equipment currentBodyEquip;
-    private A_Equipment currentShoesEquip;
-    private A_Equipment currentWeaponEquip;
+    public A_Equipment currentHeadEquip;
+    public A_Equipment currentBodyEquip;
+    public A_Equipment currentShoesEquip;
+    public A_Equipment currentWeaponEquip;
 
     private EquipSlot currentSelectedEquipSlot;
 

@@ -225,7 +225,7 @@ public class BattleUIManager : A_UIManager
 
     private void ActivateBattleWinObject()
     {
-        Debug.Log("ActivateBattleWinObject");
+        //Debug.Log("ActivateBattleWinObject");
         //DisableThingsForBattleWinObject();
 
         //ActivateCanclePanel();
@@ -378,7 +378,7 @@ public class BattleUIManager : A_UIManager
 
     private void ActivatePreservePanel()
     {
-        Debug.Log("ActivatePreservePanel");
+        //Debug.Log("ActivatePreservePanel");
 
         preservePanel.SetActive(true);
     }

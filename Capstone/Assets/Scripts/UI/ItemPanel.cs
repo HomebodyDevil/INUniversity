@@ -15,6 +15,7 @@ public class ItemPanel : MonoBehaviour, IPanel
     public static Action EnableItemButtons;
     public static Action DisableItemButtons;
     public static Action<ItemSlot> SelectCurrentItemSlot;
+    public static Action<Dictionary<int, A_Item>> UpdateItemPanel;
 
     [SerializeField] private float padding = 30;
     [SerializeField] private GameObject EquipAndStatusPanel;
@@ -53,6 +54,11 @@ public class ItemPanel : MonoBehaviour, IPanel
 
         ItemSlot.UsedAllItems -= DisableButtons;
         ItemSlot.UsedAllItems += DisableButtons;
+
+        UpdateItemPanel -= RegisterItemToSlot;
+        UpdateItemPanel += RegisterItemToSlot;
+
+        InitializeItemSlots();
     }
 
     void Start()
@@ -82,6 +88,7 @@ public class ItemPanel : MonoBehaviour, IPanel
         EnableItemButtons -= EnableButtons;
         DisableItemButtons -= DisableButtons;
         ItemSlot.UsedAllItems -= DisableButtons;
+        UpdateItemPanel -= RegisterItemToSlot;
     }
 
     void IPanel.Initialize()
@@ -246,8 +253,9 @@ public class ItemPanel : MonoBehaviour, IPanel
         // List를 사용한 버전
         //RegisterItemToSlot(PlayerSpecManager.Instance().playerItemList);
 
-        // 이제 여기서 실질적으로 Slot에 Item들을 등록하게된다.
-        RegisterItemToSlot(ref PlayerItemsManager.Instance().GetPlayerItemDictionary());
+        // 이제 여기서 실질적으로 Slot에 Item들을 등록하게된다
+        // 원래 ref였는ㄷ 그냥으로 바꿔봄.
+        RegisterItemToSlot(PlayerItemsManager.Instance().GetPlayerItemDictionary());
     }
 
     // Slot에 Item(List)를 등록하는 함수.
@@ -265,18 +273,27 @@ public class ItemPanel : MonoBehaviour, IPanel
 
     // Dictionary로 사용한 버전
     // 나중에 정렬도 추가하면 일정 기준으로 정렬 할 수도 있을듯 하다.
-    public void RegisterItemToSlot(ref Dictionary<int, A_Item> itemList)
+    // 원래 ref였는데 한 번 그냥으로 바꿔봄.
+    public void RegisterItemToSlot(Dictionary<int, A_Item> itemList)
     {
         while (itemSlotList.Count < itemList.Count)
             IncreaseItemSlotNumber(5);
 
+        int itemListIndex = 0;
         if (itemList.Count > 0)
         {
-            int itemListIndex = 0;
             foreach (KeyValuePair<int, A_Item> item in itemList)
             {
                 itemSlotList[itemListIndex].UpdateItemSlot(item);
                 itemListIndex++;
+            }
+        }
+
+        if (itemListIndex < itemSlotList.Count)
+        {
+            for (;itemListIndex < itemSlotList.Count; itemListIndex++)
+            {
+                itemSlotList[itemListIndex].MakeEmpty();
             }
         }
 

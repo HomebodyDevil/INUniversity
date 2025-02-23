@@ -7,6 +7,7 @@ public class PlayerItemsManager : MonoBehaviour
 {
     private static PlayerItemsManager instance;
 
+    // 테스트용
     [SerializeField] private List<A_Item> itemForDictionary;
     [SerializeField] private List<int> countForDictionary;
 
@@ -41,6 +42,9 @@ public class PlayerItemsManager : MonoBehaviour
         BattleManager.OnBattleWin -= AddNewItemToPlayer;
         BattleManager.OnBattleWin += AddNewItemToPlayer;
 
+        ItemSlot.UsedAllItems -= MakeSelectNothing;
+        ItemSlot.UsedAllItems += MakeSelectNothing;
+
         Initialize();
     }
 
@@ -69,6 +73,7 @@ public class PlayerItemsManager : MonoBehaviour
     {
         ItemPanel.SelectCurrentItemSlot -= OnSelectCurrentItemSlot;
         BattleManager.OnBattleWin -= AddNewItemToPlayer;
+        ItemSlot.UsedAllItems -= MakeSelectNothing;
     }
 
     public ref Dictionary<int, A_Item> GetPlayerItemDictionary()
@@ -115,5 +120,10 @@ public class PlayerItemsManager : MonoBehaviour
                 playerItemsCount.Add(item.Key.itemID, item.Value);
             }
         }
+    }
+
+    private void MakeSelectNothing()
+    {
+        currentSelectedItemSlot = null;
     }
 }

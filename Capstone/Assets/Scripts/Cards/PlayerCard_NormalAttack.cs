@@ -34,7 +34,7 @@ public class PlayerCard_NormalAttack : A_PlayerCard
 
         float attackAmount = defaultAttack + attackRatio * playerSpecManager.currentPlayerAttackPoint;
 
-        Debug.Log(attackAmount);
+        //Debug.Log(attackAmount);
 
         battleManager.ReducePlayerCost(cardCost);
         battleManager.DamageToEnemy(attackAmount);

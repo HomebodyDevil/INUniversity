@@ -188,7 +188,9 @@ public class MapUIManager : A_UIManager
             currentObject.SetActive(false);
         }
         else
-            Debug.Log("activeObject Stack is empty");
+        {
+            //Debug.Log("activeObject Stack is empty");
+        }
 
         if (activeObject.Count <= 0)
         {

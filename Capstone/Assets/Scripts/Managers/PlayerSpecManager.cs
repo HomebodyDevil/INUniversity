@@ -32,10 +32,10 @@ public class PlayerSpecManager : MonoBehaviour
 
     public float currentCostIncreaseAmount;     // 1초당 증가할 Cost
 
-    public int playerItemSlotsNumber;
-    public List<A_Item> playerItemList;
-    public List<A_Equipment> playerEquipmentList;
-    public List<A_PlayerCard> playerCardList;
+    public int playerItemSlotsNumber;               // 필요 없을듯.
+    public List<A_Item> playerItemList;             // 필요 없을듯.
+    public List<A_Equipment> playerEquipmentList;   // 필요 없을듯.
+    //public List<A_PlayerCard> playerCardList;
     List<A_PlayerCard> playerDeckFromPlayerData;
     // public Dictionary<A_Item, int> playerItemsListDictionary;
 
@@ -100,7 +100,7 @@ public class PlayerSpecManager : MonoBehaviour
     {
         isInitialized = false;
 
-        InitializePlayerSpec();
+        //InitializePlayerSpec();
         MapUIManager.Instance().UpdatePlayerLevelText();
 
         UpdateSpec();
