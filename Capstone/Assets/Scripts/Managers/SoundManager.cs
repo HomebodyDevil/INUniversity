@@ -164,6 +164,18 @@ public class SoundManager : MonoBehaviour
         OnFadeSound -= Fade;
     }
 
+    public AudioMixer GetAudioMixer()
+    {
+        return mixer;
+    }
+
+    public void SetAudioVolume(string channel, float audiovolume)
+    {
+        //mixer.FindMatchingGroups(channel)[0].audioMixer.SetFloat("Volume", audiovolume);
+        string name = $"{channel}Volume";
+        mixer.SetFloat(name, audiovolume);
+    }
+
     private void PlayEnemyHPisZeroAudio()
     {
         PlayOtherAudio(AudioType.enemyHPZero, false);

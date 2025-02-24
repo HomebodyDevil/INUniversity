@@ -150,6 +150,7 @@ public class IntroPanel : MonoBehaviour
         //target = isIn ? 0.0f : 1.0f;
         float time = 0.0f;
 
+        bool initData = false;
         while (time < fadeTime)
         {
             yield return null;
@@ -164,6 +165,9 @@ public class IntroPanel : MonoBehaviour
 
             Color overPanelColor = panelImage.color;
             panelImage.color = new Color(overPanelColor.r, overPanelColor.g, overPanelColor.b, alpha);
+
+            if (!initData && ratio > 0.5f)
+                DataManager.Instance().LoadData();
         }
     }
 

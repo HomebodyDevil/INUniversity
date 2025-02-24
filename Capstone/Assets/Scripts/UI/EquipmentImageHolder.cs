@@ -33,6 +33,8 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
 
         UpdateEquipmentImageHolderImage -= UpdateImage;
         UpdateEquipmentImageHolderImage += UpdateImage;
+
+        UpdateImage();
     }
 
     private void OnDisable()
@@ -48,12 +50,16 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
         if (currentEquipment == null)
         {
             Debug.Log("CurrentEquipment is Null");
-            image.sprite = initialSprite;                
+            image.sprite = initialSprite;
+            //image.sprite = null;
+
+            image.gameObject.SetActive(false);
         }
         else
         {
             //Debug.Log(currentEquipment.equipmentImagePath);
             image.sprite = Resources.Load<Sprite>(currentEquipment.equipmentImagePath);
+            image.gameObject.SetActive(true);
         }
     }
 

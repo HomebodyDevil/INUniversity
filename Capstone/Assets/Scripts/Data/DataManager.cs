@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager instance;
+    private static DataManager instance;
 
     private void Initialize()
     {
@@ -35,7 +35,8 @@ public class DataManager : MonoBehaviour
 
         canLoad = true;
 
-        defaultPath = Application.dataPath;
+        //defaultPath = Application.dataPath;
+        defaultPath = Application.persistentDataPath;
         saveDataDirectoryPath = $"{defaultPath}/savedata";
         saveDataFilePath = $"{saveDataDirectoryPath}/Save.json";
 
@@ -54,7 +55,12 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void SaveData()
+    public static DataManager Instance()
+    {
+        return instance;
+    }
+
+    public void SaveData()
     {
         Debug.Log("Save");
 
@@ -192,7 +198,7 @@ public class DataManager : MonoBehaviour
     }
     #endregion
         
-    private void LoadData()
+    public void LoadData()
     {
         if (!canLoad)
         {

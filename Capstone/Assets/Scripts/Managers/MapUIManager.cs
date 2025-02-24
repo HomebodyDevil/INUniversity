@@ -21,6 +21,7 @@ public class MapUIManager : A_UIManager
     [SerializeField] private GameObject miniGamesPanel;
     [SerializeField] private GameObject ObjectDescriptionPanel;
     [SerializeField] private TextMeshProUGUI playerLevelText;
+    [SerializeField] private GameObject optionPanel;
 
     public TextMeshProUGUI LongitudeText;
     public TextMeshProUGUI LatitudeText;
@@ -80,6 +81,7 @@ public class MapUIManager : A_UIManager
         panelsList.Add(enemyBattleCheckPanel);
         panelsList.Add(announcementPanel);
         panelsList.Add(miniGamesPanel);
+        panelsList.Add(optionPanel);
 
         buttonsList = new List<GameObject>();
         buttonsList.Add(optionButton);

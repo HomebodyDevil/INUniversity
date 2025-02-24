@@ -192,6 +192,7 @@ public class DeckPanel : MonoBehaviour, IPanel
         UpdateCardSlots += InitializeItemSlots;
 
         InitializeItemSlots();
+        UpdateDeckCardImageHolders();
     }
 
     private void OnDisable()
@@ -359,7 +360,8 @@ public class DeckPanel : MonoBehaviour, IPanel
         //Debug.Log(deckImageHoldersList[2]);
         List<A_PlayerCard> deck = PlayerCardManager.Instance().GetPlayerDeckCardList();
 
-        DeckCardImageHolder.Act_DisableDeckCardCostPanel.Invoke();
+        if (DeckCardImageHolder.Act_DisableDeckCardCostPanel != null)
+            DeckCardImageHolder.Act_DisableDeckCardCostPanel.Invoke();
 
         int count = 0;
         for (; count < deck.Count; count++)
@@ -367,19 +369,26 @@ public class DeckPanel : MonoBehaviour, IPanel
             //Debug.Log("COUNT : " + count + " DECK_AMOUNT : " + deck.Count);
             //Debug.Log("DeckImageListCount : " + deckImagesList.Count);
 
-            DeckCardImageHolder deckCardImageHolder = deckImageHoldersList[count].gameObject.GetComponent<DeckCardImageHolder>();
+            Debug.Log($"deck.Count : {deck.Count}, count : {count}");
 
-            Debug.Log($"deck[count] is null ? {deck[count] == null}");
+            if (deckImageHoldersList != null)
+            {
+                DeckCardImageHolder deckCardImageHolder = deckImageHoldersList[count].gameObject.GetComponent<DeckCardImageHolder>();
 
-            //deckImageHoldersList[count].sprite = Resources.Load<Sprite>(deck[count].cardImagePath);
-            deckCardImageHolder.UpdateImage(Resources.Load<Sprite>(deck[count].cardImagePath));
+                Debug.Log($"deck[count] is null ? {deck[count] == null}");
 
-            int cost = (int)deck[count].cardCost;
-            deckCardImageHolder.EnableCostPanel();
-            deckCardImageHolder.SetCostText(cost);
+                //deckImageHoldersList[count].sprite = Resources.Load<Sprite>(deck[count].cardImagePath);
+                deckCardImageHolder.UpdateImage(Resources.Load<Sprite>(deck[count].cardImagePath));
+
+                int cost = (int)deck[count].cardCost;
+                deckCardImageHolder.EnableCostPanel();
+                deckCardImageHolder.SetCostText(cost);
+            }
+            else
+                Debug.Log($"deck[count] is null ? {deck[count] == null}");
         }
 
-        if (count < PlayerCardManager.DECK_CARDS_COUNT)
+        if (count < PlayerCardManager.DECK_CARDS_COUNT && (deckImageHoldersList != null))
         {
             for (; count < PlayerCardManager.DECK_CARDS_COUNT; count++)
             {
