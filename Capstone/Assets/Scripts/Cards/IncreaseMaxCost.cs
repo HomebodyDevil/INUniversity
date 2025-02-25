@@ -29,6 +29,8 @@ public class IncreaseMaxCost : A_PlayerCard
 
         battleManager.ReducePlayerCost(cardCost);
         playerSpecManager.maxPlayerCost += increaseAmount;
+
+        SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.heal, false);
     }
 
     public override void OnReloadCard()

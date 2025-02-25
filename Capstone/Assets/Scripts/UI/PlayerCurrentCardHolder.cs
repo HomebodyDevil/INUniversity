@@ -79,16 +79,23 @@ public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDra
             if (playerCard == null)
             {
                 Debug.Log("NULL PlayerCard");
+                return;
+            }
+
+            if (playerCard.cardCost > PlayerSpecManager.Instance().currentPlayerCost)
+            {
+                BattleManager.Instance().ResetTimeScale();
+                return;
             }
 
             if (Act_ValidDragEnd != null)
                 Act_ValidDragEnd.Invoke();
 
             playerCard.OnPlayCard();
-        }
 
-        BattleManager.Instance().UseCard(cardOrder);
-        BattleManager.Instance().ResetTimeScale();
+            BattleManager.Instance().UseCard(cardOrder);
+            BattleManager.Instance().ResetTimeScale();
+        }
     }
 
     private void UpdateCardsImages()
