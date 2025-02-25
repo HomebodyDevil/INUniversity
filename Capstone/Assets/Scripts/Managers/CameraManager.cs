@@ -14,6 +14,8 @@ public class CameraManager : MonoBehaviour
         BattleCamera = 2,
     }
 
+    public float clickDistance;
+
     [Header("Camera Objects")]
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private GameObject enemyCamera;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DataManager : MonoBehaviour
 {
@@ -60,6 +61,12 @@ public class DataManager : MonoBehaviour
         return instance;
     }
 
+    public void ResetData()
+    {
+        if (File.Exists(saveDataFilePath))
+            File.Delete(saveDataFilePath);
+    }
+
     public void SaveData()
     {
         Debug.Log("Save");
@@ -94,6 +101,7 @@ public class DataManager : MonoBehaviour
         data.playerSpec.currentPlayerHP = manager.currentPlayerHP;
         data.playerSpec.currentPlayerAttackPoint = manager.currentPlayerAttackPoint;
         data.playerSpec.currentPlayerCost = manager.currentPlayerCost;
+        data.playerSpec.currentPlayerEXP = manager.currentPlayerEXP;
 
         data.playerSpec.maxPlayerHP = manager.maxPlayerHP;
         data.playerSpec.maxPlayerEXP = manager.maxPlayerEXP;
@@ -101,6 +109,9 @@ public class DataManager : MonoBehaviour
         data.playerSpec.maxPlayerCost = manager.maxPlayerCost;
 
         data.playerSpec.currentCostIncreaseAmount = manager.currentCostIncreaseAmount;
+
+        data.playerSpec.bgmVolume = VolumeSlider.bgmVolume;
+        data.playerSpec.effectVolume = VolumeSlider.effectVolume;
     }
 
     private void SaveItems(ref SaveData data)
@@ -207,6 +218,9 @@ public class DataManager : MonoBehaviour
 
         Debug.Log("Load");
 
+        if (!File.Exists(saveDataFilePath))
+            return;
+
         CheckFile();
 
         string json = File.ReadAllText(saveDataFilePath);
@@ -246,6 +260,7 @@ public class DataManager : MonoBehaviour
         PlayerSpecManager.Instance().currentPlayerHP = data.playerSpec.currentPlayerHP;
         PlayerSpecManager.Instance().currentPlayerAttackPoint = data.playerSpec.currentPlayerAttackPoint;
         PlayerSpecManager.Instance().currentPlayerCost = data.playerSpec.currentPlayerCost;
+        PlayerSpecManager.Instance().currentPlayerEXP = data.playerSpec.currentPlayerEXP;
 
         PlayerSpecManager.Instance().maxPlayerHP = data.playerSpec.maxPlayerHP;
         PlayerSpecManager.Instance().maxPlayerEXP = data.playerSpec.maxPlayerEXP;
@@ -253,6 +268,18 @@ public class DataManager : MonoBehaviour
         PlayerSpecManager.Instance().maxPlayerCost = data.playerSpec.maxPlayerCost;
 
         PlayerSpecManager.Instance().currentCostIncreaseAmount = data.playerSpec.currentCostIncreaseAmount;
+
+        VolumeSlider.bgmVolume = data.playerSpec.bgmVolume;
+        VolumeSlider.effectVolume = data.playerSpec.effectVolume;
+
+        Debug.Log($"{data.playerSpec.bgmVolume}\n{data.playerSpec.effectVolume}");
+        SoundManager.Instance().SetAudioVolume("BGM", data.playerSpec.bgmVolume);
+        SoundManager.Instance().SetAudioVolume("Effect", data.playerSpec.effectVolume);
+
+        MapUIManager.Instance().UpdatePlayerLevelText();
+
+        if (VolumeSlider.OnUpdateSlider != null)
+            VolumeSlider.OnUpdateSlider.Invoke();
 
         if (PlayerStatusTextInEquipment.Act_UpdatePlayerStatusTextInEquipment != null)
             PlayerStatusTextInEquipment.Act_UpdatePlayerStatusTextInEquipment.Invoke();
@@ -479,10 +506,17 @@ public class DataManager : MonoBehaviour
 
         FileStream file = null;
         if (!File.Exists(saveDataFilePath))
-            file = File.Create(saveDataFilePath);
+        {
+            file = File.Create(saveDataFilePath);            
+        }
 
         if (file != null)
             file.Close();
+    }
+
+    private void InitFile()
+    {
+
     }
 
 

@@ -23,13 +23,15 @@ public class HPBody : A_Equipment
         isEquipped = true;
 
         PlayerSpecManager playerMan = PlayerSpecManager.Instance();
-
-        float currentHP = playerMan.currentPlayerHP;
-        float hpRatio = currentHP / playerMan.maxPlayerHP;
-
         playerMan.maxPlayerHP += gainMaxHP;
 
-        playerMan.currentPlayerHP = playerMan.maxPlayerHP * hpRatio;
+        //float currentHP = playerMan.currentPlayerHP;
+        //float hpRatio = currentHP / playerMan.maxPlayerHP;
+
+        //playerMan.currentPlayerHP = playerMan.maxPlayerHP * hpRatio;
+
+        PlayerSpecManager.Instance().currentPlayerHP = Mathf.Min(playerMan.currentPlayerHP, playerMan.maxPlayerHP);
+
     }
 
     public override void TakeOff()
@@ -39,7 +41,7 @@ public class HPBody : A_Equipment
         PlayerSpecManager playerMan = PlayerSpecManager.Instance();
         float currentPlayerAttackPoint = playerMan.GetCurrentPlayerAttackPoint();
 
-        playerMan.maxPlayerHP -= gainMaxHP;
-        playerMan.currentPlayerHP = Mathf.Min(playerMan.currentPlayerHP, playerMan.maxPlayerHP);
+        PlayerSpecManager.Instance().maxPlayerHP -= gainMaxHP;
+        //PlayerSpecManager.Instance().currentPlayerHP = Mathf.Min(playerMan.currentPlayerHP, playerMan.maxPlayerHP);
     }
 }

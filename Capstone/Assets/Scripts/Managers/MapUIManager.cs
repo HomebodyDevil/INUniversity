@@ -67,6 +67,9 @@ public class MapUIManager : A_UIManager
         CanclePanel.OnCanclePanelClicked -= OnCanclePanel;  // CanclePanel의 Action과 연결함.
         CanclePanel.OnCanclePanelClicked += OnCanclePanel;
 
+        SceneManagerEX.OnSwitchSceneToMap -= UpdatePlayerLevelText;
+        SceneManagerEX.OnSwitchSceneToMap += UpdatePlayerLevelText;
+
         deckPanel.SetActive(false);
         itemsPanel.SetActive(false);
 
@@ -97,6 +100,7 @@ public class MapUIManager : A_UIManager
     private void OnDisable()
     {
         CanclePanel.OnCanclePanelClicked -= OnCanclePanel;
+        SceneManagerEX.OnSwitchSceneToMap += UpdatePlayerLevelText;
     }
 
     public void SwitchPanels()

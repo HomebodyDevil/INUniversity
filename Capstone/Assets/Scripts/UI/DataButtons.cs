@@ -10,6 +10,7 @@ public class DataButtons : MonoBehaviour
         LocalLoad,
         ServerSave,
         ServerLoad,
+        Clear,
     }
 
     [SerializeField] private DataButtonType type;
@@ -23,6 +24,9 @@ public class DataButtons : MonoBehaviour
                 break;
             case DataButtonType.LocalLoad:
                 DataManager.Instance().LoadData();
+                break;
+            case DataButtonType.Clear:
+                DataManager.Instance().ResetData();
                 break;
         }
 

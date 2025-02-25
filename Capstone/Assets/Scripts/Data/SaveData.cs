@@ -26,6 +26,9 @@ public class PlayerSpecData
     public float maxPlayerCost;
 
     public float currentCostIncreaseAmount;
+
+    public float bgmVolume;
+    public float effectVolume;
 }
 
 [System.Serializable]

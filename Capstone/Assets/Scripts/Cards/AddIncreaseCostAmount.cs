@@ -7,11 +7,11 @@ public class AddIncreaseCostAmount : A_PlayerCard
     [SerializeField] private float increaseAmount;
     [SerializeField] private float maxIncreaseAmount;
 
-    private static float increased;
+    public static float increased = 0.0f;
 
     private void Start()
     {
-        increased = 0.0f;
+
     }
 
     public override void OnDiscardCard()
@@ -46,6 +46,8 @@ public class AddIncreaseCostAmount : A_PlayerCard
         string str = $"+{howMuch}";
         PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.blue, false);
         TextController.ShowDescription.Invoke(true, false, false, str, true);
+
+        SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.heal, false);
 
         increased += howMuch;
     }

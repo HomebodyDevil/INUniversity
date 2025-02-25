@@ -167,6 +167,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     
     public void UseItem()
     {
+        PlayerSpecManager spec = PlayerSpecManager.Instance();
+        if (item is Item_Potion && spec.currentPlayerHP >= spec.maxPlayerHP)
+        {
+            Debug.Log("Already Full");
+            return;
+        }
+
         if (!hasItem || slotItemUseCount < 0)
             return;
 

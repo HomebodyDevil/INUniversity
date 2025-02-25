@@ -10,8 +10,8 @@ public class PlayerSpecManager : MonoBehaviour
 
     public bool isInitialized;
 
-    [SerializeField] float hpAddAmount;
-    [SerializeField] float attackPointAddAmount;
+    //[SerializeField] float hpAddAmount;
+    //[SerializeField] float attackPointAddAmount;
 
     [Space(10), Header("Settings")]
     public int currentPlayerLevel;
@@ -19,6 +19,8 @@ public class PlayerSpecManager : MonoBehaviour
     public float currentPlayerEXP;
     public float currentPlayerAttackPoint;
     public float currentPlayerCost;
+    public float attackAddAmount;
+    public float hpAddAmount;
 
     private float originalPlayerMaxHP;
     private float originalPlayerAttackPoint;
@@ -111,7 +113,7 @@ public class PlayerSpecManager : MonoBehaviour
         originalPlayerMaxHP = maxPlayerHP;
         originalPlayerAttackPoint = currentPlayerAttackPoint;
         originalPlayerMaxCost = maxPlayerCost;
-        originalCostIncreaseAmount = currentPlayerAttackPoint;
+        originalCostIncreaseAmount = currentCostIncreaseAmount;
     }
 
     private void RestoreOriginalSpec()
@@ -119,7 +121,7 @@ public class PlayerSpecManager : MonoBehaviour
         maxPlayerHP = originalPlayerMaxHP;
         currentPlayerAttackPoint = originalPlayerAttackPoint;
         maxPlayerCost = originalPlayerMaxCost;
-        currentPlayerAttackPoint = originalCostIncreaseAmount;
+        currentCostIncreaseAmount = originalCostIncreaseAmount;
     }
 
     public void UpdateSpec()
@@ -128,7 +130,7 @@ public class PlayerSpecManager : MonoBehaviour
         maxPlayerHP = Mathf.Max(maxPlayerHP + currentPlayerLevel * hpAddAmount, 0.0f);
         currentPlayerHP = maxPlayerHP * hpRatio;
 
-        maxPlayerAttackPoint = Mathf.Max(currentPlayerAttackPoint + currentPlayerLevel * attackPointAddAmount, 0.0f);
+        //maxPlayerAttackPoint = Mathf.Max(currentPlayerAttackPoint + currentPlayerLevel * attackPointAddAmount, 0.0f);
     }
 
     public void InitializePlayerSpec()
@@ -216,6 +218,11 @@ public class PlayerSpecManager : MonoBehaviour
         currentPlayerEXP = currentPlayerEXP - maxPlayerEXP;
         currentPlayerLevel++;
         maxPlayerEXP *= 1.3f;
+
+        originalPlayerMaxHP += attackAddAmount;
+        originalPlayerAttackPoint += attackAddAmount;
+        //currentPlayerAttackPoint += attackAddAmount;
+        //maxPlayerHP += hpAddAmount;
     }
 
     public void AddValueToCurrentPlayerHP(float n)

@@ -35,8 +35,14 @@ public class PlayerEffectTransform : MonoBehaviour
         SceneManagerEX.OnSwitchSceneToBattle -= LookBattleCamera;
         SceneManagerEX.OnSwitchSceneToBattle += LookBattleCamera;
 
+        SceneManagerEX.OnSwitchSceneToBattle -= ResetEffect;
+        SceneManagerEX.OnSwitchSceneToBattle += ResetEffect;
+
         SceneManagerEX.OnSwitchSceneToMap -= LookFreeLookCamera;
         SceneManagerEX.OnSwitchSceneToMap += LookFreeLookCamera;
+
+        SceneManagerEX.OnSwitchSceneToMap -= ResetEffect;
+        SceneManagerEX.OnSwitchSceneToMap += ResetEffect;
 
         cameras.Add(freeLookCamera);
         cameras.Add(battleVirtualCamera);
@@ -57,6 +63,15 @@ public class PlayerEffectTransform : MonoBehaviour
 
         SceneManagerEX.OnSwitchSceneToBattle -= LookBattleCamera;
         SceneManagerEX.OnSwitchSceneToMap -= LookFreeLookCamera;
+
+        SceneManagerEX.OnSwitchSceneToBattle -= ResetEffect;
+        SceneManagerEX.OnSwitchSceneToMap -= ResetEffect;
+    }
+
+    private void ResetEffect()
+    {
+        animator.SetBool("Hitted", false);
+        animator.SetBool("Healed", false);
     }
 
     private void LookCamera()

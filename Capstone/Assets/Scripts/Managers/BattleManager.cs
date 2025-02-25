@@ -64,6 +64,8 @@ public class BattleManager : MonoBehaviour
     private Light sunLight;
     private Light battleLight;
 
+    private List<Coroutine> coroutines;
+
     private void Initialize()
     {
         if (instance == null)
@@ -114,6 +116,12 @@ public class BattleManager : MonoBehaviour
 
         BattleManager.OnBattleLose -= StopBattleCoroutines;
         BattleManager.OnBattleLose += StopBattleCoroutines;
+
+        SceneManagerEX.OnSwitchSceneToMap -= StopBattleCoroutines;
+        SceneManagerEX.OnSwitchSceneToMap += StopBattleCoroutines;
+
+        SceneManagerEX.OnSwitchSceneToMap -= ResetIncreaseCostAmount;
+        SceneManagerEX.OnSwitchSceneToMap += ResetIncreaseCostAmount;
     }
 
     // Start is called before the first frame update
@@ -123,7 +131,9 @@ public class BattleManager : MonoBehaviour
         currentPlayerHandCards = new List<A_PlayerCard>();
         currentPlayerReadyCards = new List<A_PlayerCard>();
 
-    //dropItemsList = new List<A_Item>();
+        coroutines = new List<Coroutine>();
+
+        //dropItemsList = new List<A_Item>();
         dropItemsDictionary = new Dictionary<A_Item, int>();
         dropEquipmentList = new List<A_Equipment>();
         dropCardsList = new List<A_PlayerCard>();
@@ -151,6 +161,13 @@ public class BattleManager : MonoBehaviour
         SceneManagerEX.OnSwitchSceneToMap -= DisableIsInBattle;
         BattleManager.OnEnemyHPisZero -= StopBattleCoroutines;
         BattleManager.OnBattleLose -= StopBattleCoroutines;
+        SceneManagerEX.OnSwitchSceneToMap -= StopBattleCoroutines;
+        SceneManagerEX.OnSwitchSceneToMap -= ResetIncreaseCostAmount;
+    }
+
+    private void ResetIncreaseCostAmount()
+    {
+        AddIncreaseCostAmount.increased = 0.0f;
     }
 
     private void EnableIsInBattle()
@@ -522,6 +539,7 @@ public class BattleManager : MonoBehaviour
         //Debug.Log($"Player Deck is null : {playerDeck == null}");
 
         currentPlayerHandCards.Clear();
+        currentPlayerReadyCards.Clear();
         foreach (A_PlayerCard card in playerDeck)
             currentPlayerReadyCards.Add(card);
 
@@ -574,6 +592,7 @@ public class BattleManager : MonoBehaviour
         //    Debug.Log($"Counting Card-2 : {card}");
     }
 
+    private bool canUseCard = true;
     public void UseCard(int order)
     {
         if (currentPlayerHandCards[order] == null)
@@ -583,21 +602,41 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        if (!canUseCard)
+        {
+            Debug.Log("CantUseCard");
+            return;
+        }
+
+        //canUseCard = true;
+
         A_PlayerCard usedCard = currentPlayerHandCards[order];
         currentPlayerReadyCards.Add(usedCard);
 
         int playerReadyCards = currentPlayerReadyCards.Count;
         int index = Random.Range(0, playerReadyCards);
+        Debug.Log($"playerReadyCards : {playerReadyCards}");
 
         //currentPlayerHandCards.RemoveAt(order);
         //currentPlayerHandCards.Add(currentPlayerReadyCards[index]);
         A_PlayerCard newCard = currentPlayerReadyCards[index];
+        Debug.Log(newCard);
+
         currentPlayerHandCards[order] = newCard;
         currentPlayerReadyCards.RemoveAt(index);
+        Debug.Log(currentPlayerHandCards[order]);
 
         newCard.OnDrawCard();
 
         PlayerCurrentCardHolder.Act_UpdateHandCardsImages.Invoke();
+
+        //StartCoroutine(WaitForDrawCard());
+    }
+
+    IEnumerator WaitForDrawCard()
+    {        
+        yield return new WaitForSeconds(0.1f);
+        canUseCard = true;
     }
 
     private void ShuffleList<T>(List<T> list)
@@ -743,8 +782,17 @@ public class BattleManager : MonoBehaviour
     {
         repeatAttacking = 0;
         StopCoroutine("MultipleAttackRoutine");
-        StopCoroutine("RepeatHealRoutine");
-        StopCoroutine("RepeatAttackRoutine");
+        //StopCoroutine("RepeatHealRoutine");
+        //StopCoroutine("RepeatAttackRoutine");
+
+        foreach (Coroutine coroutine in coroutines)
+        {
+            Debug.Log(coroutine);
+
+            StopCoroutine(coroutine);
+        }
+
+        coroutines.Clear();
     }
 
     public void MultipleAttack(int repeat, float attackAmount, float attackInterval)
@@ -754,14 +802,25 @@ public class BattleManager : MonoBehaviour
 
     public void RepeatHeal(int repeat, float healAmount, float interval)
     {
-        StartCoroutine(RepeatHealRoutine(repeat, healAmount, interval));
+        int index = coroutines.Count;
+        IEnumerator coroutine = RepeatHealRoutine(repeat, healAmount, interval);
+        //StartCoroutine(coroutine);
+
+        coroutines.Add(StartCoroutine(coroutine));
     }
 
     private int repeatAttacking = 0;
     public void RepeatAttack(int repeat, float damage, float interval)
     {
         repeatAttacking++;
-        StartCoroutine(RepeatAttackRoutine(repeat, damage, interval));
+
+        int index = coroutines.Count;
+
+        IEnumerator coroutine = RepeatAttackRoutine(repeat, damage, interval);
+        //StartCoroutine(coroutine);
+
+        coroutines.Add(StartCoroutine(coroutine));
+        //StartCoroutine(RepeatAttackRoutine(repeat, damage, interval));
     }
 
     IEnumerator MultipleAttackRoutine(int repeat, float attackAmount, float attackInterval)

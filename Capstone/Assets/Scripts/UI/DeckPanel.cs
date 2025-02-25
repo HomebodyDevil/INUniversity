@@ -369,7 +369,7 @@ public class DeckPanel : MonoBehaviour, IPanel
             //Debug.Log("COUNT : " + count + " DECK_AMOUNT : " + deck.Count);
             //Debug.Log("DeckImageListCount : " + deckImagesList.Count);
 
-            Debug.Log($"deck.Count : {deck.Count}, count : {count}");
+            //Debug.Log($"deck.Count : {deck.Count}, count : {count}");
 
             if (deckImageHoldersList != null)
             {

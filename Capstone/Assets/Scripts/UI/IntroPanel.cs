@@ -167,7 +167,13 @@ public class IntroPanel : MonoBehaviour
             panelImage.color = new Color(overPanelColor.r, overPanelColor.g, overPanelColor.b, alpha);
 
             if (!initData && ratio > 0.5f)
+            {
+                initData = true;
                 DataManager.Instance().LoadData();
+                SoundManager.OnPlayBGM.Invoke();
+
+                MapUIManager.Instance().UpdatePlayerLevelText();
+            }
         }
     }
 

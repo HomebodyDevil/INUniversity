@@ -10,6 +10,10 @@ public class EnemyBody : MonoBehaviour, IPointerClickHandler
         if (!GPSManager.isIn)
             return;
 
+        float distance = Vector3.Distance(transform.position, Player.Instance().gameObject.transform.position);
+        if (distance > CameraManager.Instance().clickDistance)
+            return;
+
         GameObject testEnemyObject = gameObject.transform.parent.gameObject;
 
         //Debug.Log("This is Enemy");

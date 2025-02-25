@@ -41,6 +41,7 @@ public class SoundManager : MonoBehaviour
     public static Action<AudioType, bool> PlayEffectAudio;
     public static Action<AudioType, bool> PlayHitAudio;
     public static Action<bool> OnFadeSound;
+    public static Action OnPlayBGM;
 
     private static SoundManager instance;
 
@@ -132,6 +133,9 @@ public class SoundManager : MonoBehaviour
         OnFadeSound -= Fade;
         OnFadeSound += Fade;
 
+        OnPlayBGM -= startBackground;
+        OnPlayBGM += startBackground;
+
         UnityEngine.Random.InitState((int)(DateTime.Now.Ticks));
 
         soundChangeTime = 1 / soundChangeTime;
@@ -162,6 +166,7 @@ public class SoundManager : MonoBehaviour
         PlayEffectAudio -= PlayOtherAudio;
         PlayHitAudio -= PlayOtherAudio;
         OnFadeSound -= Fade;
+        OnPlayBGM -= startBackground;
     }
 
     public AudioMixer GetAudioMixer()
