@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -331,6 +332,9 @@ public class MapUIManager : A_UIManager
 
     public void UpdatePlayerLevelText()
     {
+        if (playerLevelText == null)
+            return;
+
         int currentPlayerLevel = PlayerSpecManager.Instance().currentPlayerLevel;
         string str = String.Format("Lv.{0}", currentPlayerLevel);
 

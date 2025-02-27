@@ -94,8 +94,10 @@ public class PlayerCurrentCardHolder : MonoBehaviour, IBeginDragHandler, IEndDra
             playerCard.OnPlayCard();
 
             BattleManager.Instance().UseCard(cardOrder);
-            BattleManager.Instance().ResetTimeScale();
+            //BattleManager.Instance().ResetTimeScale();
         }
+
+        BattleManager.Instance().ResetTimeScale();
     }
 
     private void UpdateCardsImages()

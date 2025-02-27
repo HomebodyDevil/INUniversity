@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,8 @@ public class PlayerSpecData
 
     public float bgmVolume;
     public float effectVolume;
+
+    public string guid;
 }
 
 [System.Serializable]

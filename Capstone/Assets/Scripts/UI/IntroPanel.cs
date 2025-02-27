@@ -169,8 +169,12 @@ public class IntroPanel : MonoBehaviour
             if (!initData && ratio > 0.5f)
             {
                 initData = true;
-                DataManager.Instance().LoadData();
-                SoundManager.OnPlayBGM.Invoke();
+
+                if (DataManager.Instance() != null)
+                    DataManager.Instance().LoadData();
+
+                if (SoundManager.OnPlayBGM != null)
+                    SoundManager.OnPlayBGM.Invoke();
 
                 MapUIManager.Instance().UpdatePlayerLevelText();
             }

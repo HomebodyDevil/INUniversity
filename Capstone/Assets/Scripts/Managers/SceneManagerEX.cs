@@ -183,11 +183,14 @@ public class SceneManagerEX : MonoBehaviour
                     BattleManager.Instance().SetEnemy();
 
                     OnSwitchSceneToBattle.Invoke();
+
+                    DataManager.Instance().SaveData();
                 }
                 else if (sceneName == "MapScene")
                 {
                     CameraManager.Instance().SetCamera(CameraManager.CameraKind.MapCamera);
                     OnSwitchSceneToMap.Invoke();
+                    //DataManager.Instance().LoadData();
                 }
                 else
                 {
@@ -210,6 +213,7 @@ public class SceneManagerEX : MonoBehaviour
     IEnumerator Fade(bool isIn)
     {
         float tick = 0;
+        //bool savedLoaded = false;
         while(tick < fadeTime)
         {
             //Debug.Log(tick);
@@ -226,6 +230,11 @@ public class SceneManagerEX : MonoBehaviour
             Color newColor = new Color(loadingPanel.color.r, loadingPanel.color.g, loadingPanel.color.b, alpha);
             loadingPanel.color = newColor;
             loadingText.color = newColor;
+
+            //if (savedLoaded == false || tick / fadeTime >= 1/2)
+            //{
+            //    DataManager.Instance().SaveData();
+            //}
         }
     }
 

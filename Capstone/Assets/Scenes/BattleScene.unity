@@ -818,6 +818,7 @@ MonoBehaviour:
   minVolume: -20
   maxVolume: 10
   fillBar: {fileID: 1425024880}
+  slider: {fileID: 92395889}
 --- !u!1 &93921353
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,6 +8271,7 @@ MonoBehaviour:
   minVolume: -20
   maxVolume: 10
   fillBar: {fileID: 255758961}
+  slider: {fileID: 1123927390}
 --- !u!1 &1138189348
 GameObject:
   m_ObjectHideFlags: 0

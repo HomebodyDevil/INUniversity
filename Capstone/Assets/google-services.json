@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "807221642415",
+    "project_id": "inuniversity-374e5",
+    "storage_bucket": "inuniversity-374e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807221642415:android:c374e575d0c5f94022405a",
+        "android_client_info": {
+          "package_name": "com.DeadEnd.INUniversity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPgsn52vWZcYdiW59FbkE5AQzLSV2liJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

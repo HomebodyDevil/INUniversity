@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ public class PlayerSpecManager : MonoBehaviour
 
     //[SerializeField] float hpAddAmount;
     //[SerializeField] float attackPointAddAmount;
+
+    [Header("Guid")]
+    public Guid guid;
 
     [Space(10), Header("Settings")]
     public int currentPlayerLevel;

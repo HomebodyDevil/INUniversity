@@ -24,12 +24,12 @@ public class VolumeSlider : MonoBehaviour
     [SerializeField, Range(0.0f, 10.0f)] private float maxVolume;
     [SerializeField] Transform fillBar;
 
-    private Slider slider;
+    [SerializeField] private Slider slider;
     private AudioMixer audioMixer;
 
     private void Start()
     {
-        slider = gameObject.GetComponent<Slider>();
+        //slider = gameObject.GetComponent<Slider>();
         audioMixer = SoundManager.Instance().GetAudioMixer();
 
         UpdateSlider();
@@ -58,6 +58,9 @@ public class VolumeSlider : MonoBehaviour
 
         OnUpdateSlider -= UpdateSlider;
         OnUpdateSlider += UpdateSlider;
+
+        UpdateSlider();
+        OnValueChanged();
     }
 
     private void OnDisable()

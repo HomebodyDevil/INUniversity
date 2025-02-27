@@ -1,12 +1,28 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.CloudSave;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class DataManager : MonoBehaviour
 {
     private static DataManager instance;
+
+    [SerializeField] private GameObject loginPanel;
+    [SerializeField] private GameObject optionPanel;
+    [SerializeField] private GameObject optionButton;
+    [SerializeField] private Transform childTransform;
+
+    [Space(10), Header("Cloud Buttons")]
+    [SerializeField] private Button cloudSaveButton;
+    [SerializeField] private Button cloudLoadButton;
 
     private void Initialize()
     {
@@ -29,6 +45,19 @@ public class DataManager : MonoBehaviour
     {
         Initialize();
 
+        cloudSaveButton.onClick.AddListener(
+            async () =>
+            {
+                await SaveCloud();
+            }
+            );
+
+        cloudLoadButton.onClick.AddListener(
+            async () =>
+            {
+                await LoadCloud();
+            });
+
         // 경로 참고
         // 회사명은 기본값 DefaultCompany
         // PC : "C:/Users/사용자/AppData/LocalLow/회사명/프로젝트/"
@@ -40,6 +69,18 @@ public class DataManager : MonoBehaviour
         defaultPath = Application.persistentDataPath;
         saveDataDirectoryPath = $"{defaultPath}/savedata";
         saveDataFilePath = $"{saveDataDirectoryPath}/Save.json";
+
+        BattleManager.OnBattleWin -= SaveData;
+        BattleManager.OnBattleWin += SaveData;
+
+        BattleManager.OnBattleLose -= SaveData;
+        BattleManager.OnBattleLose += SaveData;
+
+        SceneManagerEX.OnSwitchSceneToBattle -= DisableOptionButton;
+        SceneManagerEX.OnSwitchSceneToBattle += DisableOptionButton;
+
+        SceneManagerEX.OnSwitchSceneToMap -= EnableOptionButton;
+        SceneManagerEX.OnSwitchSceneToMap += EnableOptionButton;
 
         //Debug.Log(saveDataDirectoryPath);
     }
@@ -54,6 +95,14 @@ public class DataManager : MonoBehaviour
         {
             LoadData();
         }
+    }
+
+    private void OnDestroy()
+    {
+        BattleManager.OnBattleWin -= SaveData;
+        BattleManager.OnBattleLose -= SaveData;
+        SceneManagerEX.OnSwitchSceneToBattle -= DisableOptionButton;
+        SceneManagerEX.OnSwitchSceneToMap -= EnableOptionButton;
     }
 
     public static DataManager Instance()
@@ -112,6 +161,17 @@ public class DataManager : MonoBehaviour
 
         data.playerSpec.bgmVolume = VolumeSlider.bgmVolume;
         data.playerSpec.effectVolume = VolumeSlider.effectVolume;
+
+        InitGuid();
+        data.playerSpec.guid = manager.guid.ToString();
+    }
+
+    public void InitGuid()
+    {
+        if (PlayerSpecManager.Instance().guid == default(Guid))
+        {
+            PlayerSpecManager.Instance().guid = Guid.NewGuid();
+        }
     }
 
     private void SaveItems(ref SaveData data)
@@ -225,7 +285,7 @@ public class DataManager : MonoBehaviour
 
         string json = File.ReadAllText(saveDataFilePath);
 
-        while (transform.childCount > 0)
+        while (childTransform.childCount > 0)
             DestroyImmediate(transform.GetChild(0).gameObject);
 
         SaveData data = JsonUtility.FromJson<SaveData>(json);
@@ -256,6 +316,8 @@ public class DataManager : MonoBehaviour
             return;
         }
 
+        PlayerSpecManager.Instance().guid = Guid.Parse(data.playerSpec.guid);
+
         PlayerSpecManager.Instance().currentPlayerLevel = data.playerSpec.currentPlayerLevel;
         PlayerSpecManager.Instance().currentPlayerHP = data.playerSpec.currentPlayerHP;
         PlayerSpecManager.Instance().currentPlayerAttackPoint = data.playerSpec.currentPlayerAttackPoint;
@@ -276,7 +338,8 @@ public class DataManager : MonoBehaviour
         SoundManager.Instance().SetAudioVolume("BGM", data.playerSpec.bgmVolume);
         SoundManager.Instance().SetAudioVolume("Effect", data.playerSpec.effectVolume);
 
-        MapUIManager.Instance().UpdatePlayerLevelText();
+        if (MapUIManager.Instance() != null)
+            MapUIManager.Instance().UpdatePlayerLevelText();
 
         if (VolumeSlider.OnUpdateSlider != null)
             VolumeSlider.OnUpdateSlider.Invoke();
@@ -309,7 +372,7 @@ public class DataManager : MonoBehaviour
             GameObject itemObject = Resources.Load<GameObject>(path);
             itemObject = Instantiate(itemObject);
 
-            itemObject.transform.SetParent(transform, false);
+            itemObject.transform.SetParent(childTransform, false);
 
             A_Item currItem = itemObject.GetComponent<A_Item>();
             PlayerItemsManager.Instance().GetPlayerItemDictionary().Add(id, currItem);
@@ -340,7 +403,7 @@ public class DataManager : MonoBehaviour
             GameObject equipmentObject = Resources.Load<GameObject>(objectPath);
             equipmentObject = Instantiate(equipmentObject);
 
-            equipmentObject.transform.SetParent(transform, false);
+            equipmentObject.transform.SetParent(childTransform, false);
 
             A_Equipment currEquipment = equipmentObject.GetComponent<A_Equipment>();
             PlayerEquipmentManager.Instance().currentHeadEquip = currEquipment;
@@ -354,7 +417,7 @@ public class DataManager : MonoBehaviour
             GameObject equipmentObject = Resources.Load<GameObject>(objectPath);
             equipmentObject = Instantiate(equipmentObject);
 
-            equipmentObject.transform.SetParent(transform, false);
+            equipmentObject.transform.SetParent(childTransform, false);
 
             A_Equipment currEquipment = equipmentObject.GetComponent<A_Equipment>();
             PlayerEquipmentManager.Instance().currentWeaponEquip = currEquipment;
@@ -368,7 +431,7 @@ public class DataManager : MonoBehaviour
             GameObject equipmentObject = Resources.Load<GameObject>(objectPath);
             equipmentObject = Instantiate(equipmentObject);
 
-            equipmentObject.transform.SetParent(transform, false);
+            equipmentObject.transform.SetParent(childTransform, false);
 
             A_Equipment currEquipment = equipmentObject.GetComponent<A_Equipment>();
             PlayerEquipmentManager.Instance().currentBodyEquip = currEquipment;
@@ -382,7 +445,7 @@ public class DataManager : MonoBehaviour
             GameObject equipmentObject = Resources.Load<GameObject>(objectPath);
             equipmentObject = Instantiate(equipmentObject);
 
-            equipmentObject.transform.SetParent(transform, false);
+            equipmentObject.transform.SetParent(childTransform, false);
 
             A_Equipment currEquipment = equipmentObject.GetComponent<A_Equipment>();
             PlayerEquipmentManager.Instance().currentShoesEquip = currEquipment;
@@ -397,7 +460,7 @@ public class DataManager : MonoBehaviour
             GameObject currEquipObject = Resources.Load<GameObject>(equipPath);
             currEquipObject = Instantiate(currEquipObject);
 
-            currEquipObject.transform.SetParent(transform, false);
+            currEquipObject.transform.SetParent(childTransform, false);
 
             A_Equipment currEquip = currEquipObject.GetComponent<A_Equipment>();
             PlayerEquipmentManager.Instance().GetPlayerHaveEquipmentDictionary().Add(id, currEquip);
@@ -447,7 +510,7 @@ public class DataManager : MonoBehaviour
             GameObject cardObject = Resources.Load<GameObject>(path);
             cardObject = Instantiate(cardObject);
 
-            cardObject.transform.SetParent(transform, false);
+            cardObject.transform.SetParent(childTransform, false);
 
             A_PlayerCard currCard = cardObject.GetComponent<A_PlayerCard>();
             PlayerCardManager.Instance().AddNewHaveCard(currCard);            
@@ -514,11 +577,112 @@ public class DataManager : MonoBehaviour
             file.Close();
     }
 
-    private void InitFile()
-    {
+    //public void CloudLoad()
+    //{
+    //    if (!AuthenticationService.Instance.IsSignedIn)
+    //    {
+    //        loginPanel.SetActive(true);
+    //    }
 
+    //    StartCoroutine(CloudLoadRoutine());
+    //}
+
+    IEnumerator WaitDone()
+    {
+        while(!CloudData.isDone)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
+    public void DisableOptionButton()
+    {
+        optionButton.SetActive(false);
+    }
+
+    public void EnableOptionButton()
+    {
+        optionButton.SetActive(true);
+    }
+
+    public void EnableOptionPanel()
+    {
+        optionPanel.SetActive(true);
+        CinemachineBrain cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        cinemachineBrain.enabled = false;
+    }
+
+    public async Task SaveCloud()
+    {
+        SoundManager.OnButtonUp.Invoke();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            loginPanel.SetActive(true);
+            return;
+        }
+
+        StartCoroutine(WaitDone());
+
+        SaveData data = new SaveData();
+
+        SaveSpec(ref data);
+        SaveItems(ref data);
+        SaveEquipment(ref data);
+        SaveCards(ref data);
+
+        string dataJson = JsonUtility.ToJson(data);
+        string key = "SaveData";
+
+        Dictionary<string, object> dataPair = new Dictionary<string, object> { { key, dataJson } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(dataPair);
+        }
+        catch(AuthenticationException ae)
+        {
+
+        }
+        catch(RequestFailedException re)
+        {
+
+        }
+    }
+
+    public async Task LoadCloud()
+    {
+        SoundManager.OnButtonUp.Invoke();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            loginPanel.SetActive(true);
+            return;
+        }
+
+        StartCoroutine(WaitDone());
+
+        var key = new HashSet<string>{ "SaveData" };
+
+        try
+        {
+            var getData = await CloudSaveService.Instance.Data.Player.LoadAsync(key);
+            string dataJson = getData["SaveData"].Value.GetAsString();
+
+            SaveData data = JsonUtility.FromJson<SaveData>(dataJson);
+            LoadSpec(ref data);
+            LoadItems(ref data);
+            LoadEquipment(ref data);
+            LoadCards(ref data);
+        }
+        catch (AuthenticationException ae)
+        {
+
+        }
+        catch (RequestFailedException re)
+        {
+
+        }
+    }
 
 
 
