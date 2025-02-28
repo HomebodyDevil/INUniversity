@@ -161,7 +161,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8655993497542076429}
   - component: {fileID: 3915967417548036579}
-  - component: {fileID: 7860271406671857966}
   - component: {fileID: 6730494868256738628}
   m_Layer: 0
   m_Name: Enemy_Slime_InBattle
@@ -205,26 +204,6 @@ MonoBehaviour:
   enemyBody: {fileID: 0}
   enemyVisual: {fileID: 0}
   isInBattle: 0
---- !u!114 &7860271406671857966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3891003556211449958}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d65e1931ce4984399629e19748b277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 4336340384914391334}
-  attackCost: 2
-  healCost: 7
-  attackChance: 3
-  healChance: 7
-  attackAmount: 5
-  healRatio: 1
-  healCool: 8
 --- !u!114 &6730494868256738628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +222,7 @@ MonoBehaviour:
   attackChance: 3
   healChance: 7
   attackAmount: 5
-  healRatio: 0
+  healRatio: 0.8
   healCool: 8
 --- !u!1 &4992603937729670761
 GameObject:

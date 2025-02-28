@@ -73,7 +73,7 @@ public class EquipSlot : MonoBehaviour, IPointerClickHandler
         if (isSelected)
         {
             MapUIManager.Instance().ActivateObjectDescriptionPanel();
-            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(equipment.equipmentImagePath, equipment.name, equipment.equipmentDescription);
+            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(equipment.equipmentImagePath, equipment.equipmentName, equipment.equipmentDescription);
         }
         else
         {

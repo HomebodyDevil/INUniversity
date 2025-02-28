@@ -365,10 +365,10 @@ MonoBehaviour:
   attackAmount: 2
   nightStillAmount: 1
   additionalAttackAmount: 0.2
-  normalCool: 2
-  healCool: 13
-  attackCool: 2
-  changeTimeCool: 12
+  normalCool: 0.8
+  healCool: 12
+  attackCool: 1.5
+  changeTimeCool: 8
 --- !u!1 &7239254769111000379
 GameObject:
   m_ObjectHideFlags: 0

@@ -85,7 +85,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             //Debug.Log(String.Format("path : {0}, name : {1}, desc : {2}", item.itemImagePath, item.name, item.itemDescription));
 
             MapUIManager.Instance().ActivateObjectDescriptionPanel();
-            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(item.itemImagePath, item.name, item.itemDescription);
+            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(item.itemImagePath, item.itemName, item.itemDescription);
         }
         else
         {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyFoxData
   m_EditorClassIdentifier: 
-  enemyName: Fox
+  enemyName: "\uC5EC\uC6B0"
   attackPoint: 10
   maxHP: 10
   maxCost: 10
@@ -20,25 +20,28 @@ MonoBehaviour:
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Fox_InBattle
-  enemyDescription: Fox
+  enemyDescription: "\uC774\uB984 : \uC5EC\uC6B0\n\n\uD559\uAD50\uC5D0\uC11C \uC5EC\uC6B0\uB97C
+    \uBCF8 \uC801\uC740 \uC5C6\uC5B4\uC694."
   enemyImagePath: Images/Enemies/Enemy_Fox/Enemy_Fox_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Fox/Enemy_Fox_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Fox/Enemy_Fox_Lose_Profile
-  enemyPlayerWinDialogueText: Player Win
-  enemyPlayerLoseDialogueText: Player Lose
+  enemyPlayerWinDialogueText: "\uB2D8 \uC384\uC2DC\uB124\uC694."
+  enemyPlayerLoseDialogueText: "\uB2D8 \uC57D\uD558\uC2DC\uB124\uC694."
   dropItems:
   - item: {fileID: 1819807146939611753, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
     chance: 70
     maxDropAmount: 5
   dropCards:
   - card: {fileID: 2242407686405643945, guid: 711905648dda4f243b4e2caf21bf25a1, type: 3}
-    chance: 50
+    chance: 40
+  - card: {fileID: 2242407686405643945, guid: 97e9935a7335bdb4984f4c54467ffea7, type: 3}
+    chance: 20
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 11104308ed8b1d441ba9f2031f3a4018, type: 3}
-    chance: 50
+    chance: 30
   - equipment: {fileID: 3141337324803865170, guid: 6d53527cb95d6f94dbc0bc3c090bac0e, type: 3}
-    chance: 50
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: f31f97b501312df4eb6606e88780f450, type: 3}
-    chance: 50
+    chance: 30
   - equipment: {fileID: 3141337324803865170, guid: 4a7e72667ed42ac4bab7e6ea2a5d8ba2, type: 3}
-    chance: 50
+    chance: 20

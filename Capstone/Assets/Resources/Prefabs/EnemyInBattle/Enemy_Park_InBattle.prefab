@@ -243,10 +243,10 @@ MonoBehaviour:
   attackHPMinRatio: 0.1
   attackMPRatio: 0.8
   healRatio: 0.5
-  normalCool: 0.5
-  healCool: 7
-  attackHPCool: 2
-  attackMPCool: 9
+  normalCool: 0.8
+  healCool: 16
+  attackHPCool: 1.5
+  attackMPCool: 4
 --- !u!1 &6551720422606226740
 GameObject:
   m_ObjectHideFlags: 0

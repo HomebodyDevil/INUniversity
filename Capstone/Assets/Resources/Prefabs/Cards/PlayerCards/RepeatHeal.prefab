@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b324d566fd578e47bfee8660f9c56d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 4
   cardID: 8
-  cardName: RepeatHeal
+  cardName: "\uC9C0\uC18D \uD68C\uBCF5"
   cardImagePath: Images/Cards/RepeatHeal
-  cardDescription: RepeatHeal
+  cardDescription: "\uBC18\uBCF5 : 5(1.2\uCD08 \uAC04\uACA9)\n\uD68C\uBCF5\uB7C9
+    : 5 + (\uACF5\uACA9\uB825 * 10%)"
   count: 5
   healRaio: 0.1
   interval: 1.2

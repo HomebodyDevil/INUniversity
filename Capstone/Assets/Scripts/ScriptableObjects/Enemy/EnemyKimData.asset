@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyKimData
   m_EditorClassIdentifier: 
-  enemyName: Fox
-  attackPoint: 5
-  maxHP: 10
+  enemyName: Kim, Uno of the Cosmos
+  attackPoint: 10
+  maxHP: 40
   maxCost: 20
   currentCostIncreaseAmount: 1
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Kim_InBattle
-  enemyDescription: Kim
+  enemyDescription: "\uC774\uB984 : Kim, Uno of the Cosmos\n\n\uC18C\uB9AC\uC640
+    \uAD00\uB828\uB41C \uC5F0\uAD6C\uB97C \uD558\uC2E4 \uAC83 \uAC19\uC544\uC694."
   enemyImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Kim/Enemy_Kim_Lose_Profile
-  enemyPlayerWinDialogueText: Player Win
-  enemyPlayerLoseDialogueText: Player Lose
+  enemyPlayerWinDialogueText: "\uB108\uB294 \uC6D0"
+  enemyPlayerLoseDialogueText: "\uB108\uB294 \uC81C\uB85C"
   dropItems:
   - item: {fileID: 1819807146939611753, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
     chance: 70
@@ -47,8 +48,8 @@ MonoBehaviour:
   - equipment: {fileID: 3141337324803865170, guid: 6d53527cb95d6f94dbc0bc3c090bac0e, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: f0d17d66837e95146920323d942621cb, type: 3}
-    chance: 50
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 9f4b0273f44765e41be77b6b5ea56e35, type: 3}
-    chance: 50
+    chance: 20

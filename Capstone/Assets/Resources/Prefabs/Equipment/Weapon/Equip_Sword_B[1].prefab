@@ -47,8 +47,8 @@ MonoBehaviour:
   equipmentType: 3
   equipmentID: 1021
   isEquipped: 0
-  equipmentName: Sword_B[1]
+  equipmentName: "\uC591\uB0A0\uAC80[1]"
   equipmentImagePath: Images/Equipment/sword_b_1
-  equipmentDescription: increaseCost
+  equipmentDescription: "\uACF5\uACA9\uB825 : +3\n\uC790\uC6D0 \uD68C\uBCF5 : +0.05"
   gainAttackPoint: 3
   gainIncreaseCost: 0.05

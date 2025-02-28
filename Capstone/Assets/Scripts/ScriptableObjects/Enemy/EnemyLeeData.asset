@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyLeeData
   m_EditorClassIdentifier: 
-  enemyName: Fox
-  attackPoint: 5
-  maxHP: 30
+  enemyName: Lee, The Apex Tiger
+  attackPoint: 8
+  maxHP: 35
   maxCost: 20
   currentCostIncreaseAmount: 0.8
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Lee_InBattle
-  enemyDescription: Lee
+  enemyDescription: "\uC774\uB984 : Lee, The Apex Tiger\n\n\uBE44\uC804 \uAD00\uB828
+    \uC5F0\uAD6C\uB97C \uD558\uC2E4 \uAC83 \uAC19\uC544\uC694."
   enemyImagePath: Images/Enemies/Enemy_Lee/Enemy_Lee_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Lee/Enemy_Lee_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Lee/Enemy_Lee_Lose_Profile
@@ -45,8 +46,8 @@ MonoBehaviour:
   - equipment: {fileID: 3141337324803865170, guid: 7f58c5a563be35b49abeefee2553ad5f, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 22d97b7036450544d8d3b811ce98302e, type: 3}
-    chance: 50
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 9f4b0273f44765e41be77b6b5ea56e35, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 72d1aefb9db470f4e9b39a3a5a366e7a, type: 3}
-    chance: 50
+    chance: 20

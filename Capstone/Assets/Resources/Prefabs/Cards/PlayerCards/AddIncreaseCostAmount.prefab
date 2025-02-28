@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0002c4a77fbcac47a935bab3f263c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 4
   cardID: 5
-  cardName: AddIncreaseCostAmount
+  cardName: "\uC804\uB825\uC9C8\uC8FC"
   cardImagePath: Images/Cards/AddIncreaseCostAmount
-  cardDescription: AddIncreaseCostAmount
-  increaseAmount: 2
-  maxIncreaseAmount: 2.5
+  cardDescription: "\uCD08\uB2F9 \uC790\uC6D0 \uD68C\uBCF5\uB960 \uC99D\uAC00 : 0.3\n\uCD5C\uB300
+    1.2\uAE4C\uC9C0 \uC99D\uAC00 \uAC00\uB2A5"
+  increaseAmount: 0.3
+  maxIncreaseAmount: 1.2

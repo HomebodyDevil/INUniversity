@@ -79,7 +79,7 @@ public class DeckCardImageHolder : MonoBehaviour, IPointerClickHandler
 
             Debug.Log($"playerDeck[order] is null ? {playerDeck[order] == null}");
 
-            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currCard.cardImagePath, currCard.name, currCard.cardDescription);
+            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currCard.cardImagePath, currCard.cardName, currCard.cardDescription);
         }
         else
         {

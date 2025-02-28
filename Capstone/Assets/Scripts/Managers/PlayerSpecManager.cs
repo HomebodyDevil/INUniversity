@@ -118,6 +118,8 @@ public class PlayerSpecManager : MonoBehaviour
         originalPlayerAttackPoint = currentPlayerAttackPoint;
         originalPlayerMaxCost = maxPlayerCost;
         originalCostIncreaseAmount = currentCostIncreaseAmount;
+
+        //DataManager.Instance().SaveData();
     }
 
     private void RestoreOriginalSpec()
@@ -126,6 +128,8 @@ public class PlayerSpecManager : MonoBehaviour
         currentPlayerAttackPoint = originalPlayerAttackPoint;
         maxPlayerCost = originalPlayerMaxCost;
         currentCostIncreaseAmount = originalCostIncreaseAmount;
+
+        AddIncreaseCostAmount.increased = 0.0f;
     }
 
     public void UpdateSpec()

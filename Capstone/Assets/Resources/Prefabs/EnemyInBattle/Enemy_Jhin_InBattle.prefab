@@ -244,16 +244,16 @@ MonoBehaviour:
   increaseMaxCostChance: 7
   increaseAttackAmountChance: 7
   attackAmount: 5
-  healRatio: 0.8
+  healRatio: 0.4
   amountOfIncreaseMaxHP: 5
   amountOfIncreaseMaxCost: 3
   amountOfIncreaseIncreasingMaxCost: 0.8
   amountOfIncreaseAttackAmount: 2
-  normalCool: 2
+  normalCool: 0.8
   healCool: 16
-  increaseMaxHPCool: 5
-  increaseMaxCostCool: 5
-  increaseAttackAmountCool: 5
+  increaseMaxHPCool: 2
+  increaseMaxCostCool: 2
+  increaseAttackAmountCool: 2
 --- !u!1 &6639097510197129614
 GameObject:
   m_ObjectHideFlags: 0

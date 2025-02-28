@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyJhinData
   m_EditorClassIdentifier: 
-  enemyName: Fox
-  attackPoint: 5
+  enemyName: Jhin, The Maximum
+  attackPoint: 7
   maxHP: 50
   maxCost: 5
   currentCostIncreaseAmount: 1
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Jhin_InBattle
-  enemyDescription: Jhin
+  enemyDescription: "\uC774\uB984 : Jhin, The Maximum\n\n\uC774\uC81C \uD559\uAD50\uC5D0
+    \uC548 \uACC4\uC2E0 \uAC83 \uAC19\uC544\uC694."
   enemyImagePath: Images/Enemies/Enemy_Jhin/Enemy_Jhin_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Jhin/Enemy_Jhin_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Jhin/Enemy_Jhin_Lose_Profile
@@ -45,8 +46,8 @@ MonoBehaviour:
   - equipment: {fileID: 3141337324803865170, guid: 8372dee6ed533964aae5b78ed2690451, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 0c44ed58c4f10aa41bcc13da1092b316, type: 3}
-    chance: 50
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 4a7e72667ed42ac4bab7e6ea2a5d8ba2, type: 3}
     chance: 50
   - equipment: {fileID: 3141337324803865170, guid: 72d1aefb9db470f4e9b39a3a5a366e7a, type: 3}
-    chance: 50
+    chance: 20

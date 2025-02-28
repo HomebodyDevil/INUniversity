@@ -239,15 +239,15 @@ MonoBehaviour:
   healChance: 2
   normalAttackChance: 1
   slowCostChance: 1
-  healRatio: 0.5
+  healRatio: 0.3
   normalAttackAmount: 2
   poisonAmount: 1
   poisonTick: 3
-  slowCostRatio: 0.7
-  normalCool: 2
-  healCool: 13
-  normalAttackCool: 7
-  slowCool: 10
+  slowCostRatio: 0.2
+  normalCool: 0.8
+  healCool: 12
+  normalAttackCool: 1.5
+  slowCool: 5
 --- !u!1 &7266148541701779471
 GameObject:
   m_ObjectHideFlags: 0

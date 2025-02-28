@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab30a90cf2143b46959583098da5fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 4
   cardID: 2
-  cardName: HealSelf
+  cardName: "\uD68C\uBCF5"
   cardImagePath: Images/Cards/HealSelf
-  cardDescription: healSelf
+  cardDescription: "\uCCB4\uB825\uD68C\uBCF5 : 20%"
   healRaio: 0.2

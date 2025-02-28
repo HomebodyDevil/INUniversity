@@ -47,8 +47,8 @@ MonoBehaviour:
   equipmentType: 3
   equipmentID: 1033
   isEquipped: 1
-  equipmentName: Spear_A[3]
+  equipmentName: "\uCC3D[3]"
   equipmentImagePath: Images/Equipment/spear_a_3
-  equipmentDescription: Spear_A[3]
+  equipmentDescription: "\uACF5\uACA9\uB825 : +3\n\uC790\uC6D0 \uD68C\uBCF5 : +0.2"
   gainAttackPoint: 3
   gainIncreaseCost: 0.2

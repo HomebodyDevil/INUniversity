@@ -47,7 +47,7 @@ MonoBehaviour:
   equipmentType: 2
   equipmentID: 1083
   isEquipped: 0
-  equipmentName: Shoes[3]
+  equipmentName: "\uC2E0\uBC1C[3]"
   equipmentImagePath: Images/Equipment/shoes_3
-  equipmentDescription: increaseCost
+  equipmentDescription: "\uC790\uC6D0 \uD68C\uBCF5 : +0.16"
   gainIncreaseCost: 0.16

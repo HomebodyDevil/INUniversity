@@ -40,16 +40,17 @@ public class AddIncreaseCostAmount : A_PlayerCard
 
         battleManager.ReducePlayerCost(cardCost);
 
-        float howMuch = Mathf.Clamp(playerSpecManager.currentCostIncreaseAmount + increaseAmount, 0.0f, maxIncreaseAmount);
-        playerSpecManager.currentCostIncreaseAmount = howMuch;
+        //float howMuch = Mathf.Clamp(playerSpecManager.currentCostIncreaseAmount + increaseAmount, 0.0f, maxIncreaseAmount);
+        //playerSpecManager.currentCostIncreaseAmount = howMuch;
+        playerSpecManager.currentCostIncreaseAmount += increaseAmount;
 
-        string str = $"+{howMuch}";
+        string str = $"+{increaseAmount}";
         PlayerEffectTransform.EnablePlayerHealedEffect.Invoke(Color.blue, false);
         TextController.ShowDescription.Invoke(true, false, false, str, true);
 
         SoundManager.PlayEffectAudio.Invoke(SoundManager.AudioType.heal, false);
 
-        increased += howMuch;
+        increased += increaseAmount;
     }
 
     public override void OnReloadCard()

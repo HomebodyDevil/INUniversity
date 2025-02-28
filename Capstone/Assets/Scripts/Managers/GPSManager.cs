@@ -146,13 +146,13 @@ public class GPSManager : MonoBehaviour
             longitude = homeTestLon;
         }
 
-        longText.text = "Long\t: " + longitude;
-        latText.text = "Lat\t: " + latitude;
+        longText.text = "경도\t: " + longitude;
+        latText.text = "위도\t: " + latitude;
 
         // 확인용 Panel 사용.
         // 추후 없애주자.
         //TestText.text = String.Format("{2}\nxCor : {0}\nzCor : {1}", player.xCor, player.zCor, checkText);
-        TestText.text = String.Format(isIn ? "Now INUniversity" : "Wrong Area");
+        TestText.text = String.Format(isIn ? "Now INUniversity" : "등교하세요.");
 
         //if (Input.location.status == LocationServiceStatus.Running)
         //{

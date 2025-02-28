@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331f09f0c08202c49943df65a347c79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 5
   cardID: 7
-  cardName: PoisonAttack
+  cardName: "\uC911\uB3C5"
   cardImagePath: Images/Cards/PoisonAttack
-  cardDescription: PoisonAttack
+  cardDescription: "\uBC18\uBCF5 : 5(1.5\uCD08 \uAC04\uACA9)\n\uD53C\uD574 : 2 +
+    (\uACF5\uACA9\uB825 * 1%)"
   repCount: 5
   defaultDamage: 2
   damageRatio: 0.01

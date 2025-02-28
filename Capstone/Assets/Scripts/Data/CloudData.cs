@@ -68,11 +68,11 @@ public class CloudData : MonoBehaviour
 
         await InitializeServices();
 
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            SetCloudWarningPanel(true, "The Internet is not connected");
-            logInPanel.SetActive(false);
-        }
+        //if (Application.internetReachability == NetworkReachability.NotReachable)
+        //{
+        //    SetCloudWarningPanel(true, "The Internet is not connected");
+        //    logInPanel.SetActive(false);
+        //}
     }
 
     public static CloudData Instance()
@@ -88,6 +88,14 @@ public class CloudData : MonoBehaviour
     async Task OnLoginButton()
     {
         SoundManager.OnButtonUp.Invoke();
+
+        //if (Application.internetReachability == NetworkReachability.NotReachable)
+        //{
+        //    SetCloudWarningPanel(true, "The Internet is not connected");
+        //    //logInPanel.SetActive(false);
+
+        //    return;
+        //}
 
         string id = idInput.text;
         string pwd = pwdInput.text;
@@ -160,6 +168,12 @@ public class CloudData : MonoBehaviour
     async Task OnSignUpButton()
     {
         SoundManager.OnButtonUp.Invoke();
+
+        //if (Application.internetReachability == NetworkReachability.NotReachable)
+        //{
+        //    SetCloudWarningPanel(true, "The Internet is not connected");
+        //    logInPanel.SetActive(false);
+        //}
 
         string id = idInput.text;
         string pwd = pwdInput.text;

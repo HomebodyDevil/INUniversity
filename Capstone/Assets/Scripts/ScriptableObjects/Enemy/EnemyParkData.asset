@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyParkData
   m_EditorClassIdentifier: 
-  enemyName: Fox
-  attackPoint: 5
-  maxHP: 30
+  enemyName: Park, The Axis of Sage
+  attackPoint: 8
+  maxHP: 35
   maxCost: 20
   currentCostIncreaseAmount: 0.8
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Park_InBattle
-  enemyDescription: Park
+  enemyDescription: "\uC774\uB984 : Park, The Axis of Sage\n\n\uC5B4\uC148\uBE14\uB9AC\uC5B4\uB97C
+    \uC798 \uD558\uC2E4 \uAC83 \uAC19\uC544\uC694."
   enemyImagePath: Images/Enemies/Enemy_Park/Enemy_Park_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Park/Enemy_Park_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Park/Enemy_Park_Lose_Profile

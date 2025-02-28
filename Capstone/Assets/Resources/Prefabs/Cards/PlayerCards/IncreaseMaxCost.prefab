@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1213e7d82d4df014cbf143edbe4cea1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 3
   cardID: 6
-  cardName: IncreaseMaxCost
+  cardName: "\uC790\uC6D0\uD1B5 \uC99D\uAC00"
   cardImagePath: Images/Cards/IncreaseMaxCost
-  cardDescription: IncreaseMaxCost
-  increaseAmount: 1
+  cardDescription: "\uC790\uC6D0\uD1B5 \uC99D\uAC00 : 4"
+  increaseAmount: 4

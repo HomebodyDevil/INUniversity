@@ -47,8 +47,8 @@ MonoBehaviour:
   equipmentType: 3
   equipmentID: 1013
   isEquipped: 0
-  equipmentName: Sword_A[3]
+  equipmentName: "\uAC80[3]"
   equipmentImagePath: Images/Equipment/sword_a_3
-  equipmentDescription: maxCost
+  equipmentDescription: "\uACF5\uACA9\uB825 : +5\n\uC790\uC6D0 : +5"
   gainAttackPoint: 5
   gainMaxCost: 5

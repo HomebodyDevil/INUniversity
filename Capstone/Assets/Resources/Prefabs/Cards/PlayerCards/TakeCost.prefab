@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f355715688be74fb94cb88a9384b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 1
+  cardCost: 5
   cardID: 10
-  cardName: TakeCost
+  cardName: "\uC790\uC6D0 \uD6D4\uCE58\uAE30"
   cardImagePath: Images/Cards/TakeCost
-  cardDescription: TakeCost
+  cardDescription: "\uC801 \uC790\uC6D0 : -3\n\uD50C\uB808\uC774\uC5B4 \uC790\uC6D0
+    : +3"
   initialTakeAmount: 3

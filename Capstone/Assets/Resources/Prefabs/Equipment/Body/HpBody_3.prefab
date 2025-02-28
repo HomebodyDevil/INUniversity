@@ -47,7 +47,7 @@ MonoBehaviour:
   equipmentType: 1
   equipmentID: 1063
   isEquipped: 0
-  equipmentName: HpBody[3]
+  equipmentName: "\uCCB4\uB825\uAC11\uC637[3]"
   equipmentImagePath: Images/Equipment/hpBody_3
-  equipmentDescription: maxHP
+  equipmentDescription: "\uCCB4\uB825 : +23"
   gainMaxHP: 23

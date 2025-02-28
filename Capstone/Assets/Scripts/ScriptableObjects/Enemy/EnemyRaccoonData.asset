@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b37c1d471024a346a88a196f24aa3cd, type: 3}
   m_Name: EnemyRaccoonData
   m_EditorClassIdentifier: 
-  enemyName: Fox
+  enemyName: "\uB108\uAD6C\uB9AC"
   attackPoint: 10
   maxHP: 10
   maxCost: 10
@@ -20,23 +20,26 @@ MonoBehaviour:
   EXPAmount: 3
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Raccoon_InBattle
-  enemyDescription: Raccoon
+  enemyDescription: "\uC774\uB984 : \uB108\uAD6C\uB9AC\n\n\uD559\uAD50\uC5D0\uC11C
+    \uB108\uAD6C\uB9AC\uB97C \uBCF8 \uC801\uC740 \uC5C6\uC5B4\uC694."
   enemyImagePath: Images/Enemies/Enemy_Raccoon/Enemy_Raccoon_Profile
   enemyPlayerWinProfileImagePath: Images/Enemies/Enemy_Raccoon/Enemy_Raccoon_Win_Profile
   enemyPlayerLoseProfileImagePath: Images/Enemies/Enemy_Raccoon/Enemy_Raccoon_Lose_Profile
-  enemyPlayerWinDialogueText: Player Win
-  enemyPlayerLoseDialogueText: Player Lose
+  enemyPlayerWinDialogueText: "\uB2D8 \uC384\uC2DC\uB124\uC694."
+  enemyPlayerLoseDialogueText: "\uB2D8 \uC57D\uD558\uC2DC\uB124\uC694."
   dropItems:
   - item: {fileID: 1819807146939611753, guid: c7d5331366de2a542b233a78c103b9cf, type: 3}
     chance: 70
     maxDropAmount: 5
   dropCards:
   - card: {fileID: 2242407686405643945, guid: b16d1ab4d0875bc4791096ccb95861c2, type: 3}
-    chance: 50
+    chance: 40
+  - card: {fileID: 2242407686405643945, guid: 97e9935a7335bdb4984f4c54467ffea7, type: 3}
+    chance: 20
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 893430dad1313a140a91f5c03e106c53, type: 3}
-    chance: 50
+    chance: 30
   - equipment: {fileID: 3141337324803865170, guid: 4939f3a5da16c3549932f5aa37482b0b, type: 3}
-    chance: 50
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: d4757a1fd8deb6b45a474ad2a3aba515, type: 3}
-    chance: 50
+    chance: 20

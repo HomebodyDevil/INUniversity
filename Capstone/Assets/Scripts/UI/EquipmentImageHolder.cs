@@ -74,7 +74,7 @@ public class EquipmentImageHolder : MonoBehaviour, IPointerClickHandler
         else
         {
             MapUIManager.Instance().ActivateObjectDescriptionPanel();
-            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currentEquipment.equipmentImagePath, currentEquipment.name, currentEquipment.equipmentDescription);
+            ObjectDescriptionPanel.Act_UpdateObjectDescription.Invoke(currentEquipment.equipmentImagePath, currentEquipment.equipmentName, currentEquipment.equipmentDescription);
         }
     }
 }

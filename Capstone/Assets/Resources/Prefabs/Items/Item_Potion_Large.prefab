@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88891a6a8147f0141bf3e1a45afbcd2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Potion(Large)
+  itemName: "\uBB3C\uC57D(\uB300)"
   itemImagePath: Images/Items/Item_Potion_Large
-  itemDescription: heal 50%
+  itemDescription: "\uCCB4\uB825 \uD68C\uBCF5 : 50%"
   itemID: 2003
   haveNumber: 1
   amount: 2

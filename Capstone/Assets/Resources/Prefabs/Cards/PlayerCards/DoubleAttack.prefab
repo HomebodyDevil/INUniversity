@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bc20f3f8cbeb5458e8d424ff0566c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 2
+  cardCost: 3
   cardID: 4
-  cardName: DoubleAttack
+  cardName: "\uB450 \uBC88 \uCE58\uAE30"
   cardImagePath: Images/Cards/DoubleAttack
-  cardDescription: DoubleAttack
+  cardDescription: "\uB450 \uBC88 \uB54C\uB9B0\uB2E4 : 3+(\uACF5\uACA9\uB825 * 5%)"
   defaultAttack: 3
   attackRatio: 0.05
   attackInterval: 0.07

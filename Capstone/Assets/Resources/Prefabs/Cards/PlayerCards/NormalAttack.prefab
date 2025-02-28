@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 230f8268a4aa68843af560dcfd2cde7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCost: 0
+  cardCost: 2
   cardID: 1
-  cardName: NormalAttack
+  cardName: "\uCE58\uAE30"
   cardImagePath: Images/Cards/NormalAttack
-  cardDescription: attack
+  cardDescription: "\uD55C \uB300 \uB54C\uB9B0\uB2E4 : 3+(\uACF5\uACA9\uB825 * 8%)"
   defaultAttack: 3
   attackRatio: 0.08

@@ -15,6 +15,7 @@ public class DataManager : MonoBehaviour
 {
     private static DataManager instance;
 
+    [SerializeField] private GameObject cloudPanel;
     [SerializeField] private GameObject loginPanel;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject optionButton;
@@ -70,11 +71,11 @@ public class DataManager : MonoBehaviour
         saveDataDirectoryPath = $"{defaultPath}/savedata";
         saveDataFilePath = $"{saveDataDirectoryPath}/Save.json";
 
-        BattleManager.OnBattleWin -= SaveData;
-        BattleManager.OnBattleWin += SaveData;
+        //BattleManager.OnBattleWin -= SaveData;
+        //BattleManager.OnBattleWin += SaveData;
 
-        BattleManager.OnBattleLose -= SaveData;
-        BattleManager.OnBattleLose += SaveData;
+        //BattleManager.OnBattleLose -= SaveData;
+        //BattleManager.OnBattleLose += SaveData;
 
         SceneManagerEX.OnSwitchSceneToBattle -= DisableOptionButton;
         SceneManagerEX.OnSwitchSceneToBattle += DisableOptionButton;
@@ -99,8 +100,8 @@ public class DataManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        BattleManager.OnBattleWin -= SaveData;
-        BattleManager.OnBattleLose -= SaveData;
+        //BattleManager.OnBattleWin -= SaveData;
+        //BattleManager.OnBattleLose -= SaveData;
         SceneManagerEX.OnSwitchSceneToBattle -= DisableOptionButton;
         SceneManagerEX.OnSwitchSceneToMap -= EnableOptionButton;
     }
@@ -279,14 +280,14 @@ public class DataManager : MonoBehaviour
         Debug.Log("Load");
 
         if (!File.Exists(saveDataFilePath))
-            return;
+            return;        
 
         CheckFile();
 
         string json = File.ReadAllText(saveDataFilePath);
 
         while (childTransform.childCount > 0)
-            DestroyImmediate(transform.GetChild(0).gameObject);
+            DestroyImmediate(childTransform.GetChild(0).gameObject);
 
         SaveData data = JsonUtility.FromJson<SaveData>(json);
         LoadSpec(ref data);
@@ -616,9 +617,18 @@ public class DataManager : MonoBehaviour
     {
         SoundManager.OnButtonUp.Invoke();
 
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            CloudData.Instance().SetCloudWarningPanel(true, "The Internet is not connected");
+            //logInPanel.SetActive(false);
+
+            return;
+        }
+
         if (!AuthenticationService.Instance.IsSignedIn)
         {
             loginPanel.SetActive(true);
+            cloudPanel.SetActive(true);
             return;
         }
 
@@ -653,8 +663,17 @@ public class DataManager : MonoBehaviour
     {
         SoundManager.OnButtonUp.Invoke();
 
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            CloudData.Instance().SetCloudWarningPanel(true, "The Internet is not connected");
+            //logInPanel.SetActive(false);
+
+            return;
+        }
+
         if (!AuthenticationService.Instance.IsSignedIn)
         {
+            cloudPanel.SetActive(true);
             loginPanel.SetActive(true);
             return;
         }

@@ -47,8 +47,8 @@ MonoBehaviour:
   equipmentType: 0
   equipmentID: 1093
   isEquipped: 0
-  equipmentName: Head[3]
+  equipmentName: "\uD22C\uAD6C[3]"
   equipmentImagePath: Images/Equipment/head_3
-  equipmentDescription: Head[3]
+  equipmentDescription: "\uACF5\uACA9\uB825 : +1.6\n\uCD5C\uB300 \uC790\uC6D0 : +2"
   gainAttackPoint: 1.6
   gainMaxCost: 2

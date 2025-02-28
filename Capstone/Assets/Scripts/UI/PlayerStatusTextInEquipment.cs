@@ -51,8 +51,9 @@ public class PlayerStatusTextInEquipment : MonoBehaviour
         int attack = (int)playerSpecManager.currentPlayerAttackPoint;
         int maxHP = (int)playerSpecManager.maxPlayerHP;
         int maxCost = (int)playerSpecManager.maxPlayerCost;
+        float costIncrease = playerSpecManager.currentCostIncreaseAmount;
 
-        string content = string.Format("Attack\t{0, 5}\nMaxHP\t{1, 5}\nMaxCost\t{2, 5}", attack, maxHP, maxCost);
+        string content = string.Format("공격력     \t: {0}\n최대체력\t: {1}\n최대자원\t: {2}\n자원회복\t: {3:0.0}", attack, maxHP, maxCost, costIncrease);
         text.text = content;
     }
 

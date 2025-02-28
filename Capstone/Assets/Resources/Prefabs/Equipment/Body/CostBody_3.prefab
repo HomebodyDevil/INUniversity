@@ -47,8 +47,8 @@ MonoBehaviour:
   equipmentType: 1
   equipmentID: 1053
   isEquipped: 0
-  equipmentName: CostBody[3]
+  equipmentName: "\uC790\uC6D0\uAC11\uC637[3]"
   equipmentImagePath: Images/Equipment/costBody_3
-  equipmentDescription: maxCost
+  equipmentDescription: "\uCCB4\uB825 : +13\n\uCD5C\uB300 \uC790\uC6D0 : +7"
   gainMaxHP: 13
   gainMaxCost: 7

@@ -184,7 +184,7 @@ public class SceneManagerEX : MonoBehaviour
 
                     OnSwitchSceneToBattle.Invoke();
 
-                    DataManager.Instance().SaveData();
+                    //DataManager.Instance().SaveData();
                 }
                 else if (sceneName == "MapScene")
                 {

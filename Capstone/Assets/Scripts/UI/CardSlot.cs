@@ -63,7 +63,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         if (isSelected)
         {
             MapUIManager.Instance().ActivateObjectDescriptionPanel();
-            ObjectDescriptionPanel.Act_UpdateObjectDescription(card.cardImagePath, card.name, card.cardDescription);
+            ObjectDescriptionPanel.Act_UpdateObjectDescription(card.cardImagePath, card.cardName, card.cardDescription);
         }
         else
         {
