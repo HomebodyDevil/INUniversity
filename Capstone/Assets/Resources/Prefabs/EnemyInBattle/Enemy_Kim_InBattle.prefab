@@ -243,7 +243,7 @@ MonoBehaviour:
   normalAttackAmount: 2
   poisonAmount: 1
   poisonTick: 3
-  slowCostRatio: 0.2
+  slowCostRatio: 0.1
   normalCool: 0.8
   healCool: 12
   normalAttackCool: 1.5

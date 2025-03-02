@@ -166,7 +166,7 @@ public class Enemy_Lee_InBattle : MonoBehaviour
         int loopCount = 0;
         while (true)
         {
-            yield return new WaitForSecondsRealtime(coolSec);
+            yield return new WaitForSeconds(coolSec);
 
             if (loopCount++ > 9999)
             {
@@ -289,20 +289,22 @@ public class Enemy_Lee_InBattle : MonoBehaviour
         behaviorControl.SetCostStillAmount(nightStillAmount);
         behaviorControl.EndAttackBool();
 
-        isLunch = isLunch ? false : true;
-
-        behaviorControl.SetIsLunch(isLunch);
-
-        if (isLunch)    // 바꾼 후의 시점
+        //isLunch = isLunch ? false : true;
+        
+        if (!isLunch)
         {
+            isLunch = true;
             behaviorControl.SetBehaviorIndex(1);
             animator.SetBool("Attack_Yellow", true);
         }
         else
         {
+            isLunch = false;
             behaviorControl.SetBehaviorIndex(2);
             animator.SetBool("Attack_Black", true);
         }
+
+        behaviorControl.SetIsLunch(isLunch);
 
         BattleManager.Instance().ReduceEnemyCost(changeTimeCost);
 

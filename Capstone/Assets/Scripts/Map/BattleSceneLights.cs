@@ -78,7 +78,8 @@ public class BattleSceneLights : MonoBehaviour
 
     private void EndLunchAnimation()
     {
-        transform.rotation = Quaternion.Euler(-30, -190, 0);
+        //transform.rotation = Quaternion.Euler(-30, -190, 0);
+        transform.rotation = Quaternion.Euler(15, -190, 0);
         ResetConditions();
     }
 

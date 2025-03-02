@@ -250,6 +250,7 @@ public class MapUIManager : A_UIManager
         }
         else
         {
+            DataManager.Instance().SaveData();
             SceneManagerEX.Instance().SwitchToBattleScene();
         }
     }

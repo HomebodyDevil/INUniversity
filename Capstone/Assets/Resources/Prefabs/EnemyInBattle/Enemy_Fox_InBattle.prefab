@@ -189,9 +189,9 @@ MonoBehaviour:
   healCost: 5
   attackChance: 30
   healChance: 70
-  attackAmount: 10
+  attackAmount: 1.5
   healRatio: 0.3
-  healCool: 4
+  healCool: 8
 --- !u!1 &4845248883948753829
 GameObject:
   m_ObjectHideFlags: 0

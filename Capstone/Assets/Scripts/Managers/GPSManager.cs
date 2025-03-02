@@ -146,8 +146,8 @@ public class GPSManager : MonoBehaviour
             longitude = homeTestLon;
         }
 
-        longText.text = "경도\t: " + longitude;
-        latText.text = "위도\t: " + latitude;
+        longText.text = "경도\t" + longitude;
+        latText.text = "위도\t" + latitude;
 
         // 확인용 Panel 사용.
         // 추후 없애주자.

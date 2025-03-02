@@ -25,7 +25,7 @@ public class EXPTextInMap : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(1.5f);
 
-            text.text = string.Format("EXP : ( {0} / {1} )",
+            text.text = string.Format("EXP : ( {0:0.0} / {1:0.0} )",
                                         PlayerSpecManager.Instance().currentPlayerEXP,
                                         PlayerSpecManager.Instance().maxPlayerEXP);
         }   

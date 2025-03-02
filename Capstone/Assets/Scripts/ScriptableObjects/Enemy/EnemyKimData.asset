@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHP: 40
   maxCost: 20
   currentCostIncreaseAmount: 1
-  EXPAmount: 3
+  EXPAmount: 60
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Kim_InBattle
   enemyDescription: "\uC774\uB984 : Kim, Uno of the Cosmos\n\n\uC18C\uB9AC\uC640
@@ -46,10 +46,16 @@ MonoBehaviour:
     chance: 50
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 6d53527cb95d6f94dbc0bc3c090bac0e, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: f0d17d66837e95146920323d942621cb, type: 3}
     chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: 9f4b0273f44765e41be77b6b5ea56e35, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 632a53f2bfa35ec46a2fe609718a3c38, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 132b6ce12f33b7c46b46a2fb15badc22, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 66718a1525cec0d4184d0e9399e7cc74, type: 3}
     chance: 20

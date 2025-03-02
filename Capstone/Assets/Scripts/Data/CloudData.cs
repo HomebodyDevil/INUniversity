@@ -121,7 +121,8 @@ public class CloudData : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(id, pwd);
-            SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
+            //SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
+            SetCloudWarningPanel(true, "Success.\nPlease do it again.");
 
             logInPanel.SetActive(false);
             canclePanel.SetActive(false);
@@ -201,7 +202,10 @@ public class CloudData : MonoBehaviour
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(id, pwd);
             await OnLoginButton();
-            SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
+            //SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
+            SetCloudWarningPanel(true, "Success.\nPlease do it again.");
+
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(id);
 
             logInPanel.SetActive(false);
             canclePanel.SetActive(false);

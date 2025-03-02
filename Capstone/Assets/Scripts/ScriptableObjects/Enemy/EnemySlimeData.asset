@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHP: 10
   maxCost: 10
   currentCostIncreaseAmount: 1
-  EXPAmount: 3
+  EXPAmount: 4
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Slime_InBattle
   enemyDescription: "\uC774\uB984 : \uC2AC\uB77C\uC784\n\n\uC0AC\uC2E4 \uD559\uAD50\uC5D0\uB294
@@ -42,4 +42,8 @@ MonoBehaviour:
   - equipment: {fileID: 3141337324803865170, guid: 7f58c5a563be35b49abeefee2553ad5f, type: 3}
     chance: 20
   - equipment: {fileID: 3141337324803865170, guid: d4757a1fd8deb6b45a474ad2a3aba515, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: e25b73a05aaa8fa4db95c40ff4dc8821, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 3ef7259faf14b8c45b662d7555f7fb95, type: 3}
     chance: 20

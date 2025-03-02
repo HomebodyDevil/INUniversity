@@ -38,10 +38,14 @@ MonoBehaviour:
     chance: 20
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 25c00297ce3ba3d44ba0083e41a0359e, type: 3}
-    chance: 30
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 8372dee6ed533964aae5b78ed2690451, type: 3}
     chance: 20
   - equipment: {fileID: 3141337324803865170, guid: b43c97a90932f70449d717ac97c0b524, type: 3}
-    chance: 30
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 6cad15baf002fa149be57ff05c97c125, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: a95ce73528e5c5b46a49e395a40865cb, type: 3}
     chance: 20

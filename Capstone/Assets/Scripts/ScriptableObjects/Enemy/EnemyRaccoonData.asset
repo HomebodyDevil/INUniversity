@@ -43,3 +43,7 @@ MonoBehaviour:
     chance: 20
   - equipment: {fileID: 3141337324803865170, guid: d4757a1fd8deb6b45a474ad2a3aba515, type: 3}
     chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 6cad15baf002fa149be57ff05c97c125, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: a95ce73528e5c5b46a49e395a40865cb, type: 3}
+    chance: 20

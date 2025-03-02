@@ -678,7 +678,8 @@ public class BattleManager : MonoBehaviour
                 if (num == 0)
                     num += 1;
 
-                dropItemsDictionary.Add((dropItems[i].item).GetComponent<A_Item>(), num);
+                if (dropItems[i].item != null)
+                    dropItemsDictionary.Add((dropItems[i].item).GetComponent<A_Item>(), num);
             }
         }
 
@@ -689,7 +690,8 @@ public class BattleManager : MonoBehaviour
             randValue = Random.Range(0, 100);
             if (randValue < dropEquipment[i].chance)
             {
-                dropEquipmentList.Add((dropEquipment[i].equipment).GetComponent<A_Equipment>());
+                if (dropEquipment[i].equipment != null)
+                    dropEquipmentList.Add((dropEquipment[i].equipment).GetComponent<A_Equipment>());
             }
         }
 
@@ -704,7 +706,8 @@ public class BattleManager : MonoBehaviour
             randValue = Random.Range(0, 100);
             if (randValue < dropCards[i].chance)
             {
-                dropCardsList.Add((dropCards[i].card).GetComponent<A_PlayerCard>());
+                if (dropCards[i].card != null)
+                    dropCardsList.Add((dropCards[i].card).GetComponent<A_PlayerCard>());
             }
         }
 

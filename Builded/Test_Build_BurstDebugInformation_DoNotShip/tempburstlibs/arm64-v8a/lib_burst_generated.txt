@@ -47,6 +47,7 @@ Library: C:\Unity_Project\INUniversity\Capstone\Temp\BurstOutput\tempburstlibs\a
 --assembly-defines=Unity.Services.Core.Scheduler;
 --assembly-defines=Unity.Services.Core.Telemetry;
 --assembly-defines=Unity.Services.Core.Threading;
+--assembly-defines=Unity.Services.Leaderboards;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Timeline;
 --assembly-defines=UnityEngine;
@@ -105,6 +106,7 @@ Library: C:\Unity_Project\INUniversity\Capstone\Temp\BurstOutput\tempburstlibs\a
 --assembly-defines=Unity.Services.Core.Scheduler;
 --assembly-defines=Unity.Services.Core.Telemetry;
 --assembly-defines=Unity.Services.Core.Threading;
+--assembly-defines=Unity.Services.Leaderboards;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Timeline;
 --assembly-defines=UnityEngine;

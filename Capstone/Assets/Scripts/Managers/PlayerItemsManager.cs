@@ -42,6 +42,9 @@ public class PlayerItemsManager : MonoBehaviour
         BattleManager.OnBattleWin -= AddNewItemToPlayer;
         BattleManager.OnBattleWin += AddNewItemToPlayer;
 
+        BattleManager.OnBattleLose -= AddLosePotion;
+        BattleManager.OnBattleLose += AddLosePotion;
+
         ItemSlot.UsedAllItems -= MakeSelectNothing;
         ItemSlot.UsedAllItems += MakeSelectNothing;
 
@@ -74,6 +77,7 @@ public class PlayerItemsManager : MonoBehaviour
         ItemPanel.SelectCurrentItemSlot -= OnSelectCurrentItemSlot;
         BattleManager.OnBattleWin -= AddNewItemToPlayer;
         ItemSlot.UsedAllItems -= MakeSelectNothing;
+        BattleManager.OnBattleLose -= AddLosePotion;
     }
 
     public ref Dictionary<int, A_Item> GetPlayerItemDictionary()
@@ -117,8 +121,31 @@ public class PlayerItemsManager : MonoBehaviour
             else
             {
                 playerItemsDictionary.Add(item.Key.itemID, item.Key);
-                playerItemsCount.Add(item.Key.itemID, item.Value);
+
+                if (playerItemsCount.ContainsKey(item.Key.itemID))
+                    playerItemsCount[item.Key.itemID] += item.Value;
+                else
+                    playerItemsCount.Add(item.Key.itemID, item.Value);
             }
+        }
+
+        AddLosePotion();
+    }
+
+    public void AddLosePotion()
+    {
+        int n = 3;
+
+        if (playerItemsDictionary.ContainsKey(2001))
+        {
+            for (int i = 0; i < n; i++)
+                playerItemsCount[2001] = Math.Min(playerItemsCount[2001] + 1, 99);
+        }
+        else
+        {
+            A_Item item = Resources.Load<A_Item>("Prefabs/Items/Item_Potion_Little");
+            playerItemsDictionary.Add(2001, item);
+            playerItemsCount.Add(2001, 3);
         }
     }
 

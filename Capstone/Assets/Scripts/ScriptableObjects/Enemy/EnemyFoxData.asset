@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHP: 10
   maxCost: 10
   currentCostIncreaseAmount: 1
-  EXPAmount: 3
+  EXPAmount: 4
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Fox_InBattle
   enemyDescription: "\uC774\uB984 : \uC5EC\uC6B0\n\n\uD559\uAD50\uC5D0\uC11C \uC5EC\uC6B0\uB97C
@@ -38,10 +38,14 @@ MonoBehaviour:
     chance: 20
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 11104308ed8b1d441ba9f2031f3a4018, type: 3}
-    chance: 30
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 6d53527cb95d6f94dbc0bc3c090bac0e, type: 3}
     chance: 20
   - equipment: {fileID: 3141337324803865170, guid: f31f97b501312df4eb6606e88780f450, type: 3}
-    chance: 30
+    chance: 20
   - equipment: {fileID: 3141337324803865170, guid: 4a7e72667ed42ac4bab7e6ea2a5d8ba2, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: e25b73a05aaa8fa4db95c40ff4dc8821, type: 3}
+    chance: 20
+  - equipment: {fileID: 3141337324803865170, guid: 3ef7259faf14b8c45b662d7555f7fb95, type: 3}
     chance: 20

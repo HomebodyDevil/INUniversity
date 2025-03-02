@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Spawn Options")]
+    [Header("Spawn Options")]    
     [SerializeField] private int spawnerID;
     [SerializeField] private int maxEnemyCount;
     [SerializeField] private List<EnemyForSpawn> spawnEnemyList;

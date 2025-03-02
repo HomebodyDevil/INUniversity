@@ -195,8 +195,12 @@ public class EnemyInfoPanel : MonoBehaviour
 
         for (int i = 0; i < dropEquip.Count; i++)
         {
-            A_Equipment equipment = dropEquip[i].equipment.GetComponent<A_Equipment>();
-            equip.Add(equipment);
+            A_Equipment equipment = null;
+            if (dropEquip[i].equipment != null)
+                equipment = dropEquip[i].equipment.GetComponent<A_Equipment>();
+
+            if (equipment != null)
+                equip.Add(equipment);
         }
 
         UpdateCardList(ref cards);

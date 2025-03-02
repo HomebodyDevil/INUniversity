@@ -703,6 +703,15 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public void ActivateCloudPanel()
+    {
+        cloudPanel.gameObject.SetActive(true);
+    }
+
+
+
+
+
 
 
 

@@ -129,7 +129,14 @@ public class PlayerSpecManager : MonoBehaviour
         maxPlayerCost = originalPlayerMaxCost;
         currentCostIncreaseAmount = originalCostIncreaseAmount;
 
+        if (currentPlayerEXP >= maxPlayerEXP)
+        {
+            LevelUp();
+        }
+
         AddIncreaseCostAmount.increased = 0.0f;
+
+        DataManager.Instance().SaveData();
     }
 
     public void UpdateSpec()
@@ -215,22 +222,24 @@ public class PlayerSpecManager : MonoBehaviour
     public void GainEXP(float exp)
     {
         currentPlayerEXP += exp;
-        if (currentPlayerEXP >= maxPlayerEXP)
-        {
-            LevelUp();
-        }
+        //if (currentPlayerEXP >= maxPlayerEXP)
+        //{
+        //    LevelUp();
+        //}
     }    
 
     public void LevelUp()
     {
-        currentPlayerEXP = currentPlayerEXP - maxPlayerEXP;
-        currentPlayerLevel++;
-        maxPlayerEXP *= 1.3f;
+        while(currentPlayerEXP > maxPlayerEXP)
+        {
+            currentPlayerEXP = Mathf.Max(0, currentPlayerEXP - maxPlayerEXP);
+            currentPlayerLevel++;
 
-        originalPlayerMaxHP += attackAddAmount;
-        originalPlayerAttackPoint += attackAddAmount;
-        //currentPlayerAttackPoint += attackAddAmount;
-        //maxPlayerHP += hpAddAmount;
+            maxPlayerEXP *= 1.3f;
+
+            maxPlayerHP += attackAddAmount;
+            currentPlayerAttackPoint += attackAddAmount;
+        }
     }
 
     public void AddValueToCurrentPlayerHP(float n)

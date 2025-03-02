@@ -96,10 +96,12 @@ public class Enemy_Lee_InBattle_Behavior_Control : MonoBehaviour
         if (isToLunch)
         {
             BattleSceneLights.ChangeTimeToLunch.Invoke();
+            Debug.Log("To Lunch");
         }
         else
         {
             BattleSceneLights.ChangeTimeToNight.Invoke();
+            Debug.Log("To Night");
         }
     }
 

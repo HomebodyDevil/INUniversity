@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHP: 35
   maxCost: 20
   currentCostIncreaseAmount: 0.8
-  EXPAmount: 3
+  EXPAmount: 90
   enemyDeck: []
   battleEnemyPrefabPath: Prefabs/EnemyInBattle/Enemy_Park_InBattle
   enemyDescription: "\uC774\uB984 : Park, The Axis of Sage\n\n\uC5B4\uC148\uBE14\uB9AC\uC5B4\uB97C
@@ -44,12 +44,16 @@ MonoBehaviour:
     chance: 50
   dropEquipment:
   - equipment: {fileID: 3141337324803865170, guid: 4939f3a5da16c3549932f5aa37482b0b, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: 674252cdcfa7c7642ae226f4f7fd4cb8, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: 9a4eb2e8cb456f34bbf7fe2cfd6fe438, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: 9f4b0273f44765e41be77b6b5ea56e35, type: 3}
-    chance: 50
+    chance: 35
   - equipment: {fileID: 3141337324803865170, guid: 632a53f2bfa35ec46a2fe609718a3c38, type: 3}
-    chance: 50
+    chance: 35
+  - equipment: {fileID: 3141337324803865170, guid: 132b6ce12f33b7c46b46a2fb15badc22, type: 3}
+    chance: 35
+  - equipment: {fileID: 3141337324803865170, guid: 66718a1525cec0d4184d0e9399e7cc74, type: 3}
+    chance: 35
