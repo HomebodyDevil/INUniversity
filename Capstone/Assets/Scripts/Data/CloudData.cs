@@ -184,7 +184,8 @@ public class CloudData : MonoBehaviour
             // id 조건 부적합.
             Debug.Log("Wrong ID Pattern");
 
-            SetCloudWarningPanel(true, "<< Invalid ID >>\n\nShould be 4 to 20 characters long.Only the following special characters are allowed: ',', '-', '_', '@'. Must contain letters and/or numbers.");            
+            //SetCloudWarningPanel(true, "<< Invalid ID >>\n\nShould be 4 to 20 characters long.\nOnly the following special characters are allowed: ',', '-', '_', '@'.\nMust contain letters and/or numbers.");
+            SetCloudWarningPanel(true, "<< 유효하지 않는 ID >>\n\n길이 : 4~20\n허용되는 특수문자 : ',', '-','_', '@'.\n문자, 숫자만 허용.");            
 
             return;
         }
@@ -194,7 +195,8 @@ public class CloudData : MonoBehaviour
             // pwd 조건 부적합.
             Debug.Log("Wrong PWD Pattern");
 
-            SetCloudWarningPanel(true, "<< Invalid Password >>\n\nShould be 8 to 30 characters long and contain at least one lowercase and one uppercase letter.");
+            //SetCloudWarningPanel(true, "<< Invalid Password >>\n\nShould be 8 to 30 characters long.\nContain at least one lowercase and one uppercase letter.\nAnd one symbol");
+            SetCloudWarningPanel(true, "<< 유효하지 않는 Password >>\n\n길이 : 8~30\n최소 하나 이상의 소문자와 대문자\n하나 이상의 특수문자.");
             return;
         }
 
