@@ -239,11 +239,19 @@ public class GPSManager : MonoBehaviour
     {
         // 권한을 허용해달라는 것.
         // Location 관련한 허가를 받아오도록 함.
+
+        int count = 0;
         while (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {            
-            yield return null;
+            yield return new WaitForSeconds(1.0f);
             Permission.RequestUserPermission(Permission.FineLocation);
+
+            if (count++ > 5)
+                break;
         }
+
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            Application.Quit();
 
         // GPS를 사용할 수 있는지 확인.
         if (!Input.location.isEnabledByUser)
