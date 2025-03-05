@@ -7,6 +7,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.WebRequestMethods;
 
 public class CloudData : MonoBehaviour
 {
@@ -64,8 +65,10 @@ public class CloudData : MonoBehaviour
             );
 
         idPattern = @"^[a-zA-Z0-9][a-zA-Z0-9.,\-_@]{3,20}$";
-        //pwdPattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,30}$";
-        pwdPattern = @"^(?=.*[A - Z])(?=.*[a - z])(?=.*\d)(?=.*[\W_])[A - Za - z\d\W_]{ 8,30}$";
+        pwdPattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,30}$";
+        //pwdPattern = @"^(?=.*[A - Z])(?=.*[a - z])(?=.*\d)(?=.*[\W_])[A - Za - z\d\W_]{8,30}$";
+        //pwdPattern = @"^(?=.*[a - zA - Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]){8,15}$";
+        //pwdPattern =  @"^(?=.*[a - z])(?=.*[A - Z])(?=.*\d)(?=.*[@$! % *? &#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,20}$";
 
         await InitializeServices();
 
@@ -234,6 +237,14 @@ public class CloudData : MonoBehaviour
                 //Debug.Log("Already Exists");
                 return;
             }
+        }
+        catch (RequestFailedException req)
+        {
+            // 올바른지 확인 부탁.
+            //SetCloudWarningPanel(true, "Check if the ID or Password is correct");
+            SetCloudWarningPanel(true, "ID 혹은 비밀번호가 맞는지 확인.");
+
+            return;
         }
     }
 
