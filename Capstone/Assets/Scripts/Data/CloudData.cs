@@ -64,7 +64,8 @@ public class CloudData : MonoBehaviour
             );
 
         idPattern = @"^[a-zA-Z0-9][a-zA-Z0-9.,\-_@]{3,20}$";
-        pwdPattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,30}$";
+        //pwdPattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,30}$";
+        pwdPattern = @"^(?=.*[A - Z])(?=.*[a - z])(?=.*\d)(?=.*[\W_])[A - Za - z\d\W_]{ 8,30}$";
 
         await InitializeServices();
 
@@ -104,7 +105,7 @@ public class CloudData : MonoBehaviour
         {
             // id 조건 부적합.
             Debug.Log("Wrong ID Pattern");
-            SetCloudWarningPanel(true, "Invalid ID");
+            SetCloudWarningPanel(true, "유효하지 않는 ID");
 
             //return;
         }
@@ -113,7 +114,7 @@ public class CloudData : MonoBehaviour
         {
             // pwd 조건 부적합.
             Debug.Log("Wrong PWD Pattern");
-            SetCloudWarningPanel(true, "Invalid password");
+            SetCloudWarningPanel(true, "유효하지 않는 비밀번호.");
 
             //return;
         }
@@ -122,7 +123,8 @@ public class CloudData : MonoBehaviour
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(id, pwd);
             //SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
-            SetCloudWarningPanel(true, "Success.\nPlease do it again.");
+            //SetCloudWarningPanel(true, "Success.\nPlease do it again.");
+            SetCloudWarningPanel(true, "성공.\n다시 시도해주세요.");
 
             logInPanel.SetActive(false);
             canclePanel.SetActive(false);
@@ -131,15 +133,20 @@ public class CloudData : MonoBehaviour
         {
             Debug.Log($"{e.Message}");
 
-            if (AuthenticationErrorCodes.AccountAlreadyLinked == e.ErrorCode)
-            {
-                // 이미 존재.
+            //if (AuthenticationErrorCodes.AccountAlreadyLinked == e.ErrorCode)
+            //{
+            //    // 이미 존재.
 
-                Debug.Log("Already Exist");
+            //    Debug.Log("Already Exist");
 
-                SetCloudWarningPanel(true, "Check if the ID or Password is correct");
-                return;
-            }
+            //    SetCloudWarningPanel(true, "Check if the ID or Password is correct");
+            //    return;
+            //}
+
+            //SetCloudWarningPanel(true, "Check if the ID or Password is correct");
+            SetCloudWarningPanel(true, "ID 혹은 비밀번호가 맞는지 확인.");
+
+            return;
         }
         catch (RequestFailedException req)
         {
@@ -161,7 +168,9 @@ public class CloudData : MonoBehaviour
             }
 
             // 올바른지 확인 부탁.
-            SetCloudWarningPanel(true, "Check if the ID or Password is correct");
+            //SetCloudWarningPanel(true, "Check if the ID or Password is correct");
+            SetCloudWarningPanel(true, "ID 혹은 비밀번호가 맞는지 확인.");
+
             return;
         }
     }
@@ -205,7 +214,8 @@ public class CloudData : MonoBehaviour
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(id, pwd);
             await OnLoginButton();
             //SetCloudWarningPanel(true, "Success.\nPlease press the Save/Load button again.");
-            SetCloudWarningPanel(true, "Success.\nPlease do it again.");
+            //SetCloudWarningPanel(true, "Success.\nPlease do it again.");
+            SetCloudWarningPanel(true, "성공.\n다시 시도해주세요.");
 
             await AuthenticationService.Instance.UpdatePlayerNameAsync(id);
 
