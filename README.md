@@ -6,7 +6,7 @@
 
 ## GPS
 <p align="center">
-	<img src="./images/Loop.png">
+	<img src="./images/Postion.png">
 </p>
 
 사용자가 중점으로부터 일정 거리 안(Area)에 들어왔다면, 사용자의 위치를 게임 상에 적용시킨다.
