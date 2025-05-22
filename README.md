@@ -1,3 +1,12 @@
+## 목표/조건
+<li>GPS에 있어서, 상용 API를 사용하지 않을 것.</li>
+<li>만들고자 하는 기능은 직접 구현할 것.</li>
+<li>상용 앱처럼, 최대한 구동과 비주얼이 자연스럽도록 할 것.</li>
+
+---
+
+<br><br>
+
 ## 루프
 <p align="center">
   <img src="./images/Loop.png" width="800">
@@ -11,7 +20,7 @@
 > `Action` 대리자를 사용하여 전투 승리, 패배, 레벨 업 등의 이벤트를 관찰하고, 적절한 로직을 수행합니다.
 
 ---
-
+<br><br>
 ## 데이터 관리 & 구조
 <div aligh="center">
 <table>
@@ -34,7 +43,7 @@
 </div>
 
 ---
-
+<br><br>
 ## GPS
 <div align="center">
 <table>
@@ -63,7 +72,7 @@ if (거리 <= 반지름) {
 ```
 
 ---
-
+<br><br>
 ## 2.5D 시점 구현
 <div align="center">
   <table style="width:90%; table-layout:fixed;">
@@ -88,7 +97,7 @@ animator.SetFloat("angle", angle)
 ```
 
 ---
-
+<br><br>
 ## 그 외
 <div aligh="center">
 	<table>
